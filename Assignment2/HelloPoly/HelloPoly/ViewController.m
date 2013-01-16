@@ -40,6 +40,8 @@ enum SIDE_NUMBERS {
         }
         default: {
             self.model.numberOfSides -=1;
+            //Check to see if the increase button has been disabled and if so
+            //renable it as we have now decreased the sides again
             if (!self.increaseButton.enabled) {
                 self.increaseButton.enabled = YES;
                 [self.increaseButton setTitleColor:self.initialButtonTextColor forState:UIControlStateNormal];
@@ -69,6 +71,8 @@ enum SIDE_NUMBERS {
         }
         default: {
             self.model.numberOfSides +=1;
+            //Check to see if the decrease button has been disabled and if so
+            //renable it as we have now increased the sides again
             if (!self.decreaseButton.enabled) {
                 self.decreaseButton.enabled = YES;
                 [self.decreaseButton setTitleColor:self.initialButtonTextColor forState:UIControlStateNormal];
