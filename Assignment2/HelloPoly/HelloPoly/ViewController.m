@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) UIColor* initialButtonTextColor;
 @end
 
 @implementation ViewController
@@ -34,13 +34,21 @@ enum SIDE_NUMBERS {
         }
         case LAST_DECREASEABLE_SIDES: {
             self.model.numberOfSides -=1;
-            sender.enabled = NO;
+            self.decreaseButton.enabled = NO;
+            [self.decreaseButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             break;
         }
         default: {
             self.model.numberOfSides -=1;
+            if (!self.increaseButton.enabled) {
+                self.increaseButton.enabled = YES;
+                [self.increaseButton setTitleColor:self.initialButtonTextColor forState:UIControlStateNormal];
+            }
         }
     }
+    
+    [self updateUI];
+    NSLog(@"decrease button handler: number of sides at exit: %i", self.model.numberOfSides);
 }
 
 - (IBAction)increase:(UIButton *)sender {
@@ -55,18 +63,34 @@ enum SIDE_NUMBERS {
         }
         case LAST_INCREASABLE_SIDES: {
             self.model.numberOfSides +=1;
-            sender.enabled = NO;
+            self.increaseButton.enabled = NO;
+            [self.increaseButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             break;
         }
         default: {
             self.model.numberOfSides +=1;
+            if (!self.decreaseButton.enabled) {
+                self.decreaseButton.enabled = YES;
+                [self.decreaseButton setTitleColor:self.initialButtonTextColor forState:UIControlStateNormal];
+            }
         }
     }
+    
+    [self updateUI];
+    NSLog(@"increase button handler: number of sides at exit: %i", self.model.numberOfSides);
+}
+
+- (void) updateUI {
+    NSLog(@"updateUI: number of sides: %i", self.model.numberOfSides);
+    
+    self.numberOfSidesLabel.text = [NSString stringWithFormat:@"%d", self.model.numberOfSides];
 }
 
 - (void) viewDidLoad {
     [super viewDidLoad];
     self.model.numberOfSides = [self.numberOfSidesLabel.text integerValue];
+    self.initialButtonTextColor = self.increaseButton.currentTitleColor;
+    [self updateUI];
 }
 
 - (void) awakeFromNib {

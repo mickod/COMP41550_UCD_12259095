@@ -12,6 +12,8 @@
 @interface ViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *numberOfSidesLabel;
 @property (strong, nonatomic) IBOutlet PolygonShape *model;
+@property (weak, nonatomic) IBOutlet UIButton *decreaseButton;
+@property (weak, nonatomic) IBOutlet UIButton *increaseButton;
 - (IBAction)decrease:(id)sender;
 - (IBAction)increase:(id)sender;
 
