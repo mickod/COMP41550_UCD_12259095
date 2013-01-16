@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E61C164616A71A9D00BF8D89 /* PolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = E61C164516A71A9D00BF8D89 /* PolygonView.m */; };
 		E67E900D16A6FA3400A72E94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E900C16A6FA3400A72E94 /* UIKit.framework */; };
 		E67E900F16A6FA3400A72E94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E900E16A6FA3400A72E94 /* Foundation.framework */; };
 		E67E901116A6FA3400A72E94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E901016A6FA3400A72E94 /* CoreGraphics.framework */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E61C164416A71A9D00BF8D89 /* PolygonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolygonView.h; sourceTree = "<group>"; };
+		E61C164516A71A9D00BF8D89 /* PolygonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolygonView.m; sourceTree = "<group>"; };
 		E67E900816A6FA3400A72E94 /* HelloPoly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloPoly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67E900C16A6FA3400A72E94 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E67E900E16A6FA3400A72E94 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -87,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				E67E903016A6FDBA00A72E94 /* PolygonShape.m */,
+				E61C164416A71A9D00BF8D89 /* PolygonView.h */,
+				E61C164516A71A9D00BF8D89 /* PolygonView.m */,
 				E67E902F16A6FDA800A72E94 /* PolygonShape.h */,
 				E67E901B16A6FA3400A72E94 /* AppDelegate.h */,
 				E67E901C16A6FA3400A72E94 /* AppDelegate.m */,
@@ -182,6 +187,7 @@
 				E67E901D16A6FA3400A72E94 /* AppDelegate.m in Sources */,
 				E67E902916A6FA3500A72E94 /* ViewController.m in Sources */,
 				E67E903116A6FDBA00A72E94 /* PolygonShape.m in Sources */,
+				E61C164616A71A9D00BF8D89 /* PolygonView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +270,7 @@
 				GCC_PREFIX_HEADER = "HelloPoly/HelloPoly-Prefix.pch";
 				INFOPLIST_FILE = "HelloPoly/HelloPoly-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -275,6 +282,7 @@
 				GCC_PREFIX_HEADER = "HelloPoly/HelloPoly-Prefix.pch";
 				INFOPLIST_FILE = "HelloPoly/HelloPoly-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -298,6 +306,7 @@
 				E67E902E16A6FA3500A72E94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

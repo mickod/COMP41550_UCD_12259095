@@ -84,16 +84,26 @@ enum SIDE_NUMBERS {
     NSLog(@"increase button handler: number of sides at exit: %i", self.model.numberOfSides);
 }
 
+- (int) numberOfSidesForPolygonView {
+    //This is the implementation of the polygonViewDataProvider protocol method
+    //that the controlled must implement as it declares it implements this protocol
+    NSLog(@"ViewController numberOfSidesForPolygonView %i", self.model.numberOfSides);
+    return self.model.numberOfSides;
+}
+
 - (void) updateUI {
     NSLog(@"updateUI: number of sides: %i", self.model.numberOfSides);
     
     self.numberOfSidesLabel.text = [NSString stringWithFormat:@"%d", self.model.numberOfSides];
+    [self.polygonView setNeedsDisplay];
 }
 
 - (void) viewDidLoad {
+    NSLog(@"ViewController viewDidLoad");
     [super viewDidLoad];
     self.model.numberOfSides = [self.numberOfSidesLabel.text integerValue];
     self.initialButtonTextColor = self.increaseButton.currentTitleColor;
+    [self.polygonView setPolygonViewDelegate:self];
     [self updateUI];
 }
 
