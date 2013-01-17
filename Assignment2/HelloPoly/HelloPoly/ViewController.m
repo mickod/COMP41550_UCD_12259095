@@ -27,14 +27,16 @@ enum SIDE_NUMBERS {
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
-    if ([sender isKindOfClass:[FullScreenViewController class]]) {
+    NSLog(@"ViewController prepareForSegue");
+    if ([[segue identifier] isEqualToString:@"FULL_SCREEN_SEGUE"]) {
         NSLog(@"ViewController prepareForSegue - kind is lScreenViewController");
         FullScreenViewController *destinationVC = segue.destinationViewController;
         destinationVC.model = self.model;
-    } else if ([sender isKindOfClass:[PolyWebViewController class]]) {
+    } else if ([[segue identifier] isEqualToString:@"WEB_VIEW_SEGUE"]) {
         NSLog(@"ViewController prepareForSegue - kind is PolyWebViewController");
         PolyWebViewController *destinationVC = segue.destinationViewController;
         destinationVC.navigationController.navigationBarHidden = NO;
+        destinationVC.model = self.model;
     }
 }
 

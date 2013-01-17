@@ -27,7 +27,12 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden = NO;
-	[self.polyWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"www.bbc.com"]]];
+    NSString *polygonName = [NSString stringWithFormat:@"%@%@", @"http://en.wikipedia.org/wiki/",self.model.name];
+	NSURL * url = [NSURL URLWithString:polygonName];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: url
+                                                           cachePolicy: NSURLRequestReloadIgnoringCacheData
+                                                       timeoutInterval: 10];
+    [self.polyWebView loadRequest:request];
     self.polyWebView.hidden = NO;
     NSLog(@"PolyWebViewController viewDidLoad");
 }

@@ -14,5 +14,6 @@
 @property (readonly,weak) NSString *name;
 
 - (id)initWithNumberOfSides:(int)sides;
+- (NSString *)name;
 
 @end

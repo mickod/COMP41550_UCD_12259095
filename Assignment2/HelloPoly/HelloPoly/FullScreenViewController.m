@@ -24,7 +24,7 @@
 }
 
 - (void) updateUI {
-    NSLog(@"updateUI: number of sides: %i", self.model.numberOfSides);
+    NSLog(@"FullScreenViewController updateUI: number of sides: %i", self.model.numberOfSides);
 
     [self.fullScreenPolygonView setNeedsDisplay];
 }
@@ -42,6 +42,7 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"FullScreenViewController viewDidLoad");
     [super viewDidLoad];
     [self.fullScreenPolygonView setPolygonViewDelegate:self];
 	[self updateUI];

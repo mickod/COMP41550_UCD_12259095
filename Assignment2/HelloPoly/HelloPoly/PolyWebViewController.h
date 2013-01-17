@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PolygonShape.h"
 
 @interface PolyWebViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIWebView *polyWebView;
-
+@property (strong, nonatomic) IBOutlet PolygonShape *model;
 @end

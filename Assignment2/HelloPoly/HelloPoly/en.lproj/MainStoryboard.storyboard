@@ -91,7 +91,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="mmD-5X-zn6" kind="modal" id="jrA-Qk-tux"/>
+                                    <segue destination="mmD-5X-zn6" kind="modal" identifier="FULL_SCREEN_SEGUE" id="jrA-Qk-tux"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -113,7 +113,7 @@
                 <customObject id="D6P-CM-orJ" userLabel="Model" customClass="PolygonShape"/>
                 <tapGestureRecognizer id="4Kx-3u-gmf">
                     <connections>
-                        <segue destination="syc-bq-7FX" kind="push" id="x6B-kG-x0f"/>
+                        <segue destination="syc-bq-7FX" kind="push" identifier="WEB_VIEW_SEGUE" id="ick-Am-lXd"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -127,7 +127,7 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" id="62q-w4-PDT">
+                            <webView contentMode="scaleAspectFit" id="62q-w4-PDT">
                                 <rect key="frame" x="28" y="67" width="272" height="373"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -202,6 +202,43 @@
             <point key="canvasLocation" x="427" y="0.0"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="FullScreenViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FullScreenViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="backButton:"/>
+                <relationship kind="outlet" name="fullScreenPolygonView" candidateClass="PolygonView"/>
+                <relationship kind="outlet" name="model" candidateClass="PolygonShape"/>
+            </relationships>
+        </class>
+        <class className="PolyWebViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PolyWebViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="model" candidateClass="PolygonShape"/>
+                <relationship kind="outlet" name="polyWebView" candidateClass="UIWebView"/>
+            </relationships>
+        </class>
+        <class className="PolygonShape" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PolygonShape.h"/>
+        </class>
+        <class className="PolygonView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PolygonView.h"/>
+        </class>
+        <class className="ViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="decrease:"/>
+                <relationship kind="action" name="increase:"/>
+                <relationship kind="action" name="polygonTappedEvent:"/>
+                <relationship kind="outlet" name="decreaseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="increaseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="model" candidateClass="PolygonShape"/>
+                <relationship kind="outlet" name="numberOfSidesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="polygonName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="polygonView" candidateClass="PolygonView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
