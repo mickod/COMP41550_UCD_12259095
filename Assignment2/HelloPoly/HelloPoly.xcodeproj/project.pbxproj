@@ -20,6 +20,8 @@
 		E67E902616A6FA3500A72E94 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E67E902416A6FA3500A72E94 /* MainStoryboard.storyboard */; };
 		E67E902916A6FA3500A72E94 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E902816A6FA3500A72E94 /* ViewController.m */; };
 		E67E903116A6FDBA00A72E94 /* PolygonShape.m in Sources */ = {isa = PBXBuildFile; fileRef = E67E903016A6FDBA00A72E94 /* PolygonShape.m */; };
+		E6BD1A8616A85983000293D2 /* FullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BD1A8516A85983000293D2 /* FullScreenViewController.m */; };
+		E6DFD91416A878F40095E604 /* PolyWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DFD91316A878F40095E604 /* PolyWebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +45,10 @@
 		E67E902816A6FA3500A72E94 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E67E902F16A6FDA800A72E94 /* PolygonShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PolygonShape.h; sourceTree = "<group>"; };
 		E67E903016A6FDBA00A72E94 /* PolygonShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolygonShape.m; sourceTree = "<group>"; };
+		E6BD1A8416A85983000293D2 /* FullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FullScreenViewController.h; sourceTree = "<group>"; };
+		E6BD1A8516A85983000293D2 /* FullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FullScreenViewController.m; sourceTree = "<group>"; };
+		E6DFD91216A878F40095E604 /* PolyWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyWebViewController.h; sourceTree = "<group>"; };
+		E6DFD91316A878F40095E604 /* PolyWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolyWebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +105,10 @@
 				E67E902716A6FA3500A72E94 /* ViewController.h */,
 				E67E902816A6FA3500A72E94 /* ViewController.m */,
 				E67E901316A6FA3400A72E94 /* Supporting Files */,
+				E6BD1A8416A85983000293D2 /* FullScreenViewController.h */,
+				E6BD1A8516A85983000293D2 /* FullScreenViewController.m */,
+				E6DFD91216A878F40095E604 /* PolyWebViewController.h */,
+				E6DFD91316A878F40095E604 /* PolyWebViewController.m */,
 			);
 			path = HelloPoly;
 			sourceTree = "<group>";
@@ -188,6 +198,8 @@
 				E67E902916A6FA3500A72E94 /* ViewController.m in Sources */,
 				E67E903116A6FDBA00A72E94 /* PolygonShape.m in Sources */,
 				E61C164616A71A9D00BF8D89 /* PolygonView.m in Sources */,
+				E6BD1A8616A85983000293D2 /* FullScreenViewController.m in Sources */,
+				E6DFD91416A878F40095E604 /* PolyWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

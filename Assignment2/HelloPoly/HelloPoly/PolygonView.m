@@ -10,6 +10,7 @@
 
 @interface PolygonView() 
     @property (nonatomic) NSArray* polygonPoints;
+    @property int currentPoints;
     + (NSArray *)pointsForPolygonInRect:(CGRect)rect numberOfSides:(int)numberOfSides;
 @end
 
@@ -44,7 +45,7 @@
 - (void)drawRect:(CGRect)rect
 {
     //Get the number of sides from the controller using a protocol delegate mechanism
-    int numberOfSideFromDelegate = [self.polygonViewDelegate numberOfSidesForPolygonView];
+    int numberOfSideFromDelegate = [self.polygonViewDelegate numberOfSidesForPolygonView:self];
     NSLog(@"PolygonView - drawRect number of sides: %i", numberOfSideFromDelegate);
     if (numberOfSideFromDelegate < 3) return;
     
@@ -70,7 +71,7 @@
         CGContextAddLineToPoint(context, nextPoint.x, nextPoint.y);
     }
     CGContextClosePath(context);
-    CGContextStrokePath(context);
+    CGContextDrawPath(context, kCGPathFillStroke);
 }
 
 @end

@@ -7,12 +7,14 @@
 //
 
 #import "ViewController.h"
+#import "FullScreenViewController.h"
+#import "PolyWebViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) UIColor* initialButtonTextColor;
 @end
 
-@implementation ViewController
+#define POLYGON_NAMES [NSArray arrayWithObjects: @"Henagon",@"Digon", @"Triangle",@"Reactangle", @"Pentagon",@"hexagon",@"Heptagon",@"Octagon",@"Nonagon",@"Decagon",@"Hendecagon",@"DoDecagon",nil]
 
 enum SIDE_NUMBERS {
     MINIMUM_SIDES = 3,
@@ -20,6 +22,21 @@ enum SIDE_NUMBERS {
     LAST_INCREASABLE_SIDES = 11,
     MAXIMUM_SIDES = 12
 };
+
+@implementation ViewController
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([sender isKindOfClass:[FullScreenViewController class]]) {
+        NSLog(@"ViewController prepareForSegue - kind is lScreenViewController");
+        FullScreenViewController *destinationVC = segue.destinationViewController;
+        destinationVC.model = self.model;
+    } else if ([sender isKindOfClass:[PolyWebViewController class]]) {
+        NSLog(@"ViewController prepareForSegue - kind is PolyWebViewController");
+        PolyWebViewController *destinationVC = segue.destinationViewController;
+        destinationVC.navigationController.navigationBarHidden = NO;
+    }
+}
 
 
 - (IBAction)decrease:(UIButton *)sender {
@@ -84,17 +101,26 @@ enum SIDE_NUMBERS {
     NSLog(@"increase button handler: number of sides at exit: %i", self.model.numberOfSides);
 }
 
-- (int) numberOfSidesForPolygonView {
+- (IBAction)polygonTappedEvent:(id)sender {
+   
+}
+
+- (int) numberOfSidesForPolygonView:(PolygonView*)polygonViewDelegator {
     //This is the implementation of the polygonViewDataProvider protocol method
-    //that the controlled must implement as it declares it implements this protocol
+    //that the controller must implement as it declares it implements this protocol
     NSLog(@"ViewController numberOfSidesForPolygonView %i", self.model.numberOfSides);
-    return self.model.numberOfSides;
+    if ([polygonViewDelegator isKindOfClass:[PolygonView class]]) {
+        return self.model.numberOfSides;
+    } else {
+        return 0;
+    }
 }
 
 - (void) updateUI {
     NSLog(@"updateUI: number of sides: %i", self.model.numberOfSides);
     
     self.numberOfSidesLabel.text = [NSString stringWithFormat:@"%d", self.model.numberOfSides];
+    self.polygonName.text = POLYGON_NAMES[self.model.numberOfSides -1];
     [self.polygonView setNeedsDisplay];
 }
 
@@ -105,6 +131,10 @@ enum SIDE_NUMBERS {
     self.initialButtonTextColor = self.increaseButton.currentTitleColor;
     [self.polygonView setPolygonViewDelegate:self];
     [self updateUI];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBarHidden = YES;
 }
 
 - (void) awakeFromNib {

@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class PolygonView;
 
-@protocol polygonViewDataProvider
-- (int) numberOfSidesForPolygonView;
+@protocol PolygonViewDataProvider
+- (int) numberOfSidesForPolygonView:(PolygonView *) polygonViewDelegator;
 @end
 
 @interface PolygonView : UIView
-    @property id <polygonViewDataProvider> polygonViewDelegate;
+    @property id <PolygonViewDataProvider> polygonViewDelegate;
 @end
