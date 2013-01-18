@@ -9,9 +9,11 @@
 #import "ViewController.h"
 #import "FullScreenViewController.h"
 #import "PolyWebViewController.h"
+#import "PolyAnimateViewController.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) UIColor* initialButtonTextColor;
+@property Boolean animationEnabled;
 @end
 
 #define POLYGON_NAMES [NSArray arrayWithObjects: @"Henagon",@"Digon", @"Triangle",@"Reactangle", @"Pentagon",@"hexagon",@"Heptagon",@"Octagon",@"Nonagon",@"Decagon",@"Hendecagon",@"DoDecagon",nil]
@@ -37,9 +39,14 @@ enum SIDE_NUMBERS {
         PolyWebViewController *destinationVC = segue.destinationViewController;
         destinationVC.navigationController.navigationBarHidden = NO;
         destinationVC.model = self.model;
+    } else if ([[segue identifier] isEqualToString:@"ANIMATE_VIEW_SEGUE"]){
+        NSLog(@"ViewController prepareForSegue - kind is PolyAnimateViewController");
+        PolyAnimateViewController *destinationVC = segue.destinationViewController;
+        destinationVC.navigationController.navigationBarHidden = NO;
+        destinationVC.model = self.model;
+        destinationVC.polygonAnimateStateDelegate = self;
     }
 }
-
 
 - (IBAction)decrease:(UIButton *)sender {
     NSLog(@"decrease button handler");
@@ -103,9 +110,14 @@ enum SIDE_NUMBERS {
     NSLog(@"increase button handler: number of sides at exit: %i", self.model.numberOfSides);
 }
 
-- (IBAction)polygonTappedEvent:(id)sender {
-   
+- (IBAction)shapeTapped:(id)sender {
+    //If the shape is tapped then start animation if it is set
+    NSLog(@"ViewController shapeTapped ");
+    if (self.animationEnabled) {
+        [self.polygonView animateNow];
+    } 
 }
+
 
 - (int) numberOfSidesForPolygonView:(PolygonView*)polygonViewDelegator {
     //This is the implementation of the polygonViewDataProvider protocol method
@@ -116,6 +128,20 @@ enum SIDE_NUMBERS {
     } else {
         return 0;
     }
+}
+
+- (void) setAnimation:(Boolean) setAnimationFlag: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //that the controller must implement.
+    NSLog(@"ViewController setAnimation ");
+    self.animationEnabled = setAnimationFlag;
+}
+
+- (Boolean) getCurrentAnimationState: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the current animation enabled state that the controller must implement.
+    NSLog(@"ViewController getCurrentAnimationState ");
+    return self.animationEnabled;
 }
 
 - (void) updateUI {
@@ -132,11 +158,13 @@ enum SIDE_NUMBERS {
     self.model.numberOfSides = [self.numberOfSidesLabel.text integerValue];
     self.initialButtonTextColor = self.increaseButton.currentTitleColor;
     [self.polygonView setPolygonViewDelegate:self];
+    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+    self.animationEnabled = NO;
     [self updateUI];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
-    self.navigationController.navigationBarHidden = YES;
+    self.navigationController.navigationBarHidden = NO;
 }
 
 - (void) awakeFromNib {

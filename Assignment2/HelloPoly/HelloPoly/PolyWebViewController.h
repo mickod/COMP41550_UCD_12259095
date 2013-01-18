@@ -11,5 +11,5 @@
 
 @interface PolyWebViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIWebView *polyWebView;
-@property (strong, nonatomic) IBOutlet PolygonShape *model;
+@property (strong, nonatomic) PolygonShape *model;
 @end

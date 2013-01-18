@@ -7,6 +7,7 @@
 //
 
 #import "PolygonView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PolygonView() 
     @property (nonatomic) NSArray* polygonPoints;
@@ -72,6 +73,125 @@
     }
     CGContextClosePath(context);
     CGContextDrawPath(context, kCGPathFillStroke);
+}
+
+
+- (void) animateNow {
+    
+    //Get the number of sides from the controller using a protocol delegate mechanism
+    NSLog(@"PolygonView - animateNow");
+    int numberOfSideFromDelegate = [self.polygonViewDelegate numberOfSidesForPolygonView:self];
+    if (numberOfSideFromDelegate < 3) return;
+    
+    //Generate the new polygon point array
+    NSArray *polygonPoints = [PolygonView pointsForPolygonInRect:self.bounds
+                                                   numberOfSides:numberOfSideFromDelegate];
+    
+    //Setup the path for the animation - this is very similar as the code the draw the line
+    //instead of drawing to the graphics context, instead we draw lines on a CGPathRef
+    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    CGPoint firstPoint = [polygonPoints[0] CGPointValue];
+    CGPathMoveToPoint(curvedPath, NULL, firstPoint.x, firstPoint.y);
+    for (id pointObject in polygonPoints) {
+        //get the CGPoint from the object
+        CGPoint nextPoint = [pointObject CGPointValue];
+        NSLog(@"curvedPath - drawRect point x %f", nextPoint.x);
+        NSLog(@"curvedPath - drawRect point y %f", nextPoint.y);
+        CGPathMoveToPoint(curvedPath, NULL, nextPoint.x, nextPoint.y);
+    }
+    
+    CAKeyframeAnimation *moveAlongPath = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    [moveAlongPath setPath:curvedPath]; // As a CGPath
+    
+    [moveAlongPath setDuration:5.0];
+    
+    //We will now draw a circle at the start of the path which we will animate to follow the path
+    //We use the same technique as before to draw to a bitmap context and then eventually create
+    //a UIImageView which we add to our view
+    UIGraphicsBeginImageContext(CGSizeMake(20,20));
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    //Set context variables
+    CGContextSetLineWidth(ctx, 1.5);
+    CGContextSetFillColorWithColor(ctx, [UIColor greenColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+    //Draw a circle - and paint it with a different outline (white) and fill color (green)
+    CGContextAddEllipseInRect(ctx, CGRectMake(1, 1, 18, 18));
+    CGContextDrawPath(ctx, kCGPathFillStroke);
+    UIImage *circle = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIImageView *circleView = [[UIImageView alloc] initWithImage:circle];
+    circleView.frame = CGRectMake(1, 1, 20, 20);
+    [self addSubview:circleView];
+    
+    [[circleView layer] addAnimation:moveAlongPath forKey:@"animatePolyGon"];
+}
+
+
+- (void) animateNowOLDOLDOLD {
+    
+    //Get the number of sides from the controller using a protocol delegate mechanism
+    NSLog(@"PolygonView - animateNow");
+    int numberOfSideFromDelegate = [self.polygonViewDelegate numberOfSidesForPolygonView:self];
+    if (numberOfSideFromDelegate < 3) return;
+    
+    //Generate the new polygon point array
+    NSArray *polygonPoints = [PolygonView pointsForPolygonInRect:self.bounds
+                                                   numberOfSides:numberOfSideFromDelegate];
+    
+    //Prepare the animation - we use keyframe animation for animations of this complexity
+    CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+    //Set some variables on the animation
+    pathAnimation.calculationMode = kCAAnimationPaced;
+    //We want the animation to persist - not so important in this case - but kept for clarity
+    //If we animated something from left to right - and we wanted it to stay in the new position,
+    //then we would need these parameters
+    pathAnimation.fillMode = kCAFillModeForwards;
+    pathAnimation.removedOnCompletion = NO;
+    pathAnimation.duration = 5.0;
+    //Lets loop continuously for the demonstration
+    pathAnimation.repeatCount = 1000;
+    
+    //Setup the path for the animation - this is very similar as the code the draw the line
+    //instead of drawing to the graphics context, instead we draw lines on a CGPathRef
+    CGMutablePathRef curvedPath = CGPathCreateMutable();
+    CGPoint firstPoint = [polygonPoints[0] CGPointValue];
+    CGPathMoveToPoint(curvedPath, NULL, firstPoint.x, firstPoint.y);
+    for (id pointObject in polygonPoints) {
+        //get the CGPoint from the object
+        CGPoint nextPoint = [pointObject CGPointValue];
+        NSLog(@"PolygonView - drawRect point x %f", nextPoint.x);
+        NSLog(@"PolygonView - drawRect point y %f", nextPoint.y);
+        CGPathMoveToPoint(curvedPath, NULL, nextPoint.x, nextPoint.y);
+    }
+    
+    //Now we have the path, we tell the animation we want to use this path - then we release
+    //the path
+    pathAnimation.path = curvedPath;
+    CGPathRelease(curvedPath);
+    
+    //We will now draw a circle at the start of the path which we will animate to follow the path
+    //We use the same technique as before to draw to a bitmap context and then eventually create
+    //a UIImageView which we add to our view
+    UIGraphicsBeginImageContext(CGSizeMake(20,20));
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    //Set context variables
+    CGContextSetLineWidth(ctx, 1.5);
+    CGContextSetFillColorWithColor(ctx, [UIColor greenColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor whiteColor].CGColor);
+    //Draw a circle - and paint it with a different outline (white) and fill color (green)
+    CGContextAddEllipseInRect(ctx, CGRectMake(1, 1, 18, 18));
+    CGContextDrawPath(ctx, kCGPathFillStroke);
+    UIImage *circle = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    UIImageView *circleView = [[UIImageView alloc] initWithImage:circle];
+    circleView.frame = CGRectMake(1, 1, 20, 20);
+    [self addSubview:circleView];
+    
+    //Add the animation to the circleView - once you add the animation to the layer, the animation starts
+    [circleView.layer addAnimation:pathAnimation forKey:@"moveTheSquare"];
+
 }
 
 @end

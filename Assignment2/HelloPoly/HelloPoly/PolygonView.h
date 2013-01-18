@@ -15,4 +15,5 @@
 
 @interface PolygonView : UIView
     @property id <PolygonViewDataProvider> polygonViewDelegate;
+- (void) animateNow;
 @end
