@@ -26,6 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.polyWebView.scalesPageToFit = YES;
     self.navigationController.navigationBarHidden = NO;
     NSString *polygonName = [NSString stringWithFormat:@"%@%@", @"http://en.wikipedia.org/wiki/",self.model.name];
 	NSURL * url = [NSURL URLWithString:polygonName];
