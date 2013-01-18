@@ -10,6 +10,7 @@
 		E61C164616A71A9D00BF8D89 /* PolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = E61C164516A71A9D00BF8D89 /* PolygonView.m */; };
 		E6538D1F16A9B16100985806 /* PolyAnimateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6538D1E16A9B16100985806 /* PolyAnimateViewController.m */; };
 		E6538D2216A9BF3200985806 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6538D2116A9BF3200985806 /* QuartzCore.framework */; };
+		E6538D2416A9E49C00985806 /* mouse1.png in Resources */ = {isa = PBXBuildFile; fileRef = E6538D2316A9E49C00985806 /* mouse1.png */; };
 		E67E900D16A6FA3400A72E94 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E900C16A6FA3400A72E94 /* UIKit.framework */; };
 		E67E900F16A6FA3400A72E94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E900E16A6FA3400A72E94 /* Foundation.framework */; };
 		E67E901116A6FA3400A72E94 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E67E901016A6FA3400A72E94 /* CoreGraphics.framework */; };
@@ -32,6 +33,7 @@
 		E6538D1D16A9B16100985806 /* PolyAnimateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolyAnimateViewController.h; sourceTree = "<group>"; };
 		E6538D1E16A9B16100985806 /* PolyAnimateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PolyAnimateViewController.m; sourceTree = "<group>"; };
 		E6538D2116A9BF3200985806 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E6538D2316A9E49C00985806 /* mouse1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mouse1.png; sourceTree = "<group>"; };
 		E67E900816A6FA3400A72E94 /* HelloPoly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloPoly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67E900C16A6FA3400A72E94 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E67E900E16A6FA3400A72E94 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -125,6 +127,7 @@
 		E67E901316A6FA3400A72E94 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E6538D2316A9E49C00985806 /* mouse1.png */,
 				E67E901416A6FA3400A72E94 /* HelloPoly-Info.plist */,
 				E67E901516A6FA3400A72E94 /* InfoPlist.strings */,
 				E67E901816A6FA3400A72E94 /* main.m */,
@@ -192,6 +195,7 @@
 				E67E902116A6FA3500A72E94 /* Default@2x.png in Resources */,
 				E67E902316A6FA3500A72E94 /* Default-568h@2x.png in Resources */,
 				E67E902616A6FA3500A72E94 /* MainStoryboard.storyboard in Resources */,
+				E6538D2416A9E49C00985806 /* mouse1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
