@@ -11,13 +11,20 @@
 #define MAX_SIDES 12
 #define MIN_SIDES 3
 
+#define USER_DEFAULT_POLYGON_SIDES @"USER_DEFAULT_POLYGON_SIDES"
 
 @implementation PolygonShape
 
 @synthesize numberOfSides = _numberOfSides;
 
-- (id)init {
-	return [self initWithNumberOfSides:5];
+- (id)init {    
+    //Load the number of sides from the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.numberOfSides = [userDefaults integerForKey:USER_DEFAULT_POLYGON_SIDES];
+    if (self.numberOfSides < 3 || self.numberOfSides > 12) {
+        self.numberOfSides = 5;
+    }
+	return [self initWithNumberOfSides:self.numberOfSides];
 }
 
 - (id)initWithNumberOfSides:(int)sides {
@@ -36,6 +43,13 @@
 		return;
 	}
 	_numberOfSides = numberOfSides;
+    
+    //Store number of sides in user defaults
+    //Save key values in the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setInteger:self.numberOfSides
+                   forKey:USER_DEFAULT_POLYGON_SIDES];
+    [userDefaults synchronize];
 }
 
 - (NSString *)name {

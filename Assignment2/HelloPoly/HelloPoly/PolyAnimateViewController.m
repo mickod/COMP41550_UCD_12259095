@@ -34,6 +34,8 @@
     //Get the correct value of the animate switch from the delegate
     NSLog(@"PolyAnimateViewController viewDidLoad");
     [self.animateSwitch setOn: [self.polygonAnimateStateDelegate getCurrentAnimationState:self]  animated:YES];
+    self.animationDurationSlider.value = [self.polygonAnimateStateDelegate getCurrentAnimationDuration:self];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,6 +50,10 @@
     [self.polygonAnimateStateDelegate setAnimation:[sender isOn] :(self)];
 }
 
-- (IBAction)animateSpeedSetEvent:(id)sender {
+- (IBAction)animateSpeedSetEvent:(UISlider*)sender {
+    
+    NSLog(@"PolyAnimateViewController animateSliderEvent");
+    [self.polygonAnimateStateDelegate setAnimationDuration:sender.value :(self)];
+    
 }
 @end

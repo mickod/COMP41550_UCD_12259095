@@ -14,9 +14,13 @@
 @interface ViewController ()
 @property (weak, nonatomic) UIColor* initialButtonTextColor;
 @property Boolean animationEnabled;
+@property float animationDuration;
 @end
 
 #define POLYGON_NAMES [NSArray arrayWithObjects: @"Henagon",@"Digon", @"Triangle",@"Reactangle", @"Pentagon",@"hexagon",@"Heptagon",@"Octagon",@"Nonagon",@"Decagon",@"Hendecagon",@"DoDecagon",nil]
+
+#define USER_DEFAULT_ANIMATION_ENABLED @"USER_DEFAULT_ANIMATION_ENABLED"
+#define USER_DEFAULT_ANIMATION_DURATION @"USER_DEFAULT_ANIMATION_DURATION"
 
 enum SIDE_NUMBERS {
     MINIMUM_SIDES = 3,
@@ -31,9 +35,10 @@ enum SIDE_NUMBERS {
     
     NSLog(@"ViewController prepareForSegue");
     if ([[segue identifier] isEqualToString:@"FULL_SCREEN_SEGUE"]) {
-        NSLog(@"ViewController prepareForSegue - kind is lScreenViewController");
+        NSLog(@"ViewController prepareForSegue - kind is FullScreenViewController");
         FullScreenViewController *destinationVC = segue.destinationViewController;
         destinationVC.model = self.model;
+        destinationVC.fullSreenViewControllerDelegate = self;
     } else if ([[segue identifier] isEqualToString:@"WEB_VIEW_SEGUE"]) {
         NSLog(@"ViewController prepareForSegue - kind is PolyWebViewController");
         PolyWebViewController *destinationVC = segue.destinationViewController;
@@ -120,7 +125,6 @@ enum SIDE_NUMBERS {
     } 
 }
 
-
 - (int) numberOfSidesForPolygonView:(PolygonView*)polygonViewDelegator {
     //This is the implementation of the polygonViewDataProvider protocol method
     //that the controller must implement as it declares it implements this protocol
@@ -134,9 +138,27 @@ enum SIDE_NUMBERS {
 
 - (void) setAnimation:(Boolean) setAnimationFlag: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
-    //that the controller must implement.
+    //that the controller must implement to set the animation flag.
     NSLog(@"ViewController setAnimation ");
     self.animationEnabled = setAnimationFlag;
+    //Save key values in the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:self.animationEnabled
+                   forKey:USER_DEFAULT_ANIMATION_ENABLED];
+    [userDefaults synchronize];
+}
+
+- (void) setAnimationDuration:(float)animateDurationSetting :(PolyAnimateViewController *)protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //that the controller must implement to set the anmation duration
+    NSLog(@"ViewController setAnimationSpeed ");
+    self.animationDuration = animateDurationSetting;
+    
+    //Save key values in the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setFloat:self.animationDuration
+                    forKey:USER_DEFAULT_ANIMATION_DURATION];
+    [userDefaults synchronize];
 }
 
 - (Boolean) getCurrentAnimationState: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
@@ -146,11 +168,29 @@ enum SIDE_NUMBERS {
     return self.animationEnabled;
 }
 
+- (float) getCurrentAnimationDuration: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the current animation duration value.
+    NSLog(@"ViewController getCurrentAnimationDuration ");
+    return self.animationDuration;
+}
+
 - (NSString*) getAnimationImageFileName:(PolygonView *) polygonViewDelegator {
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
     //to provide the animation image.
     NSLog(@"ViewController getCurrentAnimationState ");
     return nil;
+}
+
+- (float) getAnimationDuartionForView:(PolygonView *) polygonViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation duration to the view.
+    NSLog(@"ViewController getAnimationDuration ");
+    return self.animationDuration;
+}
+
+- (float) getAnimationDurationFromDelegateController:(FullScreenViewController*) fullViewScreenDelegate {
+    return self.animationDuration;
 }
 
 - (void) updateUI {
@@ -164,16 +204,21 @@ enum SIDE_NUMBERS {
 - (void) viewDidLoad {
     NSLog(@"ViewController viewDidLoad");
     [super viewDidLoad];
-    self.model.numberOfSides = [self.numberOfSidesLabel.text integerValue];
     self.initialButtonTextColor = self.increaseButton.currentTitleColor;
     [self.polygonView setPolygonViewDelegate:self];
     self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     self.animationEnabled = NO;
+    self.animationDuration = 5;
     [self updateUI];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBarHidden = NO;
+    
+    //Load the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.animationEnabled = [userDefaults boolForKey:USER_DEFAULT_ANIMATION_ENABLED];
+    self.animationDuration = [userDefaults floatForKey:USER_DEFAULT_ANIMATION_DURATION];
 }
 
 - (void) awakeFromNib {

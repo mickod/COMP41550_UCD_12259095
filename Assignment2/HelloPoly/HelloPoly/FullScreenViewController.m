@@ -47,6 +47,14 @@
     return nil;
 }
 
+
+- (float) getAnimationDuartionForView:(PolygonView *) polygonViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation duration to the view.
+    NSLog(@"ViewController getAnimationDuration ");
+    return [self.fullSreenViewControllerDelegate getAnimationDurationFromDelegateController:self];
+}
+
 - (void)viewDidLoad
 {
     NSLog(@"FullScreenViewController viewDidLoad");

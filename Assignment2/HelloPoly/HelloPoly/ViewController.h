@@ -10,9 +10,10 @@
 #import "PolygonShape.h"
 #import "PolygonView.h"
 #import "PolyAnimateViewController.h"
+#import "FullScreenViewController.h"
 
 
-@interface ViewController : UIViewController <PolygonViewDataProvider, PolygonAnimateViewProtocol>
+@interface ViewController : UIViewController <PolygonViewDataProvider, PolygonAnimateViewProtocol, FullScreenViewControllerDataProviderProtocol>
 @property (weak, nonatomic) IBOutlet UILabel *numberOfSidesLabel;
 @property (strong, nonatomic) PolygonShape *model;
 @property (strong, nonatomic) IBOutlet UIButton *decreaseButton;
@@ -22,6 +23,4 @@
 - (IBAction)decrease:(id)sender;
 - (IBAction)increase:(id)sender;
 - (IBAction)shapeTapped:(id)sender;
-
-
 @end

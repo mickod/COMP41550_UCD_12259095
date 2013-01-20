@@ -12,6 +12,7 @@
 @protocol PolygonViewDataProvider
 - (int) numberOfSidesForPolygonView:(PolygonView *) polygonViewDelegator;
 - (NSString*) getAnimationImageFileName:(PolygonView *) polygonViewDelegator;
+- (float) getAnimationDuartionForView:(PolygonView *) polygonViewDelegator;
 @end
 
 @interface PolygonView : UIView

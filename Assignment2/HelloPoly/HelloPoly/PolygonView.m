@@ -88,7 +88,7 @@
     
     //Use key frame animation (whihc uses the Quartz framework)
     CAKeyframeAnimation *pathAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
-    pathAnimation.duration = 5.0;
+    pathAnimation.duration = [self.polygonViewDelegate getAnimationDuartionForView:self];
     pathAnimation.removedOnCompletion = YES;
     
     //Setup the path for the animation - note to self.. - you must start with a point and

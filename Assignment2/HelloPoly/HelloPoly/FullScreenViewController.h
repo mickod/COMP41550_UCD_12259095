@@ -10,9 +10,16 @@
 #import "PolygonShape.h"
 #import "PolygonView.h"
 
+@class FullScreenViewController;
+
+@protocol FullScreenViewControllerDataProviderProtocol <NSObject>
+
+- (float) getAnimationDurationFromDelegateController:(FullScreenViewController*) fullScreenViewControllerDelegate;
+@end
+
 @interface FullScreenViewController : UIViewController <PolygonViewDataProvider>
 @property (strong, nonatomic) IBOutlet PolygonShape *model;
 @property (strong, nonatomic) IBOutlet PolygonView *fullScreenPolygonView;
 - (IBAction)backButton:(id)sender;
-
+@property id <FullScreenViewControllerDataProviderProtocol> fullSreenViewControllerDelegate;
 @end

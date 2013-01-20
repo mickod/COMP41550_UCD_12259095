@@ -13,7 +13,11 @@
 @protocol PolygonAnimateViewProtocol
 - (void) setAnimation:(Boolean) animateState: (PolyAnimateViewController *)
 polygonAnimateStateDelegator;
+- (void) setAnimationDuration:(float) animateState: (PolyAnimateViewController *)
+polygonAnimateStateDelegator;
 - (Boolean) getCurrentAnimationState: (PolyAnimateViewController *)
+polygonAnimateStateDelegator;
+- (float) getCurrentAnimationDuration: (PolyAnimateViewController *)
 polygonAnimateStateDelegator;
 @end
 
@@ -21,6 +25,7 @@ polygonAnimateStateDelegator;
 @property (strong, nonatomic) PolygonShape *model;
 @property id <PolygonAnimateViewProtocol> polygonAnimateStateDelegate;
 @property (weak, nonatomic) IBOutlet UISwitch *animateSwitch;
+@property (weak, nonatomic) IBOutlet UISlider *animationDurationSlider;
 - (IBAction)animateSwitchEvent:(UISwitch*)sender;
-- (IBAction)animateSpeedSetEvent:(id)sender;
+- (IBAction)animateSpeedSetEvent:(UISlider*)sender;
 @end
