@@ -15,6 +15,7 @@
 @protocol FullScreenViewControllerDataProviderProtocol <NSObject>
 
 - (float) getAnimationDurationFromDelegateController:(FullScreenViewController*) fullScreenViewControllerDelegate;
+- (NSString*) getAnimationImageFileNameFromDelegateController:(FullScreenViewController*) fullScreenViewControllerDelegate;
 @end
 
 @interface FullScreenViewController : UIViewController <PolygonViewDataProvider>

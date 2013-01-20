@@ -8,6 +8,9 @@
 
 #import "PolyAnimateViewController.h"
 
+#define MOUSE_IMAGE_NAME @"Mouse"
+#define MOUSE_IMAGE_FILENAME @"mouse1.png"
+
 @interface PolyAnimateViewController ()
 @end
 
@@ -35,13 +38,35 @@
     NSLog(@"PolyAnimateViewController viewDidLoad");
     [self.animateSwitch setOn: [self.polygonAnimateStateDelegate getCurrentAnimationState:self]  animated:YES];
     self.animationDurationSlider.value = [self.polygonAnimateStateDelegate getCurrentAnimationDuration:self];
+    [ self setImageSelectorSelectedSegment];
     
+}
+
+- (void) setImageSelectorSelectedSegment {
+    //Set the selctor index based on the name of the current selected animation image
+    NSString *currentImageName = [self.polygonAnimateStateDelegate getCurrentAnimationImageName:self];
+    
+    //A better method to map the name to the index and visa versa would be a good idea but this will
+    //do for the purposes of this exercise
+    for (int i=0; i<[self.imageSelectorSegmentControl.subviews count]; i++)
+    {
+        if ([[self.imageSelectorSegmentControl titleForSegmentAtIndex:i] isEqualToString:currentImageName] )
+        {
+            self.imageSelectorSegmentControl.selectedSegmentIndex = i;
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)imageSelectorEvent:(UISegmentedControl *)sender {
+    
+    NSLog(@"PolyAnimateViewController imageSelectorEvent");
+    [self.polygonAnimateStateDelegate setAnimationImageName:[sender titleForSegmentAtIndex:sender.selectedSegmentIndex] :(self)];
 }
 
 - (IBAction)animateSwitchEvent:(UISwitch*)sender {

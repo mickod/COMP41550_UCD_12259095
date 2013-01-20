@@ -14,18 +14,24 @@
 - (void) setAnimation:(Boolean) animateState: (PolyAnimateViewController *)
 polygonAnimateStateDelegator;
 - (void) setAnimationDuration:(float) animateState: (PolyAnimateViewController *)
-polygonAnimateStateDelegator;
+polygonAnimateControllerDelegator;
 - (Boolean) getCurrentAnimationState: (PolyAnimateViewController *)
-polygonAnimateStateDelegator;
+polygonAnimateControllerDelegator;
 - (float) getCurrentAnimationDuration: (PolyAnimateViewController *)
-polygonAnimateStateDelegator;
+polygonAnimateControllerDelegator;
+- (void) setAnimationImageName:(NSString*) imageName: (PolyAnimateViewController *)
+polygonAnimateControllerDelegator;
+- (NSString*) getCurrentAnimationImageName: (PolyAnimateViewController *)
+polygonAnimateControllerDelegator;
 @end
 
 @interface PolyAnimateViewController : UIViewController
 @property (strong, nonatomic) PolygonShape *model;
 @property id <PolygonAnimateViewProtocol> polygonAnimateStateDelegate;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *imageSelectorSegmentControl;
 @property (weak, nonatomic) IBOutlet UISwitch *animateSwitch;
 @property (weak, nonatomic) IBOutlet UISlider *animationDurationSlider;
+- (IBAction)imageSelectorEvent:(UISegmentedControl *)sender;
 - (IBAction)animateSwitchEvent:(UISwitch*)sender;
 - (IBAction)animateSpeedSetEvent:(UISlider*)sender;
 @end

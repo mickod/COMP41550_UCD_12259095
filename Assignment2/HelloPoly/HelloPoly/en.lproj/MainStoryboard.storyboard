@@ -164,7 +164,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DdO-H0-d8f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689" y="39"/>
+            <point key="canvasLocation" x="1161" y="-33"/>
         </scene>
         <!--Poly Animate View Controller - Animation Settings-->
         <scene sceneID="eqa-Sz-bFR">
@@ -227,6 +227,9 @@
                                     <segment title="Mouse"/>
                                     <segment title="Circle"/>
                                 </segments>
+                                <connections>
+                                    <action selector="imageSelectorEvent:" destination="Ood-cr-dbY" eventType="valueChanged" id="9kJ-ld-Iey"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1 sec" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wah-PS-4q1">
                                 <rect key="frame" x="118" y="116" width="41" height="21"/>
@@ -250,11 +253,12 @@
                     <connections>
                         <outlet property="animateSwitch" destination="kVI-D0-cgS" id="uIg-B5-kna"/>
                         <outlet property="animationDurationSlider" destination="Su0-aq-7gJ" id="rfJ-bt-heK"/>
+                        <outlet property="imageSelectorSegmentControl" destination="412-nV-Jz7" id="Dnq-6g-7Yb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d24-3L-J4E" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="443" y="599"/>
+            <point key="canvasLocation" x="707" y="379"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gap-v4-b7F">
@@ -270,7 +274,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w98-xe-uSo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="46"/>
+            <point key="canvasLocation" x="-438" y="12"/>
         </scene>
         <!--Full Screen View Controller-->
         <scene sceneID="eEI-Kp-dyW">
@@ -310,7 +314,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i9D-01-0G4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689" y="-584"/>
+            <point key="canvasLocation" x="729" y="-484"/>
         </scene>
     </scenes>
     <classes>
@@ -327,8 +331,10 @@
             <relationships>
                 <relationship kind="action" name="animateSpeedSetEvent:" candidateClass="UISlider"/>
                 <relationship kind="action" name="animateSwitchEvent:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="imageSelectorEvent:" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="animateSwitch" candidateClass="UISwitch"/>
                 <relationship kind="outlet" name="animationDurationSlider" candidateClass="UISlider"/>
+                <relationship kind="outlet" name="imageSelectorSegmentControl" candidateClass="UISegmentedControl"/>
             </relationships>
         </class>
         <class className="PolyWebViewController" superclassName="UIViewController">

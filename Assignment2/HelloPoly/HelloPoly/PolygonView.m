@@ -129,7 +129,7 @@
         UIGraphicsEndImageContext();
     } else {
         //load an image from a fileName based on the name from the delegate
-        animationImage = [UIImage imageNamed:@"mouse1.png"];
+        animationImage = [UIImage imageNamed:[self.polygonViewDelegate getAnimationImageFileName:self]];
     }
     self.animationImageView = [[UIImageView alloc] initWithImage:animationImage];
     self.animationImageView.layer.position = firstPoint;

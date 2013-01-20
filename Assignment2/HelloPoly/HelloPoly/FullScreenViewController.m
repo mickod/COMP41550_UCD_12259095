@@ -8,6 +8,9 @@
 
 #import "FullScreenViewController.h"
 
+#define MOUSE_IMAGE_NAME @"Mouse"
+#define MOUSE_IMAGE_FILENAME @"mouse1.png"
+
 @interface FullScreenViewController ()
 
 @end
@@ -44,7 +47,7 @@
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
     //to provide the animation image.
     NSLog(@"ViewController getCurrentAnimationState ");
-    return nil;
+    return [self.fullSreenViewControllerDelegate getAnimationImageFileNameFromDelegateController:self];
 }
 
 
@@ -71,7 +74,7 @@
 
 - (IBAction)backButton:(id)sender {
     
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:NO completion:nil];
     
 }
 @end

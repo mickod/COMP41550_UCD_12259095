@@ -15,12 +15,17 @@
 @property (weak, nonatomic) UIColor* initialButtonTextColor;
 @property Boolean animationEnabled;
 @property float animationDuration;
+@property NSString *animationImageName;
 @end
 
 #define POLYGON_NAMES [NSArray arrayWithObjects: @"Henagon",@"Digon", @"Triangle",@"Reactangle", @"Pentagon",@"hexagon",@"Heptagon",@"Octagon",@"Nonagon",@"Decagon",@"Hendecagon",@"DoDecagon",nil]
 
 #define USER_DEFAULT_ANIMATION_ENABLED @"USER_DEFAULT_ANIMATION_ENABLED"
 #define USER_DEFAULT_ANIMATION_DURATION @"USER_DEFAULT_ANIMATION_DURATION"
+#define USER_DEFAULT_ANIMATION_IMAGE_NAME @"USER_DEFAULT_ANIMATION_IMAGE_NAME"
+#define MOUSE_IMAGE_NAME @"Mouse"
+#define MOUSE_IMAGE_FILENAME @"mouse1.png"
+
 
 enum SIDE_NUMBERS {
     MINIMUM_SIDES = 3,
@@ -161,6 +166,26 @@ enum SIDE_NUMBERS {
     [userDefaults synchronize];
 }
 
+- (void) setAnimationImageName:(NSString*)animationImageName :(PolyAnimateViewController *)protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //that the controller must implement to set the anmation image
+    NSLog(@"ViewController setAnimationSpeed ");
+    self.animationImageName = animationImageName;
+    
+    //Save key values in the user defaults
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setValue:self.animationImageName
+                    forKey:USER_DEFAULT_ANIMATION_IMAGE_NAME];
+    [userDefaults synchronize];
+}
+
+- (NSString*) getCurrentAnimationImageName: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the current animation image name.
+    NSLog(@"ViewController getCurrentAnimationImageName ");
+    return self.animationImageName;
+}
+
 - (Boolean) getCurrentAnimationState: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
     //to provide the current animation enabled state.
@@ -178,8 +203,8 @@ enum SIDE_NUMBERS {
 - (NSString*) getAnimationImageFileName:(PolygonView *) polygonViewDelegator {
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
     //to provide the animation image.
-    NSLog(@"ViewController getCurrentAnimationState ");
-    return nil;
+    NSLog(@"ViewController getAnimationImageFileName ");
+    return [self getImageFileName];
 }
 
 - (float) getAnimationDuartionForView:(PolygonView *) polygonViewDelegator {
@@ -190,7 +215,25 @@ enum SIDE_NUMBERS {
 }
 
 - (float) getAnimationDurationFromDelegateController:(FullScreenViewController*) fullViewScreenDelegate {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation duration to the full screen view.
     return self.animationDuration;
+}
+
+- (NSString*) getAnimationImageFileNameFromDelegateController:(FullScreenViewController*) fullViewScreenDelegate {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation Image Name to the full screen view.
+    return [self getImageFileName];
+}
+
+- (NSString*) getImageFileName {
+    //Utility method to get the Image File name
+    NSLog(@"ViewController getImageFileName ");
+    if ( [self.animationImageName isEqualToString:MOUSE_IMAGE_NAME]) {
+        return MOUSE_IMAGE_FILENAME;
+    } else {
+        return nil;
+    }
 }
 
 - (void) updateUI {
@@ -219,6 +262,7 @@ enum SIDE_NUMBERS {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.animationEnabled = [userDefaults boolForKey:USER_DEFAULT_ANIMATION_ENABLED];
     self.animationDuration = [userDefaults floatForKey:USER_DEFAULT_ANIMATION_DURATION];
+    self.animationImageName = [userDefaults valueForKey:USER_DEFAULT_ANIMATION_IMAGE_NAME];
 }
 
 - (void) awakeFromNib {
