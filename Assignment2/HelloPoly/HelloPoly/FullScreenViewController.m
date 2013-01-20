@@ -25,7 +25,7 @@
 
 - (void) updateUI {
     NSLog(@"FullScreenViewController updateUI: number of sides: %i", self.model.numberOfSides);
-
+    [self.fullScreenPolygonView animateNow];
     [self.fullScreenPolygonView setNeedsDisplay];
 }
 
@@ -38,6 +38,13 @@
     } else {
         return 0;
     }
+}
+
+- (NSString*) getAnimationImageFileName:(PolygonView *) polygonViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation image.
+    NSLog(@"ViewController getCurrentAnimationState ");
+    return nil;
 }
 
 - (void)viewDidLoad

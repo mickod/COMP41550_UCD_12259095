@@ -50,6 +50,7 @@ enum SIDE_NUMBERS {
 
 - (IBAction)decrease:(UIButton *)sender {
     NSLog(@"decrease button handler");
+    [self.polygonView stopAnimation];
     
     //Do not allow decrease below 3 and disable decrease button
     //if sides are at 4, before decreasing number of sides
@@ -81,6 +82,7 @@ enum SIDE_NUMBERS {
 
 - (IBAction)increase:(UIButton *)sender {
     NSLog(@"increase button handler");
+    [self.polygonView stopAnimation];
     
     //Do not allow increase above 12 and disable increase button
     //if sides are at 11, before increasing number of sides
@@ -139,9 +141,16 @@ enum SIDE_NUMBERS {
 
 - (Boolean) getCurrentAnimationState: (PolyAnimateViewController *) protocolpolyAnimateViewDelegator {
     //This is the implementation of the PolygonAnimateViewProtocol protocol method
-    //to provide the current animation enabled state that the controller must implement.
+    //to provide the current animation enabled state.
     NSLog(@"ViewController getCurrentAnimationState ");
     return self.animationEnabled;
+}
+
+- (NSString*) getAnimationImageFileName:(PolygonView *) polygonViewDelegator {
+    //This is the implementation of the PolygonAnimateViewProtocol protocol method
+    //to provide the animation image.
+    NSLog(@"ViewController getCurrentAnimationState ");
+    return nil;
 }
 
 - (void) updateUI {
