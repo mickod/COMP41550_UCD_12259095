@@ -117,6 +117,10 @@
     if ( !imageName ) {
         //Delegate returned nil so use the default which is a self drawn circle. Circle drawing is
         //from: http://www.devedup.com/index.php/2010/03/03/iphone-animate-an-object-along-a-path/
+        //The rest of the animation was developed from workign through several examples inclduing
+        //the one above and then building a solution specific to this project. Most of the complexity
+        //is in debugging and in the construction of the path (in particular it is useful to note
+        //that CGPathMoveToPoint starts a new path every time it is called).
         UIGraphicsBeginImageContext(CGSizeMake(20,20));
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGContextSetLineWidth(ctx, 1.5);
