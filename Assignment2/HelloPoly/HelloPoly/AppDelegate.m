@@ -8,11 +8,25 @@
 
 #import "AppDelegate.h"
 
+#define USER_DEFAULT_ANIMATION_ENABLED @"USER_DEFAULT_ANIMATION_ENABLED"
+#define USER_DEFAULT_ANIMATION_DURATION @"USER_DEFAULT_ANIMATION_DURATION"
+#define USER_DEFAULT_ANIMATION_IMAGE_NAME @"USER_DEFAULT_ANIMATION_IMAGE_NAME"
+#define USER_DEFAULT_POLYGON_SIDES @"USER_DEFAULT_POLYGON_SIDES"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    //Set the default user defaults
+    NSUserDefaults *userDefaultsDefaultValues = [NSUserDefaults standardUserDefaults];
+    [userDefaultsDefaultValues setBool:NO
+                   forKey:USER_DEFAULT_ANIMATION_ENABLED];
+    [userDefaultsDefaultValues setFloat:5
+                    forKey:USER_DEFAULT_ANIMATION_DURATION];
+    [userDefaultsDefaultValues setValue:@"Circle"
+                    forKey:USER_DEFAULT_ANIMATION_IMAGE_NAME];
+    [userDefaultsDefaultValues setInteger:5
+                      forKey:USER_DEFAULT_POLYGON_SIDES];
     return YES;
 }
 							
