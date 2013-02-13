@@ -9,7 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (nonatomic) BOOL decimalPointAlreadyEntered;
 @end
 
 @implementation ViewController
@@ -20,6 +20,16 @@
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = sender.titleLabel.text;
     if (self.isInTheMiddleOfTypingSomething) {
+        //check to see if button pressed is a decimal point
+        if ([digit isEqualToString:@"."]) {
+            //If it is a decimal point is there one already - if so
+            //just return without doing anything else
+            if (self.decimalPointAlreadyEntered) {
+                return;
+            } else {
+                self.decimalPointAlreadyEntered = YES;
+            }
+        }
         self.calcDisplay.text = [self.calcDisplay.text stringByAppendingString:digit];
     } else {
         [self.calcDisplay setText:digit];
@@ -30,6 +40,7 @@
     if (self.isInTheMiddleOfTypingSomething) {
         self.calcModel.operand = [self.calcDisplay.text doubleValue];
         self.isInTheMiddleOfTypingSomething = NO;
+        self.decimalPointAlreadyEntered = NO;
     }
     NSString *operation = sender.titleLabel.text;
     double result = [self.calcModel performOperation:operation];
