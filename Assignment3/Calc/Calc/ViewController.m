@@ -9,7 +9,6 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-@property (nonatomic) BOOL decimalPointAlreadyEntered;
 @end
 
 @implementation ViewController
@@ -22,12 +21,10 @@
     if (self.isInTheMiddleOfTypingSomething) {
         //check to see if button pressed is a decimal point
         if ([digit isEqualToString:@"."]) {
-            //If it is a decimal point is there one already - if so
+            //If it is a decimal point check if there is one already - if so
             //just return without doing anything else
-            if (self.decimalPointAlreadyEntered) {
+            if ([self.calcDisplay.text rangeOfString:@"."].location != NSNotFound) {
                 return;
-            } else {
-                self.decimalPointAlreadyEntered = YES;
             }
         }
         self.calcDisplay.text = [self.calcDisplay.text stringByAppendingString:digit];
@@ -40,10 +37,24 @@
     if (self.isInTheMiddleOfTypingSomething) {
         self.calcModel.operand = [self.calcDisplay.text doubleValue];
         self.isInTheMiddleOfTypingSomething = NO;
-        self.decimalPointAlreadyEntered = NO;
     }
     NSString *operation = sender.titleLabel.text;
     double result = [self.calcModel performOperation:operation];
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", result]];
+    [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
 }
+
+- (void) receiveNotificationOfError:(CalcModel *)withErrorText :(NSString *)errorText {
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                      message:errorText
+                                                     delegate:nil
+                                            cancelButtonTitle:@"OK"
+                                            otherButtonTitles:nil];
+    [message show];
+}
+
+- (void) viewDidLoad {
+    self.calcModel.calcModelDelegate = self;
+}
+
 @end

@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "CalcModel.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <CalcModelDelegate>
 @property (nonatomic, strong) IBOutlet CalcModel *calcModel;
 @property (nonatomic,weak) IBOutlet UILabel *calcDisplay;
+@property (nonatomic,weak) IBOutlet UILabel *memoryDisplay;
 @property (nonatomic) BOOL isInTheMiddleOfTypingSomething;
 - (IBAction)digitPressed: (UIButton *)sender;
 - (IBAction)operationPressed:(UIButton *)sender;

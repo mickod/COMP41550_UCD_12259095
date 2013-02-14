@@ -7,10 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+@class CalcModel;
+
+@protocol CalcModelDelegate
+- (void) receiveNotificationOfError:(CalcModel *) withErrorText:(NSString*) errorText;
+@end
 
 @interface CalcModel : NSObject
 @property (nonatomic) double operand;
 @property (nonatomic) double waitingOperand;
 @property (nonatomic, strong) NSString *waitingOperation;
+@property (nonatomic) double memoryValue;
+@property id <CalcModelDelegate> calcModelDelegate;
 - (double)performOperation:(NSString *)operation;
 @end

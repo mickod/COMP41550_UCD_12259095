@@ -17,10 +17,38 @@
         if(self.operand > 0) {
             self.operand = sqrt(self.operand);
         }else {
+            [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot get sqrt of 0" ];
             self.operand = 0;
         }
     } else if ([operation isEqualToString:@"+/-"]) {
         self.operand = -self.operand;
+    } else if ([operation isEqualToString:@"Sin"]) {
+        //Convert the number to degrees first and then get Sine
+        self.operand= self.operand * M_PI/180;
+        self.operand = sin(self.operand);
+    } else if ([operation isEqualToString:@"Cos"]) {
+        //Convert the number to degrees first and then get Sine
+        self.operand= self.operand * M_PI/180;
+        self.operand = cos(self.operand);
+    } else if ([operation isEqualToString:@"STO"]) {
+        self.memoryValue = self.operand;
+    } else if ([operation isEqualToString:@"RCL"]) {
+        self.operand = self.memoryValue;
+    } else if ([operation isEqualToString:@"M+"]) {
+        self.memoryValue = self.memoryValue + self.operand;
+    } else if ([operation isEqualToString:@"π"]) {
+        self.operand = M_PI;
+    } else if ([operation isEqualToString:@"C"]) {
+        self.memoryValue = 0;
+        self.operand = 0;
+        self.waitingOperation = Nil;
+        self.waitingOperand = 0;
+    } else if ([operation isEqualToString:@"1/x"]) {
+        if (self.operand != 0) {
+            self.operand = 1/self.operand;
+        } else {
+            [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot divide by 0" ];
+        }
     } else {
         [self performWaitingOperation];
         self.waitingOperation = operation;
@@ -37,8 +65,13 @@
         self.operand = self.waitingOperand - self.operand;
     else if ([self.waitingOperation isEqualToString:@"*"])
         self.operand = self.waitingOperand * self.operand;
-    else if ([self.waitingOperation isEqualToString:@"/"])
-        if (self.operand) self.operand = self.waitingOperand / self.operand;
+    else if ([self.waitingOperation isEqualToString:@"/"]) {
+        if (self.operand) {
+            self.operand = self.waitingOperand / self.operand;
+        } else {
+            [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot divide by 0" ];
+        }
+    }
 }
 
 @end
