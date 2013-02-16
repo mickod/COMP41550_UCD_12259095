@@ -298,6 +298,7 @@
 				E6E33F0116CAF0D300055DE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

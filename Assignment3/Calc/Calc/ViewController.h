@@ -14,6 +14,8 @@
 @property (nonatomic,weak) IBOutlet UILabel *calcDisplay;
 @property (nonatomic,weak) IBOutlet UILabel *memoryDisplay;
 @property (nonatomic) BOOL isInTheMiddleOfTypingSomething;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *radianOrDegreesSegmentedController;
 - (IBAction)digitPressed: (UIButton *)sender;
 - (IBAction)operationPressed:(UIButton *)sender;
+- (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender;
 @end

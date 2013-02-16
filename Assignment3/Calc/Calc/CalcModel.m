@@ -23,12 +23,16 @@
     } else if ([operation isEqualToString:@"+/-"]) {
         self.operand = -self.operand;
     } else if ([operation isEqualToString:@"Sin"]) {
-        //Convert the number to degrees first and then get Sine
-        self.operand= self.operand * M_PI/180;
+        if (self.useDegreesNotRads) {
+            //Convert the number to use degrees first
+            self.operand= self.operand * M_PI/180;
+        }
         self.operand = sin(self.operand);
     } else if ([operation isEqualToString:@"Cos"]) {
-        //Convert the number to degrees first and then get Sine
-        self.operand= self.operand * M_PI/180;
+        if (self.useDegreesNotRads) {
+            //Convert the number to use degrees first
+            self.operand= self.operand * M_PI/180;
+        }        
         self.operand = cos(self.operand);
     } else if ([operation isEqualToString:@"STO"]) {
         self.memoryValue = self.operand;

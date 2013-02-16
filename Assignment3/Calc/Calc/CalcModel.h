@@ -18,6 +18,7 @@
 @property (nonatomic) double waitingOperand;
 @property (nonatomic, strong) NSString *waitingOperation;
 @property (nonatomic) double memoryValue;
+@property (nonatomic) BOOL useDegreesNotRads;
 @property id <CalcModelDelegate> calcModelDelegate;
 - (double)performOperation:(NSString *)operation;
 @end

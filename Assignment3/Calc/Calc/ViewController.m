@@ -44,6 +44,12 @@
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
 }
 
+- (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender {
+    NSString *segmentSelectedTitle = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex] ;
+    
+    [self setCalcModelDegreeOrRadMode:segmentSelectedTitle];
+}
+
 - (void) receiveNotificationOfError:(CalcModel *)withErrorText :(NSString *)errorText {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Error"
                                                       message:errorText
@@ -54,7 +60,23 @@
 }
 
 - (void) viewDidLoad {
+    //Set this object as the delegate for its own calcModel
     self.calcModel.calcModelDelegate = self;
+    //Set the degree or radians mode to the inital value of the segement selector
+    NSString *degreeOrRadSelected = [self.radianOrDegreesSegmentedController titleForSegmentAtIndex:self.radianOrDegreesSegmentedController.selectedSegmentIndex];
+    [self setCalcModelDegreeOrRadMode:degreeOrRadSelected];
+}
+
+-(void) setCalcModelDegreeOrRadMode:(NSString*) selectionText {
+    
+    //If the selector is rad set the calc model to use radians, otherwise
+    //default to degrees (this covers the error case where the selected value is
+    //neither for some reason
+    if ( [selectionText isEqualToString:@"Rad"] ) {
+        self.calcModel.useDegreesNotRads = NO;
+    } else {
+        self.calcModel.useDegreesNotRads = YES;
+    }
 }
 
 @end
