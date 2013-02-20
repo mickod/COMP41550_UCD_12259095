@@ -8,16 +8,70 @@
 
 #import "CalcModel.h"
 
+@interface CalcModel()
+@property (nonatomic, strong) NSMutableArray *expressionAsArray;
+@end
+
 @implementation CalcModel
 @synthesize operand = _operand;
 @synthesize waitingOperand = _waitingOperand;
 @synthesize waitingOperation = _waitingOperation;
+
+- init
+{
+    self = [super init];
+    if (!self) return nil;
+    
+    //Initialise the Expression mutable Array
+    self.expressionAsArray = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
+- (id) expression {
+    //Externally the expression is just an 'id' but
+    //internally we use an NSMutableArray. The getter for the
+    //externally visible expression property converts from
+    //the internal NSMutableArray to an id.
+    return self.expressionAsArray;
+}
+
+- (void) setUserEnteredOperand:(double)userEnteredOperand {
+    
+    //Add the operand to the model's expression
+    [self addItemToExpression: [NSNumber numberWithDouble:userEnteredOperand]];
+    
+    //Now set the operand
+    self.operand = userEnteredOperand;
+}
+
+- (void) setVariableAsOperand:(NSString *)variableName {
+   
+    //Add the operand to the model's expression
+    [self addItemToExpression: variableName];
+}
+
+- (void) addItemToExpression:(id)item {
+    
+    [self.expressionAsArray addObject:item];
+}
+
+- (NSString *) descriptionOfExpression:(id)anExpression {
+    
+    return [[anExpression valueForKey:@"description"] componentsJoinedByString:@""];
+}
+
 - (double)performOperation:(NSString *)operation {
+    
+    //Add the operation to the model's expression
+    [self addItemToExpression:operation];
+    
+    //Now perform the operation
     if([operation isEqualToString:@"sqrt"]) {
-        if(self.operand > 0) {
+        if(self.operand >= 0) {
             self.operand = sqrt(self.operand);
         }else {
-            [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot get sqrt of 0" ];
+            [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot get sqrt of negative" ];
             self.operand = 0;
         }
     } else if ([operation isEqualToString:@"+/-"]) {
@@ -47,6 +101,7 @@
         self.operand = 0;
         self.waitingOperation = Nil;
         self.waitingOperand = 0;
+        [self.expressionAsArray removeAllObjects];
     } else if ([operation isEqualToString:@"1/x"]) {
         if (self.operand != 0) {
             self.operand = 1/self.operand;
@@ -76,6 +131,33 @@
             [self.calcModelDelegate receiveNotificationOfError:self :@"Cannot divide by 0" ];
         }
     }
+}
+
++ (double) evaluateExpression:(id)anExpression usingVariableValues:(NSDictionary *)variables {
+    
+    //Enumerate through the expression and replace variabes with passed
+    //variable values
+    NSArray *evaluationExpressionArray = anExpression;
+    
+    //Now enumerate through expression again and evaluate it using
+    //an instance of this class CalcModel
+    CalcModel *tempCalcModel = [[CalcModel alloc] init];
+    double result = 0;
+    for (id expressionItem in evaluationExpressionArray) {
+        if ([expressionItem isKindOfClass:[NSNumber class] ]) {
+            //If the item is an operand simply set the operand
+           [tempCalcModel setUserEnteredOperand:[expressionItem doubleValue]];
+        } else if ([expressionItem isKindOfClass:[NSArray class]]) {
+            //If the item is an operator then perform the operation
+            result = [tempCalcModel performOperation:expressionItem];
+        } else {
+            result = 0;
+            break;
+        }
+    }
+    
+    //Return the result
+    return result;
 }
 
 @end

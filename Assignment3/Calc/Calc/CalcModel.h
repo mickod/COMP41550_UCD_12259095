@@ -17,8 +17,19 @@
 @property (nonatomic) double operand;
 @property (nonatomic) double waitingOperand;
 @property (nonatomic, strong) NSString *waitingOperation;
+@property (nonatomic, strong) id expression;
 @property (nonatomic) double memoryValue;
 @property (nonatomic) BOOL useDegreesNotRads;
 @property id <CalcModelDelegate> calcModelDelegate;
 - (double)performOperation:(NSString *)operation;
+- (void) setVariableAsOperand:(NSString *)variableName;
++ (double) evaluateExpression:(id)anExpression
+          usingVariableValues:(NSDictionary *)variables;
++ (NSSet *) variablesInExpression:(id)anExpression;
+- (NSString *) descriptionOfExpression:(id)anExpression;
++ (id) propertyListForExpression:(id)anExpression;
+- (id) expressionForPropertyList:(id)propertyList;
+- (void) setUserEnteredOperand:(double)userEnteredOperand;
++ (NSString *) getExpressionAsString;
 @end
+

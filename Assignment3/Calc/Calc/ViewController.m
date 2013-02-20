@@ -16,6 +16,12 @@
 @synthesize calcModel = _calcModel;
 @synthesize calcDisplay = _calcDisplay;
 @synthesize isInTheMiddleOfTypingSomething = _isInTheMiddleOfTypingSomething;
+
+- (IBAction)variableButtonPressed:(UIButton *)sender {
+    
+    [self.calcModel setVariableAsOperand:sender.titleLabel.text];
+}
+
 - (IBAction)digitPressed:(UIButton *)sender {
     NSString *digit = sender.titleLabel.text;
     if (self.isInTheMiddleOfTypingSomething) {
@@ -35,13 +41,14 @@
 }
 - (IBAction)operationPressed:(UIButton *)sender {
     if (self.isInTheMiddleOfTypingSomething) {
-        self.calcModel.operand = [self.calcDisplay.text doubleValue];
+        [self.calcModel setUserEnteredOperand:[self.calcDisplay.text doubleValue]];
         self.isInTheMiddleOfTypingSomething = NO;
     }
     NSString *operation = sender.titleLabel.text;
     double result = [self.calcModel performOperation:operation];
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", result]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
+    [self.expressionDisplay setText:[self.calcModel descriptionOfExpression:self.calcModel.expression]];
 }
 
 - (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender {
