@@ -48,7 +48,24 @@
     double result = [self.calcModel performOperation:operation];
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", result]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
-    [self.expressionDisplay setText:[self.calcModel descriptionOfExpression:self.calcModel.expression]];
+    [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
+}
+
+- (IBAction)solveButtonPressed:(id)sender {
+    
+    //Clear the display first
+    [self.calcDisplay setText:@"*"];
+    
+    //Set dictionary values to test the evaluation
+    NSMutableDictionary *testVariables = [[NSMutableDictionary alloc] init];
+    [testVariables setValue:[NSNumber numberWithDouble:1] forKey:@"x"];
+    [testVariables setValue:[NSNumber numberWithDouble:2] forKey:@"a"];
+    [testVariables setValue:[NSNumber numberWithDouble:3] forKey:@"b"];
+    [testVariables setValue:[NSNumber numberWithDouble:4] forKey:@"c"];
+    
+    double evaluationResult = [CalcModel evaluateExpression:self.calcModel.expression usingVariableValues:testVariables];
+    
+    [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", evaluationResult]];
 }
 
 - (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender {

@@ -26,10 +26,9 @@
 + (double) evaluateExpression:(id)anExpression
           usingVariableValues:(NSDictionary *)variables;
 + (NSSet *) variablesInExpression:(id)anExpression;
-- (NSString *) descriptionOfExpression:(id)anExpression;
++ (NSString *) descriptionOfExpression:(id)anExpression;
 + (id) propertyListForExpression:(id)anExpression;
 - (id) expressionForPropertyList:(id)propertyList;
 - (void) setUserEnteredOperand:(double)userEnteredOperand;
-+ (NSString *) getExpressionAsString;
 @end
 

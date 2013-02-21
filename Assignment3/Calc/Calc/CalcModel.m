@@ -56,7 +56,7 @@
     [self.expressionAsArray addObject:item];
 }
 
-- (NSString *) descriptionOfExpression:(id)anExpression {
++ (NSString *) descriptionOfExpression:(id)anExpression {
     
     return [[anExpression valueForKey:@"description"] componentsJoinedByString:@""];
 }
@@ -133,23 +133,59 @@
     }
 }
 
++ (NSSet *) variablesInExpression:(id)anExpression {
+    
+    NSArray *expressionArray = anExpression;
+    NSMutableSet *variableMutableSet = [[NSMutableSet alloc] init];
+    
+    for (id expressionItem in expressionArray) {
+        //Check each string in the expression to see if it is one of our variables
+        if ([expressionItem isKindOfClass:[NSString class]]) {
+            //If the item is an operator then perform the operation
+            if ([expressionItem isEqualToString:@"x"] |
+                [expressionItem isEqualToString:@"a"] |
+                [expressionItem isEqualToString:@"b"] |
+                [expressionItem isEqualToString:@"c"]) {
+                
+                if ( ![variableMutableSet containsObject:expressionItem] ) {
+                    [variableMutableSet addObject:expressionItem];
+                }
+            }
+        }
+    }
+    
+    if ([variableMutableSet count] > 0) {
+        return variableMutableSet;
+    } else {
+        return nil;
+    }
+}
+
 + (double) evaluateExpression:(id)anExpression usingVariableValues:(NSDictionary *)variables {
     
-    //Enumerate through the expression and replace variabes with passed
-    //variable values
-    NSArray *evaluationExpressionArray = anExpression;
+    //Get the variables in the expression
+    NSSet *variablesInExpression = [CalcModel variablesInExpression:anExpression];
     
     //Now enumerate through expression again and evaluate it using
     //an instance of this class CalcModel
+    NSArray *evaluationExpressionArray = anExpression;
     CalcModel *tempCalcModel = [[CalcModel alloc] init];
     double result = 0;
     for (id expressionItem in evaluationExpressionArray) {
         if ([expressionItem isKindOfClass:[NSNumber class] ]) {
             //If the item is an operand simply set the operand
            [tempCalcModel setUserEnteredOperand:[expressionItem doubleValue]];
-        } else if ([expressionItem isKindOfClass:[NSArray class]]) {
-            //If the item is an operator then perform the operation
-            result = [tempCalcModel performOperation:expressionItem];
+        } else if ([expressionItem isKindOfClass:[NSString class]]) {
+            //Check if the string is one of our variables
+            if ( [variablesInExpression containsObject:expressionItem]) {
+                //Switch the variable for its corresponding double value
+                double variableValue = [[variables objectForKey:expressionItem] doubleValue];
+                //Enter the operand
+                [tempCalcModel setUserEnteredOperand:variableValue];
+            } else {
+                //The string is an operator so perform the operation
+                result = [tempCalcModel performOperation:expressionItem];
+            }
         } else {
             result = 0;
             break;
