@@ -54,7 +54,7 @@
 - (IBAction)solveButtonPressed:(id)sender {
     
     //Clear the display first
-    [self.calcDisplay setText:@"*"];
+    [self.calcDisplay setText:@""];
     
     //Set dictionary values to test the evaluation
     NSMutableDictionary *testVariables = [[NSMutableDictionary alloc] init];
@@ -65,7 +65,7 @@
     
     double evaluationResult = [CalcModel evaluateExpression:self.calcModel.expression usingVariableValues:testVariables];
     
-    [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", evaluationResult]];
+    [self.calcDisplay setText:[NSString stringWithFormat:@"%g", evaluationResult]];
 }
 
 - (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender {
@@ -89,6 +89,7 @@
     //Set the degree or radians mode to the inital value of the segement selector
     NSString *degreeOrRadSelected = [self.radianOrDegreesSegmentedController titleForSegmentAtIndex:self.radianOrDegreesSegmentedController.selectedSegmentIndex];
     [self setCalcModelDegreeOrRadMode:degreeOrRadSelected];
+    [self.expressionDisplay setText:@""];
 }
 
 -(void) setCalcModelDegreeOrRadMode:(NSString*) selectionText {
