@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E6AEF59B16EF962100AB0E8E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */; };
+		E6AEF59E16EF968E00AB0E8E /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF59D16EF968E00AB0E8E /* GraphViewController.m */; };
+		E6CABC8816F0BA3500E1B5F6 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF5A016EF97DD00AB0E8E /* GraphView.m */; };
 		E6E33EE016CAF0D300055DE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E33EDF16CAF0D300055DE7 /* UIKit.framework */; };
 		E6E33EE216CAF0D300055DE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E33EE116CAF0D300055DE7 /* Foundation.framework */; };
 		E6E33EE416CAF0D300055DE7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E33EE316CAF0D300055DE7 /* CoreGraphics.framework */; };
@@ -22,6 +25,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E6AEF59816EF961800AB0E8E /* AxesDrawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AxesDrawer.h; sourceTree = "<group>"; };
+		E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxesDrawer.m; sourceTree = "<group>"; };
+		E6AEF59C16EF968E00AB0E8E /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
+		E6AEF59D16EF968E00AB0E8E /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
+		E6AEF59F16EF97DD00AB0E8E /* GraphView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		E6AEF5A016EF97DD00AB0E8E /* GraphView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		E6E33EDB16CAF0D300055DE7 /* GraphCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6E33EDF16CAF0D300055DE7 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E6E33EE116CAF0D300055DE7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -86,6 +95,10 @@
 		E6E33EE516CAF0D300055DE7 /* GraphCalc */ = {
 			isa = PBXGroup;
 			children = (
+				E6AEF59F16EF97DD00AB0E8E /* GraphView.h */,
+				E6AEF5A016EF97DD00AB0E8E /* GraphView.m */,
+				E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */,
+				E6AEF59816EF961800AB0E8E /* AxesDrawer.h */,
 				E6E33EEE16CAF0D300055DE7 /* AppDelegate.h */,
 				E6E33EEF16CAF0D300055DE7 /* AppDelegate.m */,
 				E6E33EF716CAF0D300055DE7 /* MainStoryboard.storyboard */,
@@ -94,6 +107,8 @@
 				E6E33EE616CAF0D300055DE7 /* Supporting Files */,
 				E6E33F0216CAF1A400055DE7 /* CalcModel.h */,
 				E6E33F0316CAF1A400055DE7 /* CalcModel.m */,
+				E6AEF59C16EF968E00AB0E8E /* GraphViewController.h */,
+				E6AEF59D16EF968E00AB0E8E /* GraphViewController.m */,
 			);
 			name = GraphCalc;
 			path = Calc;
@@ -179,10 +194,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6CABC8816F0BA3500E1B5F6 /* GraphView.m in Sources */,
 				E6E33EEC16CAF0D300055DE7 /* main.m in Sources */,
 				E6E33EF016CAF0D300055DE7 /* AppDelegate.m in Sources */,
 				E6E33EFC16CAF0D300055DE7 /* ViewController.m in Sources */,
 				E6E33F0416CAF1A400055DE7 /* CalcModel.m in Sources */,
+				E6AEF59B16EF962100AB0E8E /* AxesDrawer.m in Sources */,
+				E6AEF59E16EF968E00AB0E8E /* GraphViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

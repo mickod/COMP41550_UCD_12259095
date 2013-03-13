@@ -20,5 +20,6 @@
 - (IBAction)digitPressed: (UIButton *)sender;
 - (IBAction)operationPressed:(UIButton *)sender;
 - (IBAction)solveButtonPressed:(UIButton *)sender;
+- (IBAction)graphButtonPressed:(id)sender;
 - (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender;
 @end

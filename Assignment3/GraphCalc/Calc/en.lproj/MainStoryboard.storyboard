@@ -393,8 +393,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="solveButtonPressed:" destination="2" eventType="touchUpInside" id="E8U-iQ-DaD"/>
-                                    <segue destination="b1s-vI-T0n" kind="push" identifier="GRAPH_SEGUE" id="GIn-BS-8Ef"/>
+                                    <action selector="graphButtonPressed:" destination="2" eventType="touchUpInside" id="OXw-Ff-NtX"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cPY-N1-BfE">
@@ -523,48 +522,56 @@
                         <outlet property="expressionDisplay" destination="Lg7-yc-WLP" id="68j-Zw-Npy"/>
                         <outlet property="memoryDisplay" destination="XKF-Kz-YkB" id="Day-HZ-c6H"/>
                         <outlet property="radianOrDegreesSegmentedController" destination="Rbf-le-ut0" id="weg-mh-abR"/>
+                        <segue destination="b1s-vI-T0n" kind="push" identifier="CHECKED_GRAPH_SEGUE" id="shU-CD-Wyr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
                 <customObject id="uMH-Sr-sJs" customClass="CalcModel"/>
             </objects>
         </scene>
-        <!--View Controller - Graph View-->
+        <!--Graph View Controller - Graph View-->
         <scene sceneID="Q22-ED-lkT">
             <objects>
-                <viewController title="Graph View" id="b1s-vI-T0n" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ODU-4u-rc2">
+                <viewController title="Graph View" id="b1s-vI-T0n" customClass="GraphViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleAspectFit" id="ODU-4u-rc2">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="fso-7o-Dvb">
+                                <rect key="frame" x="0.0" y="372" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <items>
+                                    <barButtonItem title="Zoom +" id="fKn-SW-HUd">
+                                        <connections>
+                                            <action selector="zoomPlusEvent:" destination="b1s-vI-T0n" id="3hU-xc-etq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem width="173" style="plain" systemItem="fixedSpace" id="I95-qs-Zi4"/>
+                                    <barButtonItem title="Zoom -" id="N7c-le-q5E">
+                                        <connections>
+                                            <action selector="zoomMinusEvent:" destination="b1s-vI-T0n" id="ziw-xf-cvf"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <view contentMode="scaleToFill" id="vpn-4H-yGN" customClass="GraphView">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Graph view" id="PGX-3g-dx9"/>
+                    <navigationItem key="navigationItem" title="Graph view" id="jPo-rS-Zkz"/>
+                    <connections>
+                        <outlet property="thisGraphView" destination="vpn-4H-yGN" id="pOc-vH-PuD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNn-yT-w30" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="560" y="70"/>
+            <point key="canvasLocation" x="542" y="62"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CalcModel" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalcModel.h"/>
-        </class>
-        <class className="ViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="degreeOrRadSelectionEvent:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="solveButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="variableButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="calcDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="calcModel" candidateClass="CalcModel"/>
-                <relationship kind="outlet" name="expressionDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="memoryDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="radianOrDegreesSegmentedController" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

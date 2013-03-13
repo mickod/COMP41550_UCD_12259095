@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "GraphViewController.h"
 
 @interface ViewController ()
 @end
@@ -20,6 +21,16 @@
 - (IBAction)variableButtonPressed:(UIButton *)sender {
     
     [self.calcModel setVariableAsOperand:sender.titleLabel.text];
+}
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    NSLog(@"ViewController prepareForSegue");
+    if ([[segue identifier] isEqualToString:@"CHECKED_GRAPH_SEGUE"]) {
+        NSLog(@"ViewController prepareForSegue - kind is GRAPH_SEGUE");
+        GraphViewController *destinationVC = segue.destinationViewController;
+        destinationVC.calcModel = self.calcModel;
+    }
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -66,6 +77,24 @@
     double evaluationResult = [CalcModel evaluateExpression:self.calcModel.expression usingVariableValues:testVariables];
     
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", evaluationResult]];
+}
+
+- (IBAction)graphButtonPressed:(id)sender {
+    
+    //Check that the expression has a variable in it
+    if (![CalcModel variablesInExpression:self.calcModel.expression]) {
+        UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Expression has no variable"
+                  message:@""
+                delegate:nil
+                cancelButtonTitle:@"OK"
+                otherButtonTitles:nil];
+        [message show];
+        return;
+    }
+    
+    //Perform the segue
+    [self performSegueWithIdentifier:@"CHECKED_GRAPH_SEGUE" sender:sender];
+    
 }
 
 - (IBAction)degreeOrRadSelectionEvent:(UISegmentedControl*)sender {
