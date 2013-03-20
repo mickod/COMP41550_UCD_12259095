@@ -1,8 +1,8 @@
 //
-//  ViewController.m
-//  Calc
+//  GraphCalcLandscapeViewController.m
+//  GraphCalc
 //
-//  Created by Mick O'Doherty on 12/02/2013.
+//  Created by Mick O'Doherty on 14/03/2013.
 //  Copyright (c) 2013 Mick O'Doherty. All rights reserved.
 //
 
@@ -10,12 +10,12 @@
 #import "GraphViewController.h"
 #import "GraphCalcLandscapeViewController.h"
 
-@interface ViewController ()
+@interface GraphCalcLandscapeViewController ()
 @property bool isShowingLandscapeView;
 @property UIViewController *currentViewController;
 @end
 
-@implementation ViewController
+@implementation GraphCalcLandscapeViewController
 
 - (IBAction)variableButtonPressed:(UIButton *)sender {
     
@@ -25,16 +25,11 @@
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
     NSLog(@"ViewController prepareForSegue");
-    if ([[segue identifier] isEqualToString:@"CHECKED_GRAPH_SEGUE"]) {
-        NSLog(@"ViewController prepareForSegue - kind is GRAPH_SEGUE");
+    if ([[segue identifier] isEqualToString:@"LANDSCAPE_GRAPH_SEGUE"]) {
+        NSLog(@"ViewController prepareForSegue - kind is LANDSCAPE_GRAPH_SEGUE");
         GraphViewController *destinationVC = segue.destinationViewController;
         destinationVC.calcModel = self.calcModel;
-    } else if ([[segue identifier] isEqualToString:@"LANDSCAPE_SEGUE"]) {
-        NSLog(@"ViewController prepareForSegue - kind is LANDSCAPE_SEGUE");
-        GraphCalcLandscapeViewController *destinationVC = segue.destinationViewController;
-        destinationVC.calcModel = self.calcModel;
-        self.currentViewController = destinationVC;
-    }
+    } 
 }
 
 - (IBAction)digitPressed:(UIButton *)sender {
@@ -88,16 +83,16 @@
     //Check that the expression has a variable in it
     if (![CalcModel variablesInExpression:self.calcModel.expression]) {
         UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Expression has no variable"
-                  message:@""
-                delegate:nil
-                cancelButtonTitle:@"OK"
-                otherButtonTitles:nil];
+                                                          message:@""
+                                                         delegate:nil
+                                                cancelButtonTitle:@"OK"
+                                                otherButtonTitles:nil];
         [message show];
         return;
     }
     
     //Perform the segue
-    [self performSegueWithIdentifier:@"CHECKED_GRAPH_SEGUE" sender:sender];
+    [self performSegueWithIdentifier:@"LANDSCAPE_GRAPH_SEGUE" sender:sender];
     
 }
 
@@ -138,42 +133,6 @@
         self.calcModel.useDegreesNotRads = NO;
     } else {
         self.calcModel.useDegreesNotRads = YES;
-    }
-}
-
-- (void) awakeFromNib {
-    
-    //This method registers this view controller with the shared UIDevice object to
-    //receive orientation chnage notifictaions.
-    self.isShowingLandscapeView = NO;
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(orientationChanged:)
-                                               name:UIDeviceOrientationDidChangeNotification
-                                               object:nil];
-}
-
-- (void)orientationChanged:(NSNotification *)notification
-{
-    
-    //When an orientation change is detected switch view controllers - there is one
-    //view controller for the landscape view and one for portrait.
-    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
-    if (UIDeviceOrientationIsLandscape(deviceOrientation) &&
-        !self.isShowingLandscapeView)
-    {
-        [self performSegueWithIdentifier:@"LANDSCAPE_SEGUE" sender:self];
-        self.isShowingLandscapeView = YES;
-    }
-    else if (UIDeviceOrientationIsPortrait(deviceOrientation) &&
-             self.isShowingLandscapeView)
-    {
-        [self.navigationController popViewControllerAnimated:YES];
-        self.currentViewController = self;
-        self.isShowingLandscapeView = NO;
-        [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
-        [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
-        [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
     }
 }
 
