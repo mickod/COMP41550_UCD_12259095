@@ -13,7 +13,7 @@
 - (void) landscapeViewlaunchedInPortraitEvent:(GraphCalcLandscapeViewController *) sender;
 @end
 
-@interface GraphCalcLandscapeViewController : UIViewController
+@interface GraphCalcLandscapeViewController : UIViewController <CalcModelDelegate>
 @property id <GraphCalcLandscapeViewControllerDelegate> viewControllerdelegate;
 @property (weak, nonatomic) IBOutlet UILabel *expressionDisplay;
 @property (nonatomic, strong) IBOutlet CalcModel *calcModel;
