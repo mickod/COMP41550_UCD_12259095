@@ -33,6 +33,7 @@
         NSLog(@"ViewController prepareForSegue - kind is LANDSCAPE_SEGUE");
         GraphCalcLandscapeViewController *destinationVC = segue.destinationViewController;
         destinationVC.calcModel = self.calcModel;
+        destinationVC.viewControllerdelegate = self;
         self.currentViewController = destinationVC;
     }
 }
@@ -148,16 +149,25 @@
     self.isShowingLandscapeView = NO;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(orientationChanged:)
-                                               name:UIDeviceOrientationDidChangeNotification
+                                             selector:@selector(orientationChanged:)
+                                                 name:UIApplicationWillChangeStatusBarOrientationNotification
                                                object:nil];
+    
 }
 
 - (void)orientationChanged:(NSNotification *)notification
 {
     
     //When an orientation change is detected switch view controllers - there is one
-    //view controller for the landscape view and one for portrait.
+    //view controller for the landscape view and one for portrait. First check if it
+    //is the graph view as that we want to rotate as normal
+    UIViewController *currentVC = self.navigationController.visibleViewController;
+    if([currentVC isMemberOfClass:NSClassFromString(@"GraphViewController")]) {
+        //If this is the graph view controller then do nothing as we want that to be able to
+        //rotate
+        return;
+    }
+    
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsLandscape(deviceOrientation) &&
         !self.isShowingLandscapeView)
@@ -175,6 +185,19 @@
         [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
         [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
     }
+    
+}
+
+
+- (void) landscapeViewlaunchedInPortraitEvent:(GraphCalcLandscapeViewController *)sender {
+    
+    //The landscape view is tell us it has launched in portrait so pop the view
+    [self.navigationController popViewControllerAnimated:NO];
+    self.currentViewController = self;
+    self.isShowingLandscapeView = NO;
+    [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
+    [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
+    [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
 }
 
 @end

@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class GraphCalcLandscapeViewController;
+
+@protocol GraphCalcLandscapeViewControllerDelegate
+- (void) landscapeViewlaunchedInPortraitEvent:(GraphCalcLandscapeViewController *) sender;
+@end
 
 @interface GraphCalcLandscapeViewController : UIViewController
+@property id <GraphCalcLandscapeViewControllerDelegate> viewControllerdelegate;
 @property (weak, nonatomic) IBOutlet UILabel *expressionDisplay;
 @property (nonatomic, strong) IBOutlet CalcModel *calcModel;
 @property (nonatomic,weak) IBOutlet UILabel *calcDisplay;

@@ -114,6 +114,9 @@
 
 - (void) viewDidLoad {
     
+    //Hide the navigation controller back button
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    
     //Set this object as the delegate for its own calcModel
     self.calcModel.calcModelDelegate = self;
     //Set the degree or radians mode to the inital value of the segement selector
@@ -122,6 +125,21 @@
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
     [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
+    
+    //Set the back button on the navigator bar to generic calculator as the user may
+    //rotate and then go back to the basic portrait calculator
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Calculator" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.backBarButtonItem = backButton;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    //Check to see if the orientation is portrait when the view is appearing and if so
+    //infomr the delegate in case the delagte want to do something (like pop this view...)
+    UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
+    if (UIDeviceOrientationIsPortrait(deviceOrientation)) {
+        [self.viewControllerdelegate landscapeViewlaunchedInPortraitEvent:self];
+    }
 }
 
 -(void) setCalcModelDegreeOrRadMode:(NSString*) selectionText {

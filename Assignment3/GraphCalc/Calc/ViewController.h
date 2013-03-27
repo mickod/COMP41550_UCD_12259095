@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CalcModel.h"
+#import "GraphCalcLandscapeViewController.h"
 
-@interface ViewController : UIViewController <CalcModelDelegate>
+@interface ViewController : UIViewController <CalcModelDelegate, GraphCalcLandscapeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *expressionDisplay;
 @property (nonatomic, strong) IBOutlet CalcModel *calcModel;
 @property (nonatomic,weak) IBOutlet UILabel *calcDisplay;
