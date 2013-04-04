@@ -30,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		E6251AF9170CA0BC0086C6E3 /* iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad_Storyboard.storyboard; sourceTree = "<group>"; };
+		E66E4FA3170E236A0000E935 /* PlotGraphExpressionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlotGraphExpressionDelegate.h; sourceTree = "<group>"; };
 		E6AEF59816EF961800AB0E8E /* AxesDrawer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AxesDrawer.h; sourceTree = "<group>"; };
 		E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxesDrawer.m; sourceTree = "<group>"; };
 		E6AEF59C16EF968E00AB0E8E /* PhoneGraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneGraphViewController.h; sourceTree = "<group>"; };
@@ -153,6 +154,7 @@
 				E6251AF9170CA0BC0086C6E3 /* iPad_Storyboard.storyboard */,
 				E6EBA4D1170CD51C00795C9C /* PadGraphViewController.h */,
 				E6EBA4D2170CD51C00795C9C /* PadGraphViewController.m */,
+				E66E4FA3170E236A0000E935 /* PlotGraphExpressionDelegate.h */,
 			);
 			name = iPad;
 			sourceTree = "<group>";
@@ -330,7 +332,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Calc/GraphCalc_Universal-Prefix.pch";
 				INFOPLIST_FILE = "Calc/GraphCalc_Universal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = GraphCalc_Universal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -343,7 +345,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Calc/GraphCalc_Universal-Prefix.pch";
 				INFOPLIST_FILE = "Calc/GraphCalc_Universal-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = GraphCalc_Universal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

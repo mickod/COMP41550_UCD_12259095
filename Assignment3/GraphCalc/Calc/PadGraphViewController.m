@@ -75,4 +75,32 @@
     return graphPoints;
 }
 
+- (void) plotGraphFromExpressionInModel:(CalcModel *)passedCalcModel {
+    
+    //Plot the Graph
+    self.thisGraphView.scalingValue = 1;
+    self.thisGraphView.graphViewdelegate = self;
+    self.calcModel = passedCalcModel;
+    [self.thisGraphView setNeedsDisplay];
+}
+
+- (IBAction)zoomPlusEvent:(id)sender {
+    
+    if (self.thisGraphView.scalingValue < 10) {
+        self.thisGraphView.scalingValue +=1;
+        [self.thisGraphView setNeedsDisplay];
+    }
+}
+
+- (IBAction)zoomMinusEvent:(id)sender {
+    
+    if (self.thisGraphView.scalingValue > 1) {
+        self.thisGraphView.scalingValue -=1;
+        [self.thisGraphView setNeedsDisplay];
+    }
+}
+
+
+- (IBAction)pinchEvent:(id)sender {
+}
 @end

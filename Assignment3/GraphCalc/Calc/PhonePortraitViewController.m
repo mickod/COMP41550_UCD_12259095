@@ -120,6 +120,8 @@
 
 - (void) viewDidLoad {
     
+    [super viewDidLoad];
+    
     //Set this object as the delegate for its own calcModel
     self.calcModel.calcModelDelegate = self;
     //Set the degree or radians mode to the inital value of the segement selector

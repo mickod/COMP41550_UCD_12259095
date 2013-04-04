@@ -10,8 +10,9 @@
 #import "GraphView.h"
 #import "SplitViewBarButtonItemPresenter.h"
 #import "CalcModel.h"
+#import "PlotGraphExpressionDelegate.h"
 
-@interface PadGraphViewController : UIViewController <GraphViewDelegateProtocol, SplitViewBarButtonItemPresenter>
+@interface PadGraphViewController : UIViewController <GraphViewDelegateProtocol, SplitViewBarButtonItemPresenter, PlotGraphExpressionDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet GraphView *thisGraphView;
 @property (weak, nonatomic) CalcModel *calcModel;

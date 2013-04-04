@@ -979,11 +979,11 @@
             <objects>
                 <viewController title="Graph View" id="b1s-vI-T0n" customClass="PhoneGraphViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFit" id="ODU-4u-rc2">
-                        <rect key="frame" x="0.0" y="64" width="480" height="256"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         <subviews>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="fso-7o-Dvb">
-                                <rect key="frame" x="0.0" y="212" width="480" height="44"/>
+                                <rect key="frame" x="0.0" y="372" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem title="Zoom +" id="fKn-SW-HUd">
@@ -1000,13 +1000,12 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" id="vpn-4H-yGN" customClass="GraphView">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="212"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Graph view" id="jPo-rS-Zkz"/>
                     <connections>
@@ -1018,20 +1017,12 @@
             <point key="canvasLocation" x="542" y="62"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CalcModel" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalcModel.h"/>
-        </class>
-        <class className="GraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="vgP-T4-OFm"/>
+        <segue reference="shU-CD-Wyr"/>
     </inferredMetricsTieBreakers>
 </document>

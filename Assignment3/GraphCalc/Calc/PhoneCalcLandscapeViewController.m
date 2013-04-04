@@ -114,6 +114,8 @@
 
 - (void) viewDidLoad {
     
+    [super viewDidLoad];
+    
     //Hide the navigation controller back button
     [self.navigationItem setHidesBackButton:YES animated:YES];
     

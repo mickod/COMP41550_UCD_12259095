@@ -19,8 +19,10 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="3UN-9K-UDe"/>
                     <connections>
                         <outlet property="thisGraphView" destination="VrX-oK-tvG" id="LwL-qH-nwx"/>
                         <outlet property="toolbar" destination="5v8-Z2-zTD" id="0eg-6s-h7j"/>
@@ -57,6 +59,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="t3r-0o-hS6"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mGv-fi-gUd">
                                 <rect key="frame" x="98" y="90" width="58" height="30"/>
@@ -69,6 +74,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="HnX-IQ-TgV"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="H7q-Db-9m5">
                                 <rect key="frame" x="230" y="90" width="58" height="30"/>
@@ -81,6 +89,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="ohY-kR-MQa"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="O3K-CE-LmK">
                                 <rect key="frame" x="164" y="90" width="58" height="30"/>
@@ -93,6 +104,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="uUH-ow-M10"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Gno-eq-cQq">
                                 <rect key="frame" x="32" y="132" width="58" height="30"/>
@@ -105,6 +119,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="YYk-Rb-7kd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8TC-to-ZNt">
                                 <rect key="frame" x="98" y="132" width="58" height="30"/>
@@ -117,6 +134,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Isq-sq-XuQ"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Cdf-gq-8ZL">
                                 <rect key="frame" x="230" y="132" width="58" height="30"/>
@@ -129,6 +149,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="HRJ-Gh-kPc"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="5Xa-0n-fCQ">
                                 <rect key="frame" x="164" y="132" width="58" height="30"/>
@@ -141,6 +164,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="rJC-5q-sKu"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1Vt-MV-EX5">
                                 <rect key="frame" x="32" y="174" width="58" height="30"/>
@@ -153,6 +179,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="5P3-tn-AhR"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="7tA-rt-wGb">
                                 <rect key="frame" x="98" y="174" width="58" height="30"/>
@@ -165,6 +194,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="vm8-ve-d7q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Irl-JK-lK5">
                                 <rect key="frame" x="230" y="174" width="58" height="30"/>
@@ -177,6 +209,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="yMv-kB-rQ5"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FbL-bV-tqV">
                                 <rect key="frame" x="164" y="174" width="58" height="30"/>
@@ -189,6 +224,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="BrT-Sy-hr0"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RJS-xg-NRO">
                                 <rect key="frame" x="98" y="216" width="58" height="30"/>
@@ -201,6 +239,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Taz-9v-O9h"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="c3H-zD-Tfw">
                                 <rect key="frame" x="32" y="217" width="58" height="30"/>
@@ -213,6 +254,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="digitPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Wcn-uK-tgk"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="HY1-3F-2Wd">
                                 <rect key="frame" x="230" y="216" width="58" height="30"/>
@@ -225,6 +269,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="X6b-f7-zuU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2CZ-fL-UJT">
                                 <rect key="frame" x="32" y="260" width="58" height="30"/>
@@ -237,6 +284,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Fle-VW-OLi"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="V3P-Pk-gaj">
                                 <rect key="frame" x="164" y="260" width="58" height="30"/>
@@ -249,6 +299,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="hBv-ud-QAh"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="e5L-Tn-ykm">
                                 <rect key="frame" x="230" y="260" width="58" height="30"/>
@@ -261,6 +314,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="variableButtonPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Agp-aR-aYz"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TKW-H9-gQy">
                                 <rect key="frame" x="96" y="260" width="58" height="30"/>
@@ -273,6 +329,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Rg8-Fc-0eT"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Z1g-iO-Aka">
                                 <rect key="frame" x="32" y="297" width="58" height="30"/>
@@ -285,6 +344,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="AYD-ON-tfE"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Yo9-Nx-Mhl">
                                 <rect key="frame" x="32" y="334" width="122" height="30"/>
@@ -297,6 +359,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="solveButtonPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="a6Y-kn-44q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="00H-Km-d8h">
                                 <rect key="frame" x="164" y="334" width="124" height="30"/>
@@ -309,6 +374,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="graphButtonPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="gRH-qn-APS"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="OAD-ud-dBd">
                                 <rect key="frame" x="164" y="297" width="58" height="30"/>
@@ -321,6 +389,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="IU4-0P-pCI"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9Fi-vT-C10">
                                 <rect key="frame" x="230" y="297" width="58" height="30"/>
@@ -333,6 +404,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="23n-2t-q31"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="2XA-z3-jxg">
                                 <rect key="frame" x="96" y="297" width="58" height="30"/>
@@ -345,6 +419,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="a3w-SW-mKC"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Zj3-TJ-Rae">
                                 <rect key="frame" x="164" y="216" width="58" height="30"/>
@@ -357,6 +434,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="COC-Ib-nOd"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mGK-Et-2FR">
                                 <rect key="frame" x="32" y="63" width="58" height="20"/>
@@ -369,6 +449,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="oWD-uQ-KaY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JjG-Q3-887">
                                 <rect key="frame" x="164" y="62" width="58" height="20"/>
@@ -381,6 +464,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="Slg-ny-SMo"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="h46-jn-h6n">
                                 <rect key="frame" x="98" y="63" width="58" height="20"/>
@@ -393,6 +479,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="lB1-6f-TER"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vnE-uH-MRd">
                                 <rect key="frame" x="230" y="62" width="58" height="20"/>
@@ -405,53 +494,73 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="operationPressed:" destination="ukw-gj-gek" eventType="touchUpInside" id="kRz-iv-msv"/>
+                                </connections>
                             </button>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="7Tn-uj-TLl">
-                                <rect key="frame" x="32" y="372" width="91" height="44"/>
+                                <rect key="frame" x="32" y="467" width="256" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="Deg"/>
                                     <segment title="Rad"/>
                                 </segments>
+                                <connections>
+                                    <action selector="degreeOrRadSelectionEvent:" destination="ukw-gj-gek" eventType="valueChanged" id="96s-LZ-UZJ"/>
+                                </connections>
                             </segmentedControl>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gg9-vr-LSJ">
-                                <rect key="frame" x="32" y="481" width="190" height="19"/>
+                            <view contentMode="scaleToFill" id="C67-9a-OHz">
+                                <rect key="frame" x="32" y="371" width="256" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KTe-pl-La3">
-                                <rect key="frame" x="32" y="440" width="190" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Memory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ELs-Mh-LTN">
-                                <rect key="frame" x="36" y="467" width="44" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Expression" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ba6-K5-BYu">
-                                <rect key="frame" x="36" y="423" width="50" height="15"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="7"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gg9-vr-LSJ">
+                                        <rect key="frame" x="20" y="49" width="216" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KTe-pl-La3">
+                                        <rect key="frame" x="20" y="20" width="216" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Expression" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ba6-K5-BYu">
+                                        <rect key="frame" x="20" y="6" width="50" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Memory" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ELs-Mh-LTN">
+                                        <rect key="frame" x="23" y="37" width="44" height="15"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="7"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.76510743719999996" green="0.98820531040000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Calculator" id="zVF-ag-Ncu"/>
+                    <connections>
+                        <outlet property="calcDisplay" destination="yOC-XM-9Oj" id="60j-mK-2CS"/>
+                        <outlet property="calcModel" destination="LYj-xM-UtT" id="L1H-a4-Dze"/>
+                        <outlet property="expressionDisplay" destination="KTe-pl-La3" id="gIt-6Q-2P9"/>
+                        <outlet property="memoryDisplay" destination="gg9-vr-LSJ" id="Idz-PJ-7a5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qba-BR-OaW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <customObject id="LYj-xM-UtT" customClass="CalcModel"/>
             </objects>
-            <point key="canvasLocation" x="795" y="-846"/>
+            <point key="canvasLocation" x="783" y="-846"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DJv-dR-PVR">
@@ -483,21 +592,6 @@
             <point key="canvasLocation" x="-696" y="-377"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="GraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
-        </class>
-        <class className="PadCalcViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PadCalcViewController.h"/>
-        </class>
-        <class className="PadGraphViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PadGraphViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="thisGraphView" candidateClass="GraphView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

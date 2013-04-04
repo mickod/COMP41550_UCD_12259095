@@ -37,10 +37,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)ZoomPlusEvent:(id)sender {
-    
-    
-}
 - (IBAction)zoomPlusEvent:(id)sender {
     
     if (self.thisGraphView.scalingValue < 10) {
