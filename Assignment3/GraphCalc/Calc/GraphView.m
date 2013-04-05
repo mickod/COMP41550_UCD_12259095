@@ -26,8 +26,11 @@
 
 - (void)drawRect:(CGRect)rect
 {
+    //Get the Graph Origin - use the ones supplied by the delegate if it is available
+    CGPoint graphOrigin = [self.graphViewdelegate getGraphOrigin];
+    
     //Draw the Axes
-    CGPoint graphOrigin = CGPointMake(CGRectGetMidX(rect),CGRectGetMidY(rect));
+    NSLog(@"GraphView - drawRect origin x,y %f,%f", graphOrigin.x, graphOrigin.y);
     [AxesDrawer drawAxesInRect:rect originAtPoint:graphOrigin scale:self.scalingValue];
     
     //Draw the graph
@@ -51,10 +54,10 @@
     for (id pointObject in graphPoints) {
         //get the CGPoint from the object
         CGPoint nextPoint = [pointObject CGPointValue];
-        NSLog(@"GraphView - drawGraph point x %f", nextPoint.x);
-        NSLog(@"GraphView - drawGraph point y %f", nextPoint.y);
-        NSLog(@"GraphView - drawGraph origin adjusted x %f", nextPoint.x + graphOrigin.x);
-        NSLog(@"GraphView - drawGraph origin adjusted y %f", -(nextPoint.y - graphOrigin.y));
+        //NSLog(@"GraphView - drawGraph point x %f", nextPoint.x);
+        //NSLog(@"GraphView - drawGraph point y %f", nextPoint.y);
+        //NSLog(@"GraphView - drawGraph origin adjusted x %f", nextPoint.x + graphOrigin.x);
+        //NSLog(@"GraphView - drawGraph origin adjusted y %f", -(nextPoint.y - graphOrigin.y));
         CGContextAddLineToPoint(context, (scale*nextPoint.x + graphOrigin.x), -((scale*nextPoint.y - graphOrigin.y)));
     }
     CGContextDrawPath(context, kCGPathStroke);

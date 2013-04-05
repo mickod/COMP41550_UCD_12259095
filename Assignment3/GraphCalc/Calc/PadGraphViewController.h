@@ -16,4 +16,5 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet GraphView *thisGraphView;
 @property (weak, nonatomic) CalcModel *calcModel;
+- (CGPoint) getGraphOrigin;
 @end

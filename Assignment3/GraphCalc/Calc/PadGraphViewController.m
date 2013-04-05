@@ -9,7 +9,7 @@
 #import "PadGraphViewController.h"
 
 @interface PadGraphViewController ()
-
+@property CGPoint currentGraphOrigin;
 @end
 
 @implementation PadGraphViewController
@@ -28,8 +28,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Set initial view properties
 	self.thisGraphView.scalingValue = 1;
     self.thisGraphView.graphViewdelegate = self;
+    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    
+    //Attach the pinch gesture
+    UIPinchGestureRecognizer *graphPinchGesture =[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureEventOnGraphView:)];
+    [self.thisGraphView addGestureRecognizer:graphPinchGesture];
+    
+    //Add the pan gesture
+    UIPanGestureRecognizer *graphPanGesture = [[UIPanGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(panGestureEventOnGraphView:)];
+    
+    [self.thisGraphView addGestureRecognizer:graphPanGesture];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,7 +98,7 @@
     [self.thisGraphView setNeedsDisplay];
 }
 
-- (IBAction)zoomPlusEvent:(id)sender {
+- (IBAction)zoomPlusEvent {
     
     if (self.thisGraphView.scalingValue < 10) {
         self.thisGraphView.scalingValue +=1;
@@ -92,7 +106,7 @@
     }
 }
 
-- (IBAction)zoomMinusEvent:(id)sender {
+- (IBAction)zoomMinusEvent {
     
     if (self.thisGraphView.scalingValue > 1) {
         self.thisGraphView.scalingValue -=1;
@@ -100,7 +114,32 @@
     }
 }
 
-
-- (IBAction)pinchEvent:(id)sender {
+- (void)pinchGestureEventOnGraphView:(UIPinchGestureRecognizer *)sender {
+    
+    //Check to see if it was a pinch in or pinch out and zoom accordingly
+    NSLog(@"Scale: %.2f | Velocity: %.2f",sender.scale,sender.velocity);
+    if (sender.scale > 1) {
+        [self zoomPlusEvent];
+    } else {
+        [self zoomMinusEvent];
+    }
 }
+
+- (void)panGestureEventOnGraphView:(UIPanGestureRecognizer *)sender {
+    
+    //Move the origin with the pan
+    NSLog(@"Pan Gesture");
+    CGPoint translation = [sender translationInView:self.view];
+    self.currentGraphOrigin = translation;
+    [self.thisGraphView setNeedsDisplay];
+
+}
+
+- (CGPoint) getGraphOrigin {
+    
+    //This is the delegate method to return the graph orgin for a requesting
+    //Graph View
+    return self.currentGraphOrigin;
+}
+
 @end
