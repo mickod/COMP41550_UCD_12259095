@@ -29,21 +29,28 @@
 {
     [super viewDidLoad];
     
+    //Create the GraphView and add it programatically
+    //self.view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
+    //self.view.backgroundColor = [UIColor greyColor];
+    
     //Set initial view properties
 	self.thisGraphView.scalingValue = 1;
     self.thisGraphView.graphViewdelegate = self;
     self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
     
     //Attach the pinch gesture
-    UIPinchGestureRecognizer *graphPinchGesture =[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(pinchGestureEventOnGraphView:)];
-    [self.thisGraphView addGestureRecognizer:graphPinchGesture];
+    UIPinchGestureRecognizer *graphPinchGestureRecognizer =[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGestureEventOnGraphView:)];
+    [self.thisGraphView addGestureRecognizer:graphPinchGestureRecognizer];
     
     //Add the pan gesture
-    UIPanGestureRecognizer *graphPanGesture = [[UIPanGestureRecognizer alloc]
-                                   initWithTarget:self action:@selector(panGestureEventOnGraphView:)];
+    UIPanGestureRecognizer *graphPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                   initWithTarget:self action:@selector(handlePanGestureEventOnGraphView:)];
+    [self.thisGraphView addGestureRecognizer:graphPanGestureRecognizer];
     
-    [self.thisGraphView addGestureRecognizer:graphPanGesture];
-
+    //Add the doubel tab gesture controller
+    UITapGestureRecognizer *graphDoubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTabEventOnGraphView:)];
+    graphDoubleTapGestureRecognizer.numberOfTapsRequired = 2;
+    [self.thisGraphView addGestureRecognizer:graphDoubleTapGestureRecognizer];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,7 +108,7 @@
 - (IBAction)zoomPlusEvent {
     
     if (self.thisGraphView.scalingValue < 10) {
-        self.thisGraphView.scalingValue +=1;
+        self.thisGraphView.scalingValue +=0.1;
         [self.thisGraphView setNeedsDisplay];
     }
 }
@@ -109,12 +116,12 @@
 - (IBAction)zoomMinusEvent {
     
     if (self.thisGraphView.scalingValue > 1) {
-        self.thisGraphView.scalingValue -=1;
+        self.thisGraphView.scalingValue -=0.1;
         [self.thisGraphView setNeedsDisplay];
     }
 }
 
-- (void)pinchGestureEventOnGraphView:(UIPinchGestureRecognizer *)sender {
+- (void)handlePinchGestureEventOnGraphView:(UIPinchGestureRecognizer *)sender {
     
     //Check to see if it was a pinch in or pinch out and zoom accordingly
     NSLog(@"Scale: %.2f | Velocity: %.2f",sender.scale,sender.velocity);
@@ -125,14 +132,26 @@
     }
 }
 
-- (void)panGestureEventOnGraphView:(UIPanGestureRecognizer *)sender {
+- (void)handlePanGestureEventOnGraphView:(UIPanGestureRecognizer *)sender {
     
     //Move the origin with the pan
     NSLog(@"Pan Gesture");
+    
     CGPoint translation = [sender translationInView:self.view];
-    self.currentGraphOrigin = translation;
+    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
     [self.thisGraphView setNeedsDisplay];
+    
+    //set the translation view as translationInView gives the delta from the initial
+    //point not from the last time it was called
+    [sender setTranslation:CGPointZero inView:self.view];
 
+}
+
+- (void) handleDoubleTabEventOnGraphView:(UIPanGestureRecognizer *)sender {
+    
+    //Move the origin back to the center of the veiw
+    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    [self.thisGraphView setNeedsDisplay];
 }
 
 - (CGPoint) getGraphOrigin {
