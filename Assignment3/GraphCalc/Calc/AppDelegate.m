@@ -7,12 +7,27 @@
 //
 
 #import "AppDelegate.h"
+#import "PadCalcViewController.h"
+#import "PadGraphViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    
+    //Get the Master view controller from the storyboard
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"iPad_Storyboard" bundle:nil];
+    UIViewController *firstVC = [sb instantiateViewControllerWithIdentifier:@"PadCalcViewController"];
+    
+    //Create the detail view controller programatically
+    PadGraphViewController* secondVC = [[PadGraphViewController alloc] init];
+    
+    //Create the Split view controller and set the master and detail
+    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
+    splitVC.viewControllers = [NSArray arrayWithObjects:firstVC, secondVC, nil];
+    self.window.rootViewController = splitVC;
+    [self.window makeKeyAndVisible];
+
     return YES;
 }
 							

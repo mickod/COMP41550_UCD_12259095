@@ -43,6 +43,9 @@
 
 - (id <SplitViewBarButtonItemPresenter>)splitViewBarButtonPresenter
 {
+    //This method simply returns the last object in the split view controller array, which is
+    //the 'big' view, so long as it confomrs to the SplitViewBarButtonItemPresenter protcol
+    //which it always should in our case. If it does not it retruns nil.
     id detailVC = [self.splitViewController.viewControllers lastObject];
     if(![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)]) detailVC = nil;
     return detailVC;
@@ -52,6 +55,16 @@
    shouldHideViewController:(UIViewController *)vc
               inOrientation:(UIInterfaceOrientation)orientation
 {
+    //To explain this slightly obscure line... this means
+    //if the splitViewBarButtonPresenter method does not return nil
+    //    then return YES (I.e hide the view controller) if the UI interface is Portrait
+    //         and NO if it is not
+    //else
+    //    simply return NO
+    //
+    //This makes sure that we only hide the view controller when in Portrait and when the view
+    //controller conforms to the SplitViewBarButtonItemPresenter protocol, and hence
+    //has a bar button item.
     return [self splitViewBarButtonPresenter]?UIInterfaceOrientationIsPortrait(orientation):NO;
 }
 
@@ -162,8 +175,13 @@
     [super viewDidLoad];
     //Set this object as the delegate for its own calcModel
     self.calcModel.calcModelDelegate = self;
+    
+    //Set this object as the delegate for its split view controller
+    self.splitViewController.delegate = self;
+    
     //set the graph view delegate to be the detail view (i.e. the big view on the iPad)
     self.plotGraphDelegate = [self getPadGraphViewController];
+    
     //Set the degree or radians mode to the inital value of the segement selector
     NSString *degreeOrRadSelected = [self.radianOrDegreesSegmentedController titleForSegmentAtIndex:self.radianOrDegreesSegmentedController.selectedSegmentIndex];
     [self setCalcModelDegreeOrRadMode:degreeOrRadSelected];

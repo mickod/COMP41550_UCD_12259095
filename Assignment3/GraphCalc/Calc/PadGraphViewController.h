@@ -13,7 +13,7 @@
 #import "PlotGraphExpressionDelegate.h"
 
 @interface PadGraphViewController : UIViewController <GraphViewDelegateProtocol, SplitViewBarButtonItemPresenter, PlotGraphExpressionDelegate>
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet GraphView *thisGraphView;
 @property (weak, nonatomic) CalcModel *calcModel;
 - (CGPoint) getGraphOrigin;

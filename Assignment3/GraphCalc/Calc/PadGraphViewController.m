@@ -22,6 +22,7 @@
     if (self) {
         // Custom initialization
     }
+    self.navigationController.navigationBarHidden = YES;
     return self;
 }
 
@@ -29,9 +30,28 @@
 {
     [super viewDidLoad];
     
+    //Ask for notifictaion of rotation events
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
     //Create the GraphView and add it programatically
-    //self.view = [[UIView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
-    //self.view.backgroundColor = [UIColor greyColor];
+    self.view = [[GraphView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.thisGraphView = (GraphView*) self.view;
+    
+    //Create the UIToolBar and add it
+    UIToolbar *thisToolbar = [[UIToolbar alloc] init];
+    thisToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    [thisToolbar setItems:items animated:NO];
+    self.toolbar = thisToolbar;
+    [self.view addSubview:thisToolbar];
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (orientation == UIDeviceOrientationLandscapeLeft ||
+        orientation == UIDeviceOrientationLandscapeRight) {
+        self.toolbar.hidden = YES;
+    } else {
+        self.toolbar.hidden = NO;
+    }
     
     //Set initial view properties
 	self.thisGraphView.scalingValue = 1;
@@ -61,6 +81,10 @@
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem {
     if(_splitViewBarButtonItem != splitViewBarButtonItem) {
+        //This method will check if the current value of the property is not nil and if so
+        //remove the object from the toolbar items.
+        //It will then check if the value the property is to be set to is not nil and insert
+        //it into the toolbar item if it is not
         NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
         if(_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
         if(splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
@@ -159,6 +183,18 @@
     //This is the delegate method to return the graph orgin for a requesting
     //Graph View
     return self.currentGraphOrigin;
+}
+
+- (void) didRotate:(NSNotification *)notification
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    if (orientation == UIDeviceOrientationLandscapeLeft ||
+        orientation == UIDeviceOrientationLandscapeRight) {
+        self.toolbar.hidden = YES;
+    } else {
+        self.toolbar.hidden = NO;
+    }
 }
 
 @end
