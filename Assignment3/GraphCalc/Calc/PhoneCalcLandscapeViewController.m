@@ -134,10 +134,10 @@
     self.navigationItem.backBarButtonItem = backButton;
 }
 
-- (void) viewWillAppear:(BOOL)animated {
+- (void) viewDidAppear:(BOOL)animated {
     
     //Check to see if the orientation is portrait when the view is appearing and if so
-    //infomr the delegate in case the delagte want to do something (like pop this view...)
+    //infomr the delegate in case the delagte wants to do something (like pop this view...)
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsPortrait(deviceOrientation)) {
         [self.viewControllerdelegate landscapeViewlaunchedInPortraitEvent:self];

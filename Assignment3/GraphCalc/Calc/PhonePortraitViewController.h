@@ -10,7 +10,7 @@
 #import "CalcModel.h"
 #import "PhoneCalcLandscapeViewController.h"
 
-@interface PhonePortraitViewController : UIViewController <CalcModelDelegate, GraphCalcLandscapeViewControllerDelegate>
+@interface PhonePortraitViewController : UIViewController <CalcModelDelegate, GraphCalcLandscapeViewControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *expressionDisplay;
 @property (nonatomic, strong) IBOutlet CalcModel *calcModel;
 @property (nonatomic,weak) IBOutlet UILabel *calcDisplay;

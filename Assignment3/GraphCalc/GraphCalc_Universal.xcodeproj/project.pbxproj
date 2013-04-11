@@ -138,8 +138,8 @@
 				E6DF383E16F21F89000EAEDB /* PhoneCalcLandscapeViewController.m */,
 				E6AEF59C16EF968E00AB0E8E /* PhoneGraphViewController.h */,
 				E6AEF59D16EF968E00AB0E8E /* PhoneGraphViewController.m */,
-				E6E33EFB16CAF0D300055DE7 /* PhonePortraitViewController.m */,
 				E6E33EFA16CAF0D300055DE7 /* PhonePortraitViewController.h */,
+				E6E33EFB16CAF0D300055DE7 /* PhonePortraitViewController.m */,
 				E6E33EF716CAF0D300055DE7 /* iPhone_Storyboard.storyboard */,
 			);
 			name = iPhone;

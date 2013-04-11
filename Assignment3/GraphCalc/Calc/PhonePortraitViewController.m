@@ -124,9 +124,14 @@
     
     //Set this object as the delegate for its own calcModel
     self.calcModel.calcModelDelegate = self;
+    
+    //Set it as the delegate for the Navigation controller
+    self.navigationController.delegate = self;
+    
     //Set the degree or radians mode to the inital value of the segement selector
     NSString *degreeOrRadSelected = [self.radianOrDegreesSegmentedController titleForSegmentAtIndex:self.radianOrDegreesSegmentedController.selectedSegmentIndex];
     [self setCalcModelDegreeOrRadMode:degreeOrRadSelected];
+    //Set the displays
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
     [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
@@ -161,15 +166,16 @@
 {
     
     //When an orientation change is detected switch view controllers - there is one
-    //view controller for the landscape view and one for portrait. First check if it
-    //is the graph view as that we want to rotate as normal
+    //view controller for the landscape view and one for portrait.
+    //However we must first check if it is the graph view as we want that to rotate as normal
     UIViewController *currentVC = self.navigationController.visibleViewController;
-    if([currentVC isMemberOfClass:NSClassFromString(@"GraphViewController")]) {
+    if([currentVC isMemberOfClass:NSClassFromString(@"PhoneGraphViewController")]) {
         //If this is the graph view controller then do nothing as we want that to be able to
         //rotate
         return;
     }
     
+    //If not the graph view then check orientation and select the view controller appropriately
     UIDeviceOrientation deviceOrientation = [UIDevice currentDevice].orientation;
     if (UIDeviceOrientationIsLandscape(deviceOrientation) &&
         !self.isShowingLandscapeView)
@@ -190,10 +196,9 @@
     
 }
 
-
 - (void) landscapeViewlaunchedInPortraitEvent:(PhoneCalcLandscapeViewController *)sender {
     
-    //The landscape view is tell us it has launched in portrait so pop the view
+    //The landscape view is telling us it has launched in portrait so pop the view
     [self.navigationController popViewControllerAnimated:NO];
     self.currentViewController = self;
     self.isShowingLandscapeView = NO;

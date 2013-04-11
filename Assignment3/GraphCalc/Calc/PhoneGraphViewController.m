@@ -29,8 +29,14 @@
 {
     [super viewDidLoad];
 	self.thisGraphView.scalingValue = 1;
-    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
     self.thisGraphView.graphViewdelegate = self;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    //The frame size can be reliably used at this point - it is not reliable in viewdidload
+    //as it apparently uses the orientation and size etc from the xib (storyboard)
+    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
 }
 
 - (void)didReceiveMemoryWarning
