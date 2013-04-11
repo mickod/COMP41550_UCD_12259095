@@ -982,27 +982,16 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" id="fso-7o-Dvb">
-                                <rect key="frame" x="0.0" y="372" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Zoom +" id="fKn-SW-HUd">
-                                        <connections>
-                                            <action selector="zoomPlusEvent:" destination="b1s-vI-T0n" id="3hU-xc-etq"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="173" style="plain" systemItem="fixedSpace" id="I95-qs-Zi4"/>
-                                    <barButtonItem title="Zoom -" id="N7c-le-q5E">
-                                        <connections>
-                                            <action selector="zoomMinusEvent:" destination="b1s-vI-T0n" id="ziw-xf-cvf"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <view contentMode="scaleToFill" id="vpn-4H-yGN" customClass="GraphView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="3Wg-L9-dY6" appends="YES" id="25e-bx-EZv"/>
+                                    <outletCollection property="gestureRecognizers" destination="aBu-3j-jnS" appends="YES" id="6co-SX-Vaa"/>
+                                    <outletCollection property="gestureRecognizers" destination="eqU-qs-bNQ" appends="YES" id="Qcr-fz-2io"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1013,10 +1002,75 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BNn-yT-w30" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="3Wg-L9-dY6">
+                    <connections>
+                        <action selector="pinchGestureEvent:" destination="b1s-vI-T0n" id="7Pc-ac-XWo"/>
+                    </connections>
+                </pinchGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="aBu-3j-jnS">
+                    <connections>
+                        <action selector="panGestureEvent:" destination="b1s-vI-T0n" id="pI8-vT-y5h"/>
+                    </connections>
+                </panGestureRecognizer>
+                <tapGestureRecognizer numberOfTapsRequired="2" id="eqU-qs-bNQ">
+                    <connections>
+                        <action selector="tapGestureEvent:" destination="b1s-vI-T0n" id="4Xq-Zf-PZo"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="542" y="62"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="CalcModel" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalcModel.h"/>
+        </class>
+        <class className="GraphView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
+        </class>
+        <class className="PhoneCalcLandscapeViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhoneCalcLandscapeViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="degreeOrRadSelectionEvent:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="graphButtonPressed:"/>
+                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="solveButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="variableButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="calcDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="calcModel" candidateClass="CalcModel"/>
+                <relationship kind="outlet" name="expressionDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="memoryDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="radianOrDegreesSegmentedController" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="PhoneGraphViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhoneGraphViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="panGestureEvent:" candidateClass="UIPanGestureRecognizer"/>
+                <relationship kind="action" name="pinchGestureEvent:" candidateClass="UIPinchGestureRecognizer"/>
+                <relationship kind="action" name="tapGestureEvent:" candidateClass="UITapGestureRecognizer"/>
+                <relationship kind="outlet" name="thisGraphView" candidateClass="GraphView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+            </relationships>
+        </class>
+        <class className="PhonePortraitViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhonePortraitViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="degreeOrRadSelectionEvent:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="graphButtonPressed:"/>
+                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="solveButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="variableButtonPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="calcDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="calcModel" candidateClass="CalcModel"/>
+                <relationship kind="outlet" name="expressionDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="memoryDisplay" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="radianOrDegreesSegmentedController" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

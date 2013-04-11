@@ -14,19 +14,22 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    //Get the Master view controller from the storyboard
-    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"iPad_Storyboard" bundle:nil];
-    UIViewController *firstVC = [sb instantiateViewControllerWithIdentifier:@"PadCalcViewController"];
-    
-    //Create the detail view controller programatically
-    PadGraphViewController* secondVC = [[PadGraphViewController alloc] init];
-    
-    //Create the Split view controller and set the master and detail
-    UISplitViewController* splitVC = [[UISplitViewController alloc] init];
-    splitVC.viewControllers = [NSArray arrayWithObjects:firstVC, secondVC, nil];
-    self.window.rootViewController = splitVC;
-    [self.window makeKeyAndVisible];
+    //If the app is running on an ipad create the splitview controller
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        //Get the Master view controller from the storyboard
+        UIStoryboard *sb = [UIStoryboard storyboardWithName:@"iPad_Storyboard" bundle:nil];
+        UIViewController *firstVC = [sb instantiateViewControllerWithIdentifier:@"PadCalcViewController"];
+        
+        //Create the detail view controller programatically
+        PadGraphViewController* secondVC = [[PadGraphViewController alloc] init];
+        
+        //Create the Split view controller and set the master and detail
+        UISplitViewController* splitVC = [[UISplitViewController alloc] init];
+        splitVC.viewControllers = [NSArray arrayWithObjects:firstVC, secondVC, nil];
+        self.window.rootViewController = splitVC;
+        [self.window makeKeyAndVisible];
+    }
 
     return YES;
 }

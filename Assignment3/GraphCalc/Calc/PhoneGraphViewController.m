@@ -11,6 +11,7 @@
 
 @interface PhoneGraphViewController ()
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property CGPoint currentGraphOrigin;
 @end
 
 @implementation PhoneGraphViewController
@@ -28,6 +29,7 @@
 {
     [super viewDidLoad];
 	self.thisGraphView.scalingValue = 1;
+    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
     self.thisGraphView.graphViewdelegate = self;
 }
 
@@ -37,20 +39,54 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)zoomPlusEvent:(id)sender {
+
+- (IBAction)zoomPlusEvent {
     
     if (self.thisGraphView.scalingValue < 10) {
-        self.thisGraphView.scalingValue +=1;
+        self.thisGraphView.scalingValue +=0.1;
         [self.thisGraphView setNeedsDisplay];
     }
 }
 
-- (IBAction)zoomMinusEvent:(id)sender {
+- (IBAction)zoomMinusEvent {
     
     if (self.thisGraphView.scalingValue > 1) {
-        self.thisGraphView.scalingValue -=1;
+        self.thisGraphView.scalingValue -=0.1;
         [self.thisGraphView setNeedsDisplay];
     }
+}
+
+- (void)handlePinchGestureEventOnGraphView:(UIPinchGestureRecognizer *)sender {
+    
+    //Check to see if it was a pinch in or pinch out and zoom accordingly
+    NSLog(@"Scale: %.2f | Velocity: %.2f",sender.scale,sender.velocity);
+    if (sender.scale > 1) {
+        [self zoomPlusEvent];
+    } else {
+        [self zoomMinusEvent];
+    }
+}
+
+- (void)handlePanGestureEventOnGraphView:(UIPanGestureRecognizer *)sender {
+    
+    //Move the origin with the pan
+    NSLog(@"Pan Gesture");
+    
+    CGPoint translation = [sender translationInView:self.view];
+    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
+    [self.thisGraphView setNeedsDisplay];
+    
+    //set the translation view as translationInView gives the delta from the initial
+    //point not from the last time it was called
+    [sender setTranslation:CGPointZero inView:self.view];
+    
+}
+
+- (CGPoint) getGraphOrigin {
+    
+    //This is the delegate method to return the graph orgin for a requesting
+    //Graph View
+    return self.currentGraphOrigin;
 }
 
 - (NSArray*) getGraphPoints {
@@ -80,4 +116,35 @@
     return graphPoints;
 }
 
+- (IBAction)pinchGestureEvent:(UIPinchGestureRecognizer *)sender {
+    
+    //Check to see if it was a pinch in or pinch out and zoom accordingly
+    NSLog(@"Scale: %.2f | Velocity: %.2f",sender.scale,sender.velocity);
+    if (sender.scale > 1) {
+        [self zoomPlusEvent];
+    } else {
+        [self zoomMinusEvent];
+    }
+}
+
+- (IBAction)tapGestureEvent:(UITapGestureRecognizer *)sender {
+    
+    //Move the origin back to the center of the veiw
+    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    [self.thisGraphView setNeedsDisplay];
+}
+
+- (IBAction)panGestureEvent:(UIPanGestureRecognizer *)sender {
+    
+    //Move the origin with the pan
+    NSLog(@"Pan Gesture");
+    
+    CGPoint translation = [sender translationInView:self.view];
+    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
+    [self.thisGraphView setNeedsDisplay];
+    
+    //set the translation view as translationInView gives the delta from the initial
+    //point not from the last time it was called
+    [sender setTranslation:CGPointZero inView:self.view];
+}
 @end

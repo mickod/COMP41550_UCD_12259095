@@ -14,6 +14,8 @@
 @interface PhoneGraphViewController : UIViewController <GraphViewDelegateProtocol>
 @property (weak, nonatomic) IBOutlet GraphView *thisGraphView;
 @property (weak, nonatomic) CalcModel *calcModel;
-- (IBAction)zoomPlusEvent:(id)sender;
-- (IBAction)zoomMinusEvent:(id)sender;
+- (IBAction)pinchGestureEvent:(UIPinchGestureRecognizer *)sender;
+- (IBAction)tapGestureEvent:(UITapGestureRecognizer *)sender;
+- (IBAction)panGestureEvent:(UIPanGestureRecognizer *)sender;
+
 @end
