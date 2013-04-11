@@ -29,25 +29,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //Ask for notifictaion of rotation events
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didRotate:) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
+      
     //Create the GraphView and add it programatically
     self.view = [[GraphView alloc]initWithFrame:[UIScreen mainScreen].applicationFrame];
     self.view.backgroundColor = [UIColor whiteColor];
     self.thisGraphView = (GraphView*) self.view;
     
-    //Create the UIToolBar and add it
+    //Create the UIToolBar and add it. Note all apps launch in portrait intially
+    //so we use this to get the correct width for the tool bar which will
+    //only be displayed in portrait
     UIToolbar *thisToolbar = [[UIToolbar alloc] init];
-    thisToolbar.frame = CGRectMake(0, 0, self.view.frame.size.width, 44);
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    thisToolbar.frame = CGRectMake(0, 0, screenRect.size.width, 44);
     NSMutableArray *items = [[NSMutableArray alloc] init];
     [thisToolbar setItems:items animated:NO];
     self.toolbar = thisToolbar;
     [self.view addSubview:thisToolbar];
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
-    if (orientation == UIDeviceOrientationLandscapeLeft ||
-        orientation == UIDeviceOrientationLandscapeRight) {
+    UIInterfaceOrientation statusBarOrientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if(statusBarOrientation == UIDeviceOrientationLandscapeLeft ||
+       statusBarOrientation == UIDeviceOrientationLandscapeRight) {
         self.toolbar.hidden = YES;
     } else {
         self.toolbar.hidden = NO;
@@ -185,16 +185,18 @@
     return self.currentGraphOrigin;
 }
 
-- (void) didRotate:(NSNotification *)notification
-{
-    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+- (void) hideToolBar {
     
-    if (orientation == UIDeviceOrientationLandscapeLeft ||
-        orientation == UIDeviceOrientationLandscapeRight) {
-        self.toolbar.hidden = YES;
-    } else {
-        self.toolbar.hidden = NO;
-    }
+    //This method implements the SplitViewBarButtonItemPresenter delegate method
+    //to hide the tool bar
+    self.toolbar.hidden = YES;
+}
+
+- (void) showToolBar {
+    
+    //This method implements the SplitViewBarButtonItemPresenter delegate method
+    //to show the tool bar
+    self.toolbar.hidden = NO;
 }
 
 @end

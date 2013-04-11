@@ -75,6 +75,7 @@
 {
     barButtonItem.title = self.title;
     [self splitViewBarButtonPresenter].splitViewBarButtonItem = barButtonItem;
+    [[self splitViewBarButtonPresenter] showToolBar];
 }
 
 - (void)splitViewController:(UISplitViewController *)svc
@@ -83,6 +84,7 @@
 {
     // tell the detail view to take button away
     [self splitViewBarButtonPresenter].splitViewBarButtonItem = nil;
+    [[self splitViewBarButtonPresenter] hideToolBar];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

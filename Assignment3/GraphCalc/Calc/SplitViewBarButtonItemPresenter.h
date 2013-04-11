@@ -10,4 +10,6 @@
 
 @protocol SplitViewBarButtonItemPresenter <NSObject>
 @property (nonatomic, strong) UIBarButtonItem *splitViewBarButtonItem;
+- (void) hideToolBar;
+- (void) showToolBar;
 @end
