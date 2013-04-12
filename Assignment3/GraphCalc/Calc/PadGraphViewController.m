@@ -8,6 +8,9 @@
 
 #import "PadGraphViewController.h"
 
+#define USER_DEFAULT_GRAPH_ORIGIN @"USER_DEFAULT_GRAPH_ORIGIN"
+#define USER_DEFAULT_SCALING_FACTOR @"USER_DEFAULT_SCALING_FACTOR"
+
 @interface PadGraphViewController ()
 @property CGPoint currentGraphOrigin;
 @end
@@ -21,6 +24,14 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillResignActive:)
+                                                       name:UIApplicationWillResignActiveNotification
+                                                     object:[UIApplication sharedApplication]];
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillTerminate:)
+                                                       name:UIApplicationWillTerminateNotification
+                                                     object:[UIApplication sharedApplication]];
     }
     self.navigationController.navigationBarHidden = YES;
     return self;
@@ -71,6 +82,49 @@
     UITapGestureRecognizer *graphDoubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTabEventOnGraphView:)];
     graphDoubleTapGestureRecognizer.numberOfTapsRequired = 2;
     [self.thisGraphView addGestureRecognizer:graphDoubleTapGestureRecognizer];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    //Load the user defaults into the model
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.thisGraphView.scalingValue = [userDefaults floatForKey:USER_DEFAULT_SCALING_FACTOR];
+    if (self.thisGraphView.scalingValue == 0) {
+        self.thisGraphView.scalingValue = 1;
+    }
+    NSString *originAsString = [userDefaults objectForKey:USER_DEFAULT_GRAPH_ORIGIN];
+    if (originAsString == nil) {
+        self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    } else {
+        self.currentGraphOrigin = CGPointFromString(originAsString);
+    }
+
+}
+
+- (void)graphCalcAppWillResignActive:(NSNotification *)notification {
+    
+    //Applictaion is going into the background so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+    
+}
+
+- (void) graphCalcAppWillTerminate:(NSNotification *)notification {
+    
+    //Applictaion is going to terminate so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+}
+
+- (void) storeApplictaionState {
+    
+    //Store the applictaion state
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *originAsString = NSStringFromCGPoint(self.currentGraphOrigin);
+    [userDefaults setObject:originAsString forKey:USER_DEFAULT_GRAPH_ORIGIN];
+    [userDefaults setFloat:self.thisGraphView.scalingValue forKey:USER_DEFAULT_SCALING_FACTOR];
+
+    [userDefaults synchronize];
 }
 
 - (void)didReceiveMemoryWarning

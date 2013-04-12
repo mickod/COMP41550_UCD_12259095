@@ -10,6 +10,13 @@
 #import "SplitViewBarButtonItemPresenter.h"
 #import "PadGraphViewController.h"
 
+#define USER_DEFAULT_OPERAND @"USER_DEFAULT_OPERAND"
+#define USER_DEFAULT_WAITING_OPERAND @"USER_DEFAULT_WAITING_OPERAND"
+#define USER_DEFAULT_WAITING_OPERATION @"USER_DEFAULT_WAITING_OPERATION"
+#define USER_DEFAULT_EXPRESSION @"USER_DEFAULT_EXPRESSION"
+#define USER_DEFAULT_MEMORY_VALUE @"USER_DEFAULT_MEMORY_VALUE"
+#define USER_DEFAULT_DEG_NOT_RAD_BOOL @"USER_DEFAULT_DEG_NOT_RAD_BOOL"
+
 @interface PadCalcViewController ()
 
 @end
@@ -20,7 +27,23 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        
+    }
+    return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillResignActive:)
+                                                       name:UIApplicationWillResignActiveNotification
+                                                     object:[UIApplication sharedApplication]];
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillTerminate:)
+                                                       name:UIApplicationWillTerminateNotification
+                                                     object:[UIApplication sharedApplication]];
     }
     return self;
 }
@@ -33,6 +56,37 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)graphCalcAppWillResignActive:(NSNotification *)notification {
+    
+    //Applictaion is going into the background so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+    
+}
+
+- (void) graphCalcAppWillTerminate:(NSNotification *)notification {
+    
+    //Applictaion is going to terminate so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+}
+
+- (void) storeApplictaionState {
+    
+    //Store the applictaion state
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setDouble:self.calcModel.operand
+                     forKey:USER_DEFAULT_OPERAND];
+    [userDefaults setDouble:self.calcModel.waitingOperand
+                     forKey:USER_DEFAULT_WAITING_OPERAND];
+    [userDefaults setDouble:self.calcModel.memoryValue
+                     forKey:USER_DEFAULT_MEMORY_VALUE];
+    [userDefaults setBool:self.calcModel.useDegreesNotRads
+                   forKey:USER_DEFAULT_DEG_NOT_RAD_BOOL];
+    [userDefaults setObject:self.calcModel.waitingOperation forKey:USER_DEFAULT_WAITING_OPERATION];
+    [userDefaults synchronize];
 }
 
 - (PadGraphViewController *)getPadGraphViewController {
@@ -184,12 +238,25 @@
     //set the graph view delegate to be the detail view (i.e. the big view on the iPad)
     self.plotGraphDelegate = [self getPadGraphViewController];
     
-    //Set the degree or radians mode to the inital value of the segement selector
-    NSString *degreeOrRadSelected = [self.radianOrDegreesSegmentedController titleForSegmentAtIndex:self.radianOrDegreesSegmentedController.selectedSegmentIndex];
-    [self setCalcModelDegreeOrRadMode:degreeOrRadSelected];
+    //Load the user defaults into the model - note that if there are none
+    //the default returned are all ok in thi case
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.calcModel.operand = [userDefaults doubleForKey:USER_DEFAULT_OPERAND];
+    self.calcModel.waitingOperand = [userDefaults doubleForKey:USER_DEFAULT_WAITING_OPERAND];
+    self.calcModel.memoryValue = [userDefaults doubleForKey:USER_DEFAULT_MEMORY_VALUE];
+    self.calcModel.waitingOperation = [userDefaults objectForKey:USER_DEFAULT_WAITING_OPERATION];
+    self.calcModel.useDegreesNotRads = [userDefaults boolForKey:USER_DEFAULT_DEG_NOT_RAD_BOOL];
+    
+    //Set the displays based on the model
+    [self setCalcModelDegreeOrRadDisplayBasedOn:self.calcModel.useDegreesNotRads];
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
     [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+
 }
 
 -(void) setCalcModelDegreeOrRadMode:(NSString*) selectionText {
@@ -202,6 +269,19 @@
     } else {
         self.calcModel.useDegreesNotRads = YES;
     }
+}
+
+-(void) setCalcModelDegreeOrRadDisplayBasedOn:(Boolean)useDegNotRadBool {
+    
+    //If the selector is rad set the calc model to use radians, otherwise
+    //default to degrees (this covers the error case where the selected value is
+    //neither for some reason
+    if (useDegNotRadBool) {
+        self.radianOrDegreesSegmentedController.selectedSegmentIndex = 0;
+    } else {
+        self.radianOrDegreesSegmentedController.selectedSegmentIndex = 1;
+    }
+
 }
 
 - (IBAction)variableButtonPressed:(UIButton *)sender {
