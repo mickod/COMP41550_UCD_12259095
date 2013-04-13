@@ -11,6 +11,7 @@
 		E6AEF59B16EF962100AB0E8E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */; };
 		E6AEF59E16EF968E00AB0E8E /* PhoneGraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF59D16EF968E00AB0E8E /* PhoneGraphViewController.m */; };
 		E6CABC8816F0BA3500E1B5F6 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6AEF5A016EF97DD00AB0E8E /* GraphView.m */; };
+		E6D5F423171A01E6002652C4 /* UniversalCalcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6D5F422171A01E6002652C4 /* UniversalCalcViewController.m */; };
 		E6DF383F16F21F89000EAEDB /* PhoneCalcLandscapeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DF383E16F21F89000EAEDB /* PhoneCalcLandscapeViewController.m */; };
 		E6E33EE016CAF0D300055DE7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E33EDF16CAF0D300055DE7 /* UIKit.framework */; };
 		E6E33EE216CAF0D300055DE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E33EE116CAF0D300055DE7 /* Foundation.framework */; };
@@ -37,6 +38,8 @@
 		E6AEF59D16EF968E00AB0E8E /* PhoneGraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneGraphViewController.m; sourceTree = "<group>"; };
 		E6AEF59F16EF97DD00AB0E8E /* GraphView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
 		E6AEF5A016EF97DD00AB0E8E /* GraphView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		E6D5F421171A01E6002652C4 /* UniversalCalcViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniversalCalcViewController.h; sourceTree = "<group>"; };
+		E6D5F422171A01E6002652C4 /* UniversalCalcViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UniversalCalcViewController.m; sourceTree = "<group>"; };
 		E6DF383D16F21F89000EAEDB /* PhoneCalcLandscapeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneCalcLandscapeViewController.h; sourceTree = "<group>"; };
 		E6DF383E16F21F89000EAEDB /* PhoneCalcLandscapeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneCalcLandscapeViewController.m; sourceTree = "<group>"; };
 		E6E33EDB16CAF0D300055DE7 /* GraphCalc_Universal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GraphCalc_Universal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,6 +173,8 @@
 				E6AEF59816EF961800AB0E8E /* AxesDrawer.h */,
 				E6E33EEE16CAF0D300055DE7 /* AppDelegate.h */,
 				E6E33EEF16CAF0D300055DE7 /* AppDelegate.m */,
+				E6D5F421171A01E6002652C4 /* UniversalCalcViewController.h */,
+				E6D5F422171A01E6002652C4 /* UniversalCalcViewController.m */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -251,6 +256,7 @@
 				E6DF383F16F21F89000EAEDB /* PhoneCalcLandscapeViewController.m in Sources */,
 				E6EBA4CC170CAB7E00795C9C /* PadCalcViewController.m in Sources */,
 				E6EBA4D3170CD51C00795C9C /* PadGraphViewController.m in Sources */,
+				E6D5F423171A01E6002652C4 /* UniversalCalcViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

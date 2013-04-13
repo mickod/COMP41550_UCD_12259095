@@ -979,11 +979,11 @@
             <objects>
                 <viewController title="Graph View" id="b1s-vI-T0n" customClass="PhoneGraphViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFit" id="ODU-4u-rc2">
-                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="64" width="480" height="256"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="vpn-4H-yGN" customClass="GraphView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="256"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
@@ -995,6 +995,7 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     </view>
                     <navigationItem key="navigationItem" title="Graph view" id="jPo-rS-Zkz"/>
                     <connections>
@@ -1021,62 +1022,12 @@
             <point key="canvasLocation" x="542" y="62"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="CalcModel" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CalcModel.h"/>
-        </class>
-        <class className="GraphView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphView.h"/>
-        </class>
-        <class className="PhoneCalcLandscapeViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhoneCalcLandscapeViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="degreeOrRadSelectionEvent:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="graphButtonPressed:"/>
-                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="solveButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="variableButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="calcDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="calcModel" candidateClass="CalcModel"/>
-                <relationship kind="outlet" name="expressionDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="memoryDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="radianOrDegreesSegmentedController" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-        <class className="PhoneGraphViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhoneGraphViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="panGestureEvent:" candidateClass="UIPanGestureRecognizer"/>
-                <relationship kind="action" name="pinchGestureEvent:" candidateClass="UIPinchGestureRecognizer"/>
-                <relationship kind="action" name="tapGestureEvent:" candidateClass="UITapGestureRecognizer"/>
-                <relationship kind="outlet" name="thisGraphView" candidateClass="GraphView"/>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
-            </relationships>
-        </class>
-        <class className="PhonePortraitViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhonePortraitViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="degreeOrRadSelectionEvent:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="graphButtonPressed:"/>
-                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="solveButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="action" name="variableButtonPressed:" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="calcDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="calcModel" candidateClass="CalcModel"/>
-                <relationship kind="outlet" name="expressionDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="memoryDisplay" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="radianOrDegreesSegmentedController" candidateClass="UISegmentedControl"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="shU-CD-Wyr"/>
+        <segue reference="vgP-T4-OFm"/>
     </inferredMetricsTieBreakers>
 </document>
