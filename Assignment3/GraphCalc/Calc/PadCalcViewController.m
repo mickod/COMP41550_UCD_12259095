@@ -11,11 +11,14 @@
 #import "PadGraphViewController.h"
 
 #define USER_DEFAULT_OPERAND @"USER_DEFAULT_OPERAND"
+#define USER_DEFAULT_CALC_DISPLAY @"USER_DEFAULT_CALC_DISPLAY"
+#define USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL @"USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL"
 #define USER_DEFAULT_WAITING_OPERAND @"USER_DEFAULT_WAITING_OPERAND"
 #define USER_DEFAULT_WAITING_OPERATION @"USER_DEFAULT_WAITING_OPERATION"
 #define USER_DEFAULT_EXPRESSION @"USER_DEFAULT_EXPRESSION"
 #define USER_DEFAULT_MEMORY_VALUE @"USER_DEFAULT_MEMORY_VALUE"
 #define USER_DEFAULT_DEG_NOT_RAD_BOOL @"USER_DEFAULT_DEG_NOT_RAD_BOOL"
+#define USER_DEFAULT_CALC_MODEL_EXPRESSION @"USER_DEFAULT_CALC_MODEL_EXPRESSION"
 
 @interface PadCalcViewController ()
 
@@ -79,6 +82,8 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setDouble:self.calcModel.operand
                      forKey:USER_DEFAULT_OPERAND];
+    [userDefaults setObject:self.calcDisplay.text forKey:USER_DEFAULT_CALC_DISPLAY];
+    [userDefaults setBool:self.isInTheMiddleOfTypingSomething forKey:USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL];
     [userDefaults setDouble:self.calcModel.waitingOperand
                      forKey:USER_DEFAULT_WAITING_OPERAND];
     [userDefaults setDouble:self.calcModel.memoryValue
@@ -86,6 +91,8 @@
     [userDefaults setBool:self.calcModel.useDegreesNotRads
                    forKey:USER_DEFAULT_DEG_NOT_RAD_BOOL];
     [userDefaults setObject:self.calcModel.waitingOperation forKey:USER_DEFAULT_WAITING_OPERATION];
+    NSArray *calcModelExpressionAsArray = [CalcModel propertyListForExpression:self.calcModel.expression];
+    [userDefaults setObject:calcModelExpressionAsArray forKey:USER_DEFAULT_CALC_MODEL_EXPRESSION];
     [userDefaults synchronize];
 }
 
@@ -242,14 +249,18 @@
     //the default returned are all ok in thi case
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.calcModel.operand = [userDefaults doubleForKey:USER_DEFAULT_OPERAND];
+    self.isInTheMiddleOfTypingSomething = [userDefaults boolForKey:USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL];
     self.calcModel.waitingOperand = [userDefaults doubleForKey:USER_DEFAULT_WAITING_OPERAND];
     self.calcModel.memoryValue = [userDefaults doubleForKey:USER_DEFAULT_MEMORY_VALUE];
     self.calcModel.waitingOperation = [userDefaults objectForKey:USER_DEFAULT_WAITING_OPERATION];
     self.calcModel.useDegreesNotRads = [userDefaults boolForKey:USER_DEFAULT_DEG_NOT_RAD_BOOL];
+    NSArray *calcModelExpressionArray = [userDefaults objectForKey:USER_DEFAULT_CALC_MODEL_EXPRESSION];
+    id retrievedExpression = [self.calcModel expressionForPropertyList:calcModelExpressionArray];
+    self.calcModel.expression = retrievedExpression;
     
     //Set the displays based on the model
     [self setCalcModelDegreeOrRadDisplayBasedOn:self.calcModel.useDegreesNotRads];
-    [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
+    [self.calcDisplay setText:[userDefaults objectForKey:USER_DEFAULT_CALC_DISPLAY]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
     [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
 }

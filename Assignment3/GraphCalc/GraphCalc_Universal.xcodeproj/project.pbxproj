@@ -162,8 +162,8 @@
 		E6EBA4D0170CD46C00795C9C /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E6E33F0316CAF1A400055DE7 /* CalcModel.m */,
 				E6E33F0216CAF1A400055DE7 /* CalcModel.h */,
+				E6E33F0316CAF1A400055DE7 /* CalcModel.m */,
 				E6AEF59F16EF97DD00AB0E8E /* GraphView.h */,
 				E6AEF5A016EF97DD00AB0E8E /* GraphView.m */,
 				E6AEF59A16EF962100AB0E8E /* AxesDrawer.m */,

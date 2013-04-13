@@ -36,6 +36,13 @@
     return self.expressionAsArray;
 }
 
+- (void) setExpression:(id)expression {
+    ////Externally the expression is just an 'id' but
+    //internally we use an NSMutableArray. Set the internal
+    //variable with the id passed in
+    self.expressionAsArray = expression;
+}
+
 - (void) setUserEnteredOperand:(double)userEnteredOperand {
     
     //Add the operand to the model's expression
@@ -194,6 +201,20 @@
     
     //Return the result
     return result;
+}
+
++ (id) propertyListForExpression:(id)anExpression {
+    
+    //This method returns a property list for an expression
+    NSArray *expressionAsArray = anExpression;
+    return expressionAsArray;
+}
+
+- (id) expressionForPropertyList:(id)propertyList {
+    
+    //This method returns an expression for an input property list
+    NSArray *expressionAsArray = propertyList;
+    return expressionAsArray;
 }
 
 @end
