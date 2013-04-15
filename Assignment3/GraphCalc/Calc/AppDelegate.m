@@ -19,10 +19,11 @@
     {
         //Get the Master view controller from the storyboard
         UIStoryboard *sb = [UIStoryboard storyboardWithName:@"iPad_Storyboard" bundle:nil];
-        UIViewController *firstVC = [sb instantiateViewControllerWithIdentifier:@"PadCalcViewController"];
+        PadCalcViewController *firstVC = [sb instantiateViewControllerWithIdentifier:@"PadCalcViewController"];
         
         //Create the detail view controller programatically
         PadGraphViewController* secondVC = [[PadGraphViewController alloc] init];
+        secondVC.calcModel = firstVC.calcModel;
         
         //Create the Split view controller and set the master and detail
         UISplitViewController* splitVC = [[UISplitViewController alloc] init];

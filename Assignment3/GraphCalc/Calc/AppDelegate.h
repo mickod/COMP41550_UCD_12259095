@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PadCalcViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
 @end
