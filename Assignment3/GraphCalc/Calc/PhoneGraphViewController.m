@@ -9,9 +9,12 @@
 #import "PhoneGraphViewController.h"
 #import "AxesDrawer.h"
 
+#define USER_DEFAULT_GRAPH_ORIGIN @"USER_DEFAULT_GRAPH_ORIGIN"
+#define USER_DEFAULT_SCALING_FACTOR @"USER_DEFAULT_SCALING_FACTOR"
+
 @interface PhoneGraphViewController ()
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
-@property CGPoint currentGraphOrigin;
+@property CGPoint currentGraphOriginOffset;
 @end
 
 @implementation PhoneGraphViewController
@@ -21,6 +24,22 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+    }
+    return self;
+}
+
+-(id) initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillResignActive:)
+                                                       name:UIApplicationWillResignActiveNotification
+                                                     object:[UIApplication sharedApplication]];
+        [[NSNotificationCenter defaultCenter]   addObserver:self
+                                                   selector:@selector(graphCalcAppWillTerminate:)
+                                                       name:UIApplicationWillTerminateNotification
+                                                     object:[UIApplication sharedApplication]];
     }
     return self;
 }
@@ -36,7 +55,7 @@
     
     //The frame size can be reliably used at this point - it is not reliable in viewdidload
     //as it apparently uses the orientation and size etc from the xib (storyboard)
-    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    self.currentGraphOriginOffset = CGPointMake(0,0);
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +98,7 @@
     NSLog(@"Pan Gesture");
     
     CGPoint translation = [sender translationInView:self.view];
-    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
+    self.currentGraphOriginOffset = CGPointMake(self.currentGraphOriginOffset.x + translation.x, self.currentGraphOriginOffset.y + translation.y);
     [self.thisGraphView setNeedsDisplay];
     
     //set the translation view as translationInView gives the delta from the initial
@@ -88,11 +107,11 @@
     
 }
 
-- (CGPoint) getGraphOrigin {
+- (CGPoint) getGraphOriginOffset {
     
     //This is the delegate method to return the graph orgin for a requesting
     //Graph View
-    return self.currentGraphOrigin;
+    return self.currentGraphOriginOffset;
 }
 
 - (NSArray*) getGraphPoints {
@@ -136,7 +155,7 @@
 - (IBAction)tapGestureEvent:(UITapGestureRecognizer *)sender {
     
     //Move the origin back to the center of the veiw
-    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    self.currentGraphOriginOffset = CGPointMake(0,0);
     [self.thisGraphView setNeedsDisplay];
 }
 
@@ -146,11 +165,39 @@
     NSLog(@"Pan Gesture");
     
     CGPoint translation = [sender translationInView:self.view];
-    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
+    self.currentGraphOriginOffset
+    = CGPointMake(self.currentGraphOriginOffset.x + translation.x, self.currentGraphOriginOffset.y + translation.y);
     [self.thisGraphView setNeedsDisplay];
     
     //set the translation view as translationInView gives the delta from the initial
     //point not from the last time it was called
     [sender setTranslation:CGPointZero inView:self.view];
 }
+
+- (void)graphCalcAppWillResignActive:(NSNotification *)notification {
+    
+    //Applictaion is going into the background so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+    
+}
+
+- (void) graphCalcAppWillTerminate:(NSNotification *)notification {
+    
+    //Applictaion is going to terminate so store the applictaion state
+    //in NSUserDefaults
+    [self storeApplictaionState];
+}
+
+- (void) storeApplictaionState {
+    
+    //Store the applictaion state
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *originOffsetAsString = NSStringFromCGPoint(self.currentGraphOriginOffset);
+    [userDefaults setObject:originOffsetAsString forKey:USER_DEFAULT_GRAPH_ORIGIN];
+    [userDefaults setFloat:self.thisGraphView.scalingValue forKey:USER_DEFAULT_SCALING_FACTOR];
+    
+    [userDefaults synchronize];
+}
+
 @end

@@ -10,7 +10,7 @@
 
 @protocol GraphViewDelegateProtocol
 - (NSArray*) getGraphPoints;
-- (CGPoint) getGraphOrigin;
+- (CGPoint) getGraphOriginOffset;
 @end
 
 @interface GraphView : UIView

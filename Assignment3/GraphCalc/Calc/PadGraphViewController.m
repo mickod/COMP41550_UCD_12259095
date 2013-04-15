@@ -12,7 +12,7 @@
 #define USER_DEFAULT_SCALING_FACTOR @"USER_DEFAULT_SCALING_FACTOR"
 
 @interface PadGraphViewController ()
-@property CGPoint currentGraphOrigin;
+@property CGPoint currentGraphOriginOffset;
 @end
 
 @implementation PadGraphViewController
@@ -67,7 +67,7 @@
     //Set initial view properties
 	self.thisGraphView.scalingValue = 1;
     self.thisGraphView.graphViewdelegate = self;
-    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    self.currentGraphOriginOffset = CGPointMake(0,0);
     
     //Attach the pinch gesture
     UIPinchGestureRecognizer *graphPinchGestureRecognizer =[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGestureEventOnGraphView:)];
@@ -92,11 +92,12 @@
     if (self.thisGraphView.scalingValue == 0) {
         self.thisGraphView.scalingValue = 1;
     }
-    NSString *originAsString = [userDefaults objectForKey:USER_DEFAULT_GRAPH_ORIGIN];
-    if (originAsString == nil) {
-        self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    NSString *originOffsetAsString = [userDefaults objectForKey:USER_DEFAULT_GRAPH_ORIGIN];
+    if (originOffsetAsString == nil) {
+        self.currentGraphOriginOffset = CGPointMake(0,0);
     } else {
-        self.currentGraphOrigin = CGPointFromString(originAsString);
+        self.currentGraphOriginOffset = CGPointFromString(originOffsetAsString);
+        //self.currentGraphOriginOffset = CGPointMake(0,0);
     }
 
 }
@@ -120,8 +121,8 @@
     
     //Store the applictaion state
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *originAsString = NSStringFromCGPoint(self.currentGraphOrigin);
-    [userDefaults setObject:originAsString forKey:USER_DEFAULT_GRAPH_ORIGIN];
+    NSString *originOffsetAsString = NSStringFromCGPoint(self.currentGraphOriginOffset);
+    [userDefaults setObject:originOffsetAsString forKey:USER_DEFAULT_GRAPH_ORIGIN];
     [userDefaults setFloat:self.thisGraphView.scalingValue forKey:USER_DEFAULT_SCALING_FACTOR];
 
     [userDefaults synchronize];
@@ -216,7 +217,8 @@
     NSLog(@"Pan Gesture");
     
     CGPoint translation = [sender translationInView:self.view];
-    self.currentGraphOrigin = CGPointMake(self.currentGraphOrigin.x + translation.x, self.currentGraphOrigin.y + translation.y);
+    self.currentGraphOriginOffset
+    = CGPointMake(self.currentGraphOriginOffset.x + translation.x, self.currentGraphOriginOffset.y + translation.y);
     [self.thisGraphView setNeedsDisplay];
     
     //set the translation view as translationInView gives the delta from the initial
@@ -228,15 +230,15 @@
 - (void) handleDoubleTabEventOnGraphView:(UIPanGestureRecognizer *)sender {
     
     //Move the origin back to the center of the veiw
-    self.currentGraphOrigin = CGPointMake(CGRectGetMidX(self.thisGraphView.bounds),CGRectGetMidY(self.thisGraphView.bounds));
+    self.currentGraphOriginOffset = CGPointMake(0,0);
     [self.thisGraphView setNeedsDisplay];
 }
 
-- (CGPoint) getGraphOrigin {
+- (CGPoint) getGraphOriginOffset {
     
     //This is the delegate method to return the graph orgin for a requesting
     //Graph View
-    return self.currentGraphOrigin;
+    return self.currentGraphOriginOffset;
 }
 
 - (void) hideToolBar {

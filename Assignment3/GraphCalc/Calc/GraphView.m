@@ -26,8 +26,9 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    //Get the Graph Origin - use the ones supplied by the delegate if it is available
-    CGPoint graphOrigin = [self.graphViewdelegate getGraphOrigin];
+    //Get the Graph Origin - use the relative offset supplied by the delegate
+    CGPoint graphOriginOffset = [self.graphViewdelegate getGraphOriginOffset];
+    CGPoint graphOrigin = CGPointMake(CGRectGetMidX(self.bounds) + graphOriginOffset.x,CGRectGetMidY(self.bounds) + graphOriginOffset.y);
     
     //Draw the Axes
     NSLog(@"GraphView - drawRect origin x,y %f,%f", graphOrigin.x, graphOrigin.y);
