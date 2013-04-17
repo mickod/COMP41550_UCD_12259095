@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "DeviceView.h"
+#import "AppDelegate.h"
 
 @interface DetailViewController ()
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
@@ -60,9 +61,10 @@
     rect.origin = CGPointMake(100, 100);
     testDeviceView.frame = rect;
     [self.view addSubview:testDeviceView];
-    //DeviceView *testDeviceView2 = [[DeviceView alloc] init];
-    //[self.view addSubview:testDeviceView2];
-    
+
+    //Set the model to be the appdelgate model
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.meshDisplayControllermodel = appDelegate.meshDisplayControllermodel;
     
     [self configureView];
 }

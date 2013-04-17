@@ -16,6 +16,10 @@
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
     splitViewController.delegate = (id)navigationController.topViewController;
+    
+    //Initialise the model for the applictaion
+    self.meshDisplayControllermodel = [[MeshDisplayControllerModel alloc] init];
+    
     return YES;
 }
 							

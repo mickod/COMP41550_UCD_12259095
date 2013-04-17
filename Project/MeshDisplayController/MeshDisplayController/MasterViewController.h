@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MeshDisplayControllerModel.h"
 
 @interface MasterViewController : UIViewController
-
+- (IBAction)createEventEvent:(UIButton *)sender;
+- (IBAction)deleteEventEvent:(UIButton *)sender;
+- (IBAction)eventCodeEnteredEvent:(UITextField *)sender;
+@property (weak, nonatomic) IBOutlet UITextField *EventCodeTextField;
+@property (strong, nonatomic) MeshDisplayControllerModel *meshDisplayControllermodel;
 @end

@@ -10,6 +10,9 @@
 
 @interface MeshDisplayControllerModel : NSObject
 @property (strong, nonatomic) NSString *eventID;
-@property (strong, nonatomic) NSString *serverURL;
+@property (strong, nonatomic) NSString *serverBaseURL;
 @property (strong, nonatomic) NSDictionary *clientDevices;
+- (void) createEvent:(NSString*)newEventID;
+- (void) deleteCurrentEvent;
+- (void) setTextForDevice:(NSString*)deviceToSet withText:(NSString*)newText;
 @end

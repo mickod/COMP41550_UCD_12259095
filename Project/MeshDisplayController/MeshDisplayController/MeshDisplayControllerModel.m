@@ -12,7 +12,6 @@
 @interface MeshDisplayControllerModel()
 
 @property (strong, nonatomic) NSTimer* serverPollTimer;
-@property (nonatomic, strong) NSMutableData *responseData;
 @end
 
 @implementation MeshDisplayControllerModel
@@ -24,18 +23,13 @@
     if (self) {
         //set the default property values
         self.eventID = nil;
-        self.serverURL = @"http:www.xxx.yyy";
+        self.serverBaseURL = @"http:www.xxx.yyy";
         self.clientDevices = nil;
         
         //Create a timer to poll the server while this app is in the foreground
-        self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
-                                                        selector:@selector(pollServer:) userInfo:nil repeats:YES];
+        //XXXXself.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
+        //XXXX                                                selector:@selector(pollServer:) userInfo:nil repeats:YES];
         
-        //Create the http request
-        self.responseData = [NSMutableData data];
-        NSURLRequest *request = [NSURLRequest requestWithURL:
-                                 [NSURL URLWithString:self.serverURL]];
-        NSURLConnection *serverConnection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     }
     
     return self;
@@ -52,14 +46,45 @@
     
     //Message the server with the new event name - this is currently fire and forget but
     //should check for acknowledgement ideally
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"/newEvent"];
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             //We are not intersted in the response in this
+             //case so simply do nothing
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"MeshDisplayControllerModel -> createEvent: No data returned");
+         }
+         else if (error != nil){
+             NSLog(@"MeshDisplayControllerModel -> createEvent: Error = %@", error);
+         }
+         
+     }];
     
 }
 
 - (void)setEventID:(NSString *)newEventID {
     
     //Overwrite the setter to use create event in case it is accessed directly in the future
-    
-    [self createEvent:newEventID];
+    if (newEventID != nil) {
+        [self createEvent:newEventID];
+    } else {
+        _eventID = nil;
+    }
 }
 
 - (void) deleteCurrentEvent {
@@ -69,8 +94,35 @@
     
     //Message the server - this is a fire and forget message, as the server will
     //kill the event anyway when it receives no messages from the controller within
-    //a given timeframe. In other words we do not have to wait for and react to the
-    //response
+    //a given timeframe. 
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/deleteEvent/", self.eventID];
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             //We are not intersted in the response in this
+             //case so simply do nothing
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"MeshDisplayControllerModel -> deleteCurrentEvent: No data returned");
+         }
+         else if (error != nil){
+             NSLog(@"MeshDisplayControllerModel -> deleteCurrentEvent: Error = %@", error);
+         }
+         
+     }];
     
     //Set the event peoperty to nil
     self.eventID = nil;
@@ -85,8 +137,34 @@
     //Message the server with the new text for the device - for now this message is send
     //and forget but it would be good to update in future to check for acknowldegement and
     //and resend if not received
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", self.serverBaseURL, @"/updateDeviceText/", deviceToSet, @"/", newText];
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     
     
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             //We are not intersted in the response in this
+             //case so simply do nothing
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"MeshDisplayControllerModel -> setTextForDevice: No data returned");
+         }
+         else if (error != nil){
+             NSLog(@"MeshDisplayControllerModel -> setTextForDevice: Error = %@", error);
+         }
+         
+     }];
 }
 
 - (void) pollServer {
@@ -98,62 +176,36 @@
     //Send the message to the server to check the current device list. This is safely fire and
     //forget as any missed responses will be simply repeated when the poll is reeapted shortly
     //shortly afterwards
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/getDeviceListForEvent/", self.eventID];
+    NSURL *url = [NSURL URLWithString:urlAsString];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    
+    
+    [NSURLConnection
+     sendAsynchronousRequest:urlRequest
+     queue:[[NSOperationQueue alloc] init]
+     completionHandler:^(NSURLResponse *response,
+                         NSData *data,
+                         NSError *error)
+     {
+         
+         if ([data length] >0 && error == nil)
+         {
+             //Decode the response and update the device list property
+             
+         }
+         else if ([data length] == 0 && error == nil)
+         {
+             NSLog(@"MeshDisplayControllerModel -> pollServer: No data returned");
+         }
+         else if (error != nil){
+             NSLog(@"MeshDisplayControllerModel -> pollServer: Error = %@", error);
+         }
+         
+     }];
     
     
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    
-    //NSURLConnection delegate method for response received
-    NSLog(@"didReceiveResponse");
-    [self.responseData setLength:0];
-}
-
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    
-    //NSURLConnection delegate method for data received
-    [self.responseData appendData:data];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    
-    //NSURLConnection delegate method for failure notifictaion received
-    NSLog(@"NSURLConnection didFailWithError");
-    NSLog(@"%@",[NSString stringWithFormat:@"Connection failed: %@", [error description]]);
-}
-
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    
-    //NSURLConnection delegate method for connection finished loading - this is the
-    //method called when the full response has been received so this is were we
-    //decode the response
-    NSLog(@"NSURLConnection connectionDidFinishLoading");
-    NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
-    
-    // convert to JSON
-    NSError *myError = nil;
-    NSDictionary *res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
-    
-    // show all values
-    for(id key in res) {
-        
-        id value = [res objectForKey:key];
-        
-        NSString *keyAsString = (NSString *)key;
-        NSString *valueAsString = (NSString *)value;
-        
-        NSLog(@"key: %@", keyAsString);
-        NSLog(@"value: %@", valueAsString);
-    }
-    
-    // extract specific value...
-    NSArray *results = [res objectForKey:@"results"];
-    
-    for (NSDictionary *result in results) {
-        NSString *icon = [result objectForKey:@"icon"];
-        NSLog(@"icon: %@", icon);
-    }
-    
-}
 
 @end
