@@ -40,6 +40,8 @@
     ////Externally the expression is just an 'id' but
     //internally we use an NSMutableArray. Set the internal
     //variable with the id passed in
+    
+    //First conevrt to muttable array
     self.expressionAsArray = expression;
 }
 

@@ -9,6 +9,15 @@
 #import "PhonePortraitViewController.h"
 #import "PhoneGraphViewController.h"
 #import "PhoneCalcLandscapeViewController.h"
+#define USER_DEFAULT_OPERAND @"USER_DEFAULT_OPERAND"
+#define USER_DEFAULT_CALC_DISPLAY @"USER_DEFAULT_CALC_DISPLAY"
+#define USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL @"USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL"
+#define USER_DEFAULT_WAITING_OPERAND @"USER_DEFAULT_WAITING_OPERAND"
+#define USER_DEFAULT_WAITING_OPERATION @"USER_DEFAULT_WAITING_OPERATION"
+#define USER_DEFAULT_EXPRESSION @"USER_DEFAULT_EXPRESSION"
+#define USER_DEFAULT_MEMORY_VALUE @"USER_DEFAULT_MEMORY_VALUE"
+#define USER_DEFAULT_DEG_NOT_RAD_BOOL @"USER_DEFAULT_DEG_NOT_RAD_BOOL"
+#define USER_DEFAULT_CALC_MODEL_EXPRESSION @"USER_DEFAULT_CALC_MODEL_EXPRESSION"
 
 @interface PhonePortraitViewController ()
 @property bool isShowingLandscapeView;
@@ -135,6 +144,28 @@
     [self.calcDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.operand]];
     [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
     [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
+    
+    //Set the defaults
+    //Load the user defaults into the model - note that if there are none
+    //the default returned are all ok in thi case
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    self.calcModel.operand = [userDefaults doubleForKey:USER_DEFAULT_OPERAND];
+    self.isInTheMiddleOfTypingSomething = [userDefaults boolForKey:USER_DEFAULT_INTHEMIDDLEOFTYPING_BOOL];
+    self.calcModel.waitingOperand = [userDefaults doubleForKey:USER_DEFAULT_WAITING_OPERAND];
+    self.calcModel.memoryValue = [userDefaults doubleForKey:USER_DEFAULT_MEMORY_VALUE];
+    self.calcModel.waitingOperation = [userDefaults objectForKey:USER_DEFAULT_WAITING_OPERATION];
+    self.calcModel.useDegreesNotRads = [userDefaults boolForKey:USER_DEFAULT_DEG_NOT_RAD_BOOL];
+    NSArray *calcModelExpressionArray = [userDefaults objectForKey:USER_DEFAULT_CALC_MODEL_EXPRESSION];
+    id retrievedExpression = [self.calcModel expressionForPropertyList:calcModelExpressionArray];
+    self.calcModel.expression = retrievedExpression;
+    
+    //Set the displays based on the model
+    [self.calcDisplay setText:[userDefaults objectForKey:USER_DEFAULT_CALC_DISPLAY]];
+    [self.memoryDisplay setText:[NSString stringWithFormat:@"%g", self.calcModel.memoryValue]];
+    [self.expressionDisplay setText:[CalcModel descriptionOfExpression:self.calcModel.expression]];
+
+    
+    
 }
 
 -(void) setCalcModelDegreeOrRadMode:(NSString*) selectionText {
