@@ -33,6 +33,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Set the model to be the appdelgate model
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    self.meshDisplayControllermodel = appDelegate.meshDisplayControllermodel;
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,4 +62,5 @@
     //The user has entered an event code - currently we just ignore this unless they
     //push Create event also, in which case we will create a new event
 }
+
 @end

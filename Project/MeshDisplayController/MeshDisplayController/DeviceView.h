@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface DeviceView : UIView
+@property (weak, nonatomic) IBOutlet UITextField *displayTextField;
+@property (weak, nonatomic) IBOutlet UILabel *deviceLabel;
 
 @end

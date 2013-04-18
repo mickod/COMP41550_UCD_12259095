@@ -73,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				E6F61A3C171DF14400FAA6B2 /* MeshDisplayController */,
+				E6F61A3D171DF14400FAA6B2 /* Supporting Files */,
 				E6F61A35171DF14400FAA6B2 /* Frameworks */,
 				E6F61A33171DF14400FAA6B2 /* Products */,
 			);
@@ -106,7 +107,6 @@
 				E6F61A55171DF14400FAA6B2 /* DetailViewController.m */,
 				E6F61A68171DF63600FAA6B2 /* MasterViewController.h */,
 				E6F61A69171DF63600FAA6B2 /* MasterViewController.m */,
-				E6F61A3D171DF14400FAA6B2 /* Supporting Files */,
 				E6ECA575171F16EE003788F2 /* DeviceView.m */,
 				E664205C171E06F500EC56E8 /* DeviceView.h */,
 				E63FF66E171F1A6200601D49 /* ClientDeviceView.xib */,
@@ -131,6 +131,7 @@
 				E6F61A4C171DF14400FAA6B2 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			path = MeshDisplayController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
