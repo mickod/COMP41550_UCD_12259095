@@ -23,7 +23,7 @@
     if (self) {
         //set the default property values
         self.eventID = nil;
-        self.serverBaseURL = @"http:www.xxx.yyy";
+        self.serverBaseURL = @"http://localhost:8888/codeigniter-restserver-master/index.php/api/example/";
         self.clientDevices = nil;
         
         //Create a timer to poll the server while this app is in the foreground
@@ -46,9 +46,12 @@
     
     //Message the server with the new event name - this is currently fire and forget but
     //should check for acknowledgement ideally
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"/newEvent"];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event"];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@", @"event_id", self.eventID];;
+    [urlRequest setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     
     [NSURLConnection
@@ -85,9 +88,12 @@
     //Message the server - this is a fire and forget message, as the server will
     //kill the event anyway when it receives no messages from the controller within
     //a given timeframe. 
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/deleteEvent/", self.eventID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event"];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"DELETE"];
+    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@", @"event_id", self.eventID];;
+    [urlRequest setHTTPBody:[deleteBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     
     [NSURLConnection
@@ -127,9 +133,13 @@
     //Message the server with the new text for the device - for now this message is send
     //and forget but it would be good to update in future to check for acknowldegement and
     //and resend if not received
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", self.serverBaseURL, @"/updateDeviceText/", deviceToSet, @"/", newText];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event_client_text"];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"client_id", deviceToSet, @"text", newText];
+    [urlRequest setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
+    
     
     
     [NSURLConnection
@@ -166,7 +176,7 @@
     //Send the message to the server to check the current device list. This is safely fire and
     //forget as any missed responses will be simply repeated when the poll is reeapted shortly
     //shortly afterwards
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/getDeviceListForEvent/", self.eventID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/device_list_for_event/event_id/", self.eventID];
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     
