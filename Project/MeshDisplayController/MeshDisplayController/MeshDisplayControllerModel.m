@@ -77,16 +77,6 @@
     
 }
 
-- (void)setEventID:(NSString *)newEventID {
-    
-    //Overwrite the setter to use create event in case it is accessed directly in the future
-    if (newEventID != nil) {
-        [self createEvent:newEventID];
-    } else {
-        _eventID = nil;
-    }
-}
-
 - (void) deleteCurrentEvent {
     
     //This method messages the server to delete the current event and set the
@@ -170,8 +160,8 @@
 - (void) pollServer {
     
     //This method checks the server to get the latest device list - it is recognised that this
-    //will drain the battery and a move to push notifictaions in the future would be a
-    //better approach.
+    //will drain the battery and a move to push notifictaions in the future should be a
+    //better approach so long as it does not impose performance or operational restrictions.
     
     //Send the message to the server to check the current device list. This is safely fire and
     //forget as any missed responses will be simply repeated when the poll is reeapted shortly
