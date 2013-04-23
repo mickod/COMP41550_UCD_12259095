@@ -61,17 +61,20 @@
     CGRect rect = testDeviceView.frame;
     rect.origin = CGPointMake(100, 100);
     testDeviceView.frame = rect;
+    testDeviceView.deviceLabel.text = @"Test Device";
     [self.view addSubview:testDeviceView];
     
     //Add the pan gesture to the device
     UIPanGestureRecognizer *deviceViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
                                                          initWithTarget:self action:@selector(handlePanGestureEventOnDeviceView:)];
     [testDeviceView addGestureRecognizer:deviceViewPanGestureRecognizer];
-    
 
     //Set the model to be the appdelgate model
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     self.meshDisplayControllermodel = appDelegate.meshDisplayControllermodel;
+    
+    //Set self to the MeshDisplayModelViewDelegate
+    self.meshDisplayControllermodel.MeshDisplayModelViewDelegate = self;
     
     [self configureView];
 }
@@ -122,56 +125,46 @@
     self.masterPopoverController = nil;
 }
 
-- (void) handleClientDevicesAddedEvent:(NSArray *)clientDeviceArray {
+- (void) handleClientDeviceAddedEvent:(ClientDevice*) clientDeviceAdded {
     
     //Model delegate method - new devices have been creted so add them to the display
     
-    for (id newClientDevice in clientDeviceArray) {
-    
-        //Add a new DeviceView
-        if (![newClientDevice isKindOfClass:[ClientDevice class]]) {
-            return;
-        }
-        ClientDevice *clientDevice = (ClientDevice *)newClientDevice;
-        DeviceView *newDeviceView = [[DeviceView alloc] init];
-        CGRect rect = newDeviceView.frame;
-        rect.origin = CGPointMake(100, 100);
-        newDeviceView.frame = rect;
+    //Add a new DeviceView
+    DeviceView *newDeviceView = [[DeviceView alloc] init];
+    CGRect rect = newDeviceView.frame;
+    rect.origin = CGPointMake(100, 100);
+    newDeviceView.frame = rect;
+    @synchronized(self) {
         [self.view addSubview:newDeviceView];
-        
-        //Add the text to the view and the deviceID to the device label
-        newDeviceView.displayTextField.text = clientDevice.text;
-        newDeviceView.deviceLabel.text = clientDevice.deviceID;
-        
-        //Add the pan gesture to the device
-        UIPanGestureRecognizer *deviceViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
-                                                                  initWithTarget:self action:@selector(handlePanGestureEventOnDeviceView:)];
-        [newDeviceView addGestureRecognizer:deviceViewPanGestureRecognizer];
-        
-        //Add the new device to the dictionary
-        [self.clientDeviceViews  setValue:newDeviceView forKey:clientDevice.deviceID];
-     }
-}
-
-- (void) handleClientDevicesRemovedEvent:(NSArray *)clientDeviceArray {
-    
-    //Model delegate method - devices have been removed so remove them from the display
-    
-    for (id removedClientDevice in clientDeviceArray) {
-        
-        //remove a new DeviceView
-        if (![removedClientDevice isKindOfClass:[ClientDevice class]]) {
-            return;
-        }
-        ClientDevice *goneClientDevice = (ClientDevice *)removedClientDevice;
-        DeviceView *deviceViewToGo = [self.clientDeviceViews objectForKey:goneClientDevice.deviceID];
-        [deviceViewToGo removeFromSuperview];
-        
-        //Remove from the dictionary
-        [self.clientDeviceViews  removeObjectForKey:goneClientDevice.deviceID];
     }
     
+    //Add the text to the view and the deviceID to the device label
+    newDeviceView.displayTextField.text = clientDeviceAdded.text;
+    newDeviceView.deviceLabel.text = clientDeviceAdded.deviceID;
     
+    //Add the pan gesture to the device
+    UIPanGestureRecognizer *deviceViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
+                                                              initWithTarget:self action:@selector(handlePanGestureEventOnDeviceView:)];
+    [newDeviceView addGestureRecognizer:deviceViewPanGestureRecognizer];
+    
+    //Add the new device to the dictionary
+    @synchronized(self) {
+        [self.clientDeviceViews  setValue:newDeviceView forKey:clientDeviceAdded.deviceID];
+    }
+}
+
+- (void) handleClientDeviceRemovedEvent:(ClientDevice *)clientDeviceRemoved {
+    
+    //Model delegate method - a device has been removed so remove it from the display.
+    
+    //remove a new DeviceView
+    DeviceView *deviceViewToGo = [self.clientDeviceViews objectForKey:clientDeviceRemoved.deviceID];
+    [deviceViewToGo removeFromSuperview];
+    
+    //Remove from the dictionary
+    @synchronized(self) {
+        [self.clientDeviceViews  removeObjectForKey:clientDeviceRemoved.deviceID];
+    }
 }
 
 @end

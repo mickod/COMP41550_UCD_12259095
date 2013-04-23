@@ -24,12 +24,11 @@
         //set the default property values
         self.eventID = nil;
         self.serverBaseURL = @"http://localhost:8888/codeigniter-restserver-master/index.php/api/example/";
-        self.clientDevices = nil;
+        self.clientDevices = [[NSMutableDictionary alloc] init];
         
         //Create a timer to poll the server while this app is in the foreground
         self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
                                                         selector:@selector(pollServer) userInfo:nil repeats:YES];
-        
     }
     
     return self;
@@ -172,6 +171,8 @@
     //This method checks the server to get the latest device list - it is recognised that this
     //will drain the battery and a move to push notifictaions in the future should be a
     //better approach so long as it does not impose performance or operational restrictions.
+    NSLog(@"self.cleintdevices at start of pollServer: %@", self.clientDevices);
+    
     
     //Don't poll if the event-id is not set
     if (self.eventID == nil) {
@@ -199,13 +200,51 @@
          {
              //Decode the response and update the device list property
              NSError *e = nil;
-             NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
+             NSArray *deviceListJsonArray = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
              
-             if (!jsonArray) {
-                 NSLog(@"Error parsing JSON: %@", e);
+             if (!deviceListJsonArray) {
+                 NSLog(@"MeshDisplayControllerModel pollServer Error parsing JSON: %@", e);
              } else {
-                 for(NSDictionary *eventClientInfo in jsonArray) {
-                     NSLog(@"client_id: %@", [eventClientInfo objectForKey:@"client_id"]);
+                 NSMutableArray *clientIdsReturned = [[NSMutableArray alloc] init];
+                 for(NSDictionary *eventClientInfo in deviceListJsonArray) {
+                     NSString *device_clientID = [eventClientInfo objectForKey:@"client_id"];
+                     [clientIdsReturned addObject:device_clientID];
+                     NSLog(@"client_id: %@", device_clientID);
+                     //Check if this clientDevice is already in the device list
+                     NSLog(@"self.cleintdevices etc: %@", self.clientDevices);
+                     if ([self.clientDevices objectForKey:device_clientID] == nil ) {
+                         //If it is not then add it to the mode devicesList
+                         ClientDevice *newClientDevice = [[ClientDevice alloc] init];
+                         newClientDevice.deviceID = device_clientID;
+                         newClientDevice.text = @"";
+                         [self.clientDevices setValue:newClientDevice forKey:device_clientID];
+                         //Do the UI update on the main thread - hard to debug errors if you don't...
+                         dispatch_sync(dispatch_get_main_queue(), ^{
+                             [self.clientDevices setValue:newClientDevice forKey:device_clientID];
+                             NSLog(@"self.cleintdevices after update: %@", self.clientDevices);
+                             [self.MeshDisplayModelViewDelegate handleClientDeviceAddedEvent:newClientDevice];
+                         });
+                     }
+                 }
+                 
+                 //Now check for any devices removed
+                 NSMutableArray *deviceIDsToRemove = [[NSMutableArray alloc] init];
+                 for (id key in self.clientDevices) {
+                     ClientDevice *thisDevice = [self.clientDevices objectForKey:key];
+                     if (![clientIdsReturned containsObject:thisDevice.deviceID]) {
+                         //A device in the model list is no longer in the list returned
+                         //from the server so remove it from the model list
+                         //Do the UI update on the main thread - hard to debug errors if you don't...
+                         [deviceIDsToRemove addObject:thisDevice.deviceID];
+                         dispatch_sync(dispatch_get_main_queue(), ^{
+                             [self.MeshDisplayModelViewDelegate handleClientDeviceRemovedEvent:thisDevice];
+                         });  
+                     }
+                 }
+                 //Remove the devices
+                 NSLog(@"self.cleintdevices before removal: %@", self.clientDevices);
+                 for (NSString *deviceIDToRemove in deviceIDsToRemove) {
+                     [self.clientDevices removeObjectForKey:deviceIDToRemove];
                  }
              }
              
@@ -219,8 +258,6 @@
          }
          
      }];
-    
-    
 }
 
 

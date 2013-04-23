@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ClientDevice.h"
 
 @protocol MeshDisplayModelViewEventProtocol <NSObject>
 
-- (void) handleClientDevicesAddedEvent:(NSArray*) clientDeviceArray;
-- (void) handleClientDevicesRemovedEvent:(NSArray*) clientDeviceArray;
+- (void) handleClientDeviceAddedEvent:(ClientDevice*) clientDeviceAdded;
+- (void) handleClientDeviceRemovedEvent:(ClientDevice*) clientDeviceRemoved;
 
 @end
 
 @interface MeshDisplayControllerModel : NSObject
+@property id <MeshDisplayModelViewEventProtocol> MeshDisplayModelViewDelegate;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) NSString *serverBaseURL;
 @property (strong, nonatomic) NSMutableDictionary *clientDevices;
