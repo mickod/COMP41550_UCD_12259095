@@ -59,8 +59,8 @@
 
 - (IBAction)eventCodeEnteredEvent:(UITextField *)sender {
     
-    //The user has entered an event code - currently we just ignore this unless they
-    //push Create event also, in which case we will create a new event
+    //The user has entered an event code - update the event code in the model
+    self.meshDisplayControllermodel.eventID = sender.text;
 }
 
 @end

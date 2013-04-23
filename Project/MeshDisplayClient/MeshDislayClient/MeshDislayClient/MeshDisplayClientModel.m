@@ -45,10 +45,12 @@
     self.clientID = thisClientID;
     
     //Message the server with the client and the event id
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", self.serverBaseURL, @"/addClientToEvent/", self.eventID, @"/", self.clientID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event_client"];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"cient_id", self.clientID];
+    [urlRequest setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     [NSURLConnection
      sendAsynchronousRequest:urlRequest
@@ -90,10 +92,12 @@
     }
     
     //Message the server
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", self.serverBaseURL, @"/removeClientFromEvent/", self.eventID, @"/", self.clientID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event_client_delete"];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"DELETE"];
+    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"cient_id", self.clientID];
+    [urlRequest setHTTPBody:[deleteBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     [NSURLConnection
      sendAsynchronousRequest:urlRequest
@@ -131,10 +135,10 @@
     //better approach so long as it does not impose performance or operational restrictions.
     
     //Message the server
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@", self.serverBaseURL, @"/getTextForDeviceInEvent/", self.eventID, @"/", self.clientID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@%@/%@", self.serverBaseURL, @"text_for_client", @"event_id", self.eventID, @"client_id", self.clientID];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
     [NSURLConnection
      sendAsynchronousRequest:urlRequest

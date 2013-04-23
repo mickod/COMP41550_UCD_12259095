@@ -27,8 +27,8 @@
         self.clientDevices = nil;
         
         //Create a timer to poll the server while this app is in the foreground
-        //XXXXself.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
-        //XXXX                                                selector:@selector(pollServer:) userInfo:nil repeats:YES];
+        self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
+                                                        selector:@selector(pollServer) userInfo:nil repeats:YES];
         
     }
     
@@ -92,7 +92,7 @@
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"DELETE"];
-    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@", @"event_id", self.eventID];;
+    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@", @"event_id", self.eventID];
     [urlRequest setHTTPBody:[deleteBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     
@@ -173,12 +173,18 @@
     //will drain the battery and a move to push notifictaions in the future should be a
     //better approach so long as it does not impose performance or operational restrictions.
     
+    //Don't poll if the event-id is not set
+    if (self.eventID == nil) {
+        return;
+    }
+    
     //Send the message to the server to check the current device list. This is safely fire and
     //forget as any missed responses will be simply repeated when the poll is reeapted shortly
     //shortly afterwards
     NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/device_list_for_event/event_id/", self.eventID];
     NSURL *url = [NSURL URLWithString:urlAsString];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
     
     
     [NSURLConnection
@@ -192,6 +198,16 @@
          if ([data length] >0 && error == nil)
          {
              //Decode the response and update the device list property
+             NSError *e = nil;
+             NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
+             
+             if (!jsonArray) {
+                 NSLog(@"Error parsing JSON: %@", e);
+             } else {
+                 for(NSDictionary *eventClientInfo in jsonArray) {
+                     NSLog(@"client_id: %@", [eventClientInfo objectForKey:@"client_id"]);
+                 }
+             }
              
          }
          else if ([data length] == 0 && error == nil)

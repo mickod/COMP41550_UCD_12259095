@@ -154,7 +154,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="eventCodeEnteredEvent:" destination="u7Z-os-muA" eventType="editingDidEnd" id="rsq-xv-p5U"/>
+                                    <action selector="eventCodeEnteredEvent:" destination="u7Z-os-muA" eventType="editingDidEnd" id="6rt-Du-J8C"/>
                                 </connections>
                             </textField>
                         </subviews>

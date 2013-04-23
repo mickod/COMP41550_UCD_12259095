@@ -22,4 +22,5 @@
 - (void) createEvent:(NSString*)newEventID;
 - (void) deleteCurrentEvent;
 - (void) setTextForDevice:(NSString*)deviceToSet withText:(NSString*)newText;
+- (void) pollServer;
 @end

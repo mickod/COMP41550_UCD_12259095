@@ -11,8 +11,8 @@
 
 @interface MasterViewController : UIViewController
 - (IBAction)createEventEvent:(UIButton *)sender;
-- (IBAction)deleteEventEvent:(UIButton *)sender;
 - (IBAction)eventCodeEnteredEvent:(UITextField *)sender;
+- (IBAction)deleteEventEvent:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *EventCodeTextField;
 @property (strong, nonatomic) MeshDisplayControllerModel *meshDisplayControllermodel;
 @end
