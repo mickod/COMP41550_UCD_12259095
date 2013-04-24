@@ -9,6 +9,9 @@
 #import "MeshDisplayControllerModel.h"
 #import "ClientDevice.h"
 
+#define AWS_BASE_URL @"http://ec2-54-216-7-173.eu-west-1.compute.amazonaws.com/index.php/api/example"
+#define MAMP_BASE_URL @"http://localhost:8888/codeigniter-restserver-master/index.php/api/example"
+
 @interface MeshDisplayControllerModel()
 
 @property (strong, nonatomic) NSTimer* serverPollTimer;
@@ -23,7 +26,7 @@
     if (self) {
         //set the default property values
         self.eventID = nil;
-        self.serverBaseURL = @"http://localhost:8888/codeigniter-restserver-master/index.php/api/example/";
+        self.serverBaseURL = AWS_BASE_URL;
         self.clientDevices = [[NSMutableDictionary alloc] init];
         
         //Create a timer to poll the server while this app is in the foreground
