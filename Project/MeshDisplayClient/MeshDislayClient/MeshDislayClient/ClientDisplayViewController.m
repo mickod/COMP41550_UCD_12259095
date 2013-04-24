@@ -27,6 +27,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.meshDisplayModel.meshDisplayClientDelegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,10 +41,11 @@
     [super viewDidUnload];
 }
 
-- (void) didMoveToParentViewController:(UIViewController *)parent {
+- (void) handleModelDisplayTextUpdatedEvent {
     
-    //This is called when the 'back' button is hit - we want to leave the
-    //event in this case
-    [self.meshDisplayModel leaveEvent];
+    //The text has been updated so redraw the view
+    self.ClientDisplayTextLabel.text = self.meshDisplayModel.textToDisplay;
+    [self.view setNeedsDisplay];
 }
+
 @end

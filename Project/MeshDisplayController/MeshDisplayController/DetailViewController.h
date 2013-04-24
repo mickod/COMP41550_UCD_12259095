@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MeshDisplayControllerModel.h"
+#import "DeviceView.h"
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, MeshDisplayModelViewEventProtocol>
+@interface DetailViewController : UIViewController <UISplitViewControllerDelegate, MeshDisplayModelViewEventProtocol, DeviceViewDelegateProtocol>
 @property (strong, nonatomic) MeshDisplayControllerModel *meshDisplayControllermodel;
 @property (strong, nonatomic) id detailItem;
 @property (weak, nonatomic) IBOutlet UIImageView *DeviceImageView;

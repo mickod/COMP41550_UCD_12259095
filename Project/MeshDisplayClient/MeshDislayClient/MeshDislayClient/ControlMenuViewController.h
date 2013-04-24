@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MeshDisplayClientModel.h"
 
-@interface ControlMenuViewController : UIViewController
+@interface ControlMenuViewController : UIViewController <UITextFieldDelegate> 
 - (IBAction)joinEventButtonPushed:(UIButton *)sender;
 @property (weak, nonatomic) IBOutlet UITextField *EventIDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *ClientIDTextField;

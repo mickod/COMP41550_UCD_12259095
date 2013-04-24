@@ -20,6 +20,18 @@
     [super viewDidLoad];
 	//Set the default properties
     self.meshDisplayModel = [[MeshDisplayClientModel alloc] init];
+    
+    //set self as the deleagte for the text fields
+    self.ClientIDTextField.delegate = self;
+    self.EventIDTextField.delegate = self;
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    
+    //When this view is about to appear, call leave event if the event id is alreadyset
+    if (self.meshDisplayModel.eventID != nil) {
+        [self.meshDisplayModel leaveEvent];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,5 +62,10 @@
     [self setEventIDTextField:nil];
     [self setClientIDTextField:nil];
     [super viewDidUnload];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 @end

@@ -20,7 +20,7 @@
     if (self) {
         //set the default property values
         self.eventID = nil;
-        self.serverBaseURL = @"http:www.xxx.yyy";
+        self.serverBaseURL = @"http://localhost:8888/codeigniter-restserver-master/index.php/api/example";
         self.clientID = nil;
         self.textToDisplay = @"";
     }
@@ -49,7 +49,7 @@
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"cient_id", self.clientID];
+    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"client_id", self.clientID];
     [urlRequest setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     [NSURLConnection
@@ -62,12 +62,12 @@
          
          if ([data length] >0 && error == nil)
          {
-          
              //Start the timer to poll the server for the text to display while this app is
              //in the foreground
-             self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
-                                                            selector:@selector(getDisplayTextFromServer:) userInfo:nil repeats:YES];
-             
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
+                                                                       selector:@selector(getDisplayTextFromServer) userInfo:nil repeats:YES];
+             });
          }
          else if ([data length] == 0 && error == nil)
          {
@@ -87,7 +87,7 @@
     
     //Check first that the event if id is not nil
     if (self.eventID
-        = nil) {
+        == nil) {
         return;
     }
     
@@ -135,7 +135,8 @@
     //better approach so long as it does not impose performance or operational restrictions.
     
     //Message the server
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@%@/%@", self.serverBaseURL, @"text_for_client", @"event_id", self.eventID, @"client_id", self.clientID];
+    NSLog(@"event_id: %@", self.eventID);
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@/%@/%@/%@", self.serverBaseURL, @"text_for_client", @"event_id", self.eventID, @"client_id", self.clientID];
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -151,6 +152,22 @@
          if ([data length] >0 && error == nil)
          {
              //Decode the response and update the client display text
+             NSError *e = nil;
+             NSDictionary *deviceListJsonDict = [NSJSONSerialization JSONObjectWithData: data options: NSJSONReadingMutableContainers error: &e];
+             
+             if (!deviceListJsonDict) {
+                 NSLog(@"MeshDisplayClientModel getDisplayTextFromServer Error parsing JSON: %@", e);
+             } else {
+                 //There should only be one entry in the array but just in case
+                 NSString *textFormServerToDisplay = [deviceListJsonDict objectForKey:@"client_text"];
+                 if (![self.textToDisplay isEqualToString:textFormServerToDisplay]) {
+                     self.textToDisplay = textFormServerToDisplay;
+                     dispatch_sync(dispatch_get_main_queue(), ^{
+                         [self.meshDisplayClientDelegate handleModelDisplayTextUpdatedEvent];
+                     });
+                 }
+             }
+
              
          }
          else if ([data length] == 0 && error == nil)

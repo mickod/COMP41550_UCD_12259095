@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MeshDisplayClientModel.h"
 
-@interface ClientDisplayViewController : UIViewController
+@interface ClientDisplayViewController : UIViewController <MeshDisplayClientDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *ClientDisplayTextLabel;
 @property (strong, nonatomic) MeshDisplayClientModel *meshDisplayModel;
 @end

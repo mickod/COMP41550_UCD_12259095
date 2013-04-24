@@ -8,7 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol MeshDisplayClientDelegate <NSObject>
+
+-(void) handleModelDisplayTextUpdatedEvent;
+
+@end
+
 @interface MeshDisplayClientModel : NSObject
+@property (strong, nonatomic) id <MeshDisplayClientDelegate> meshDisplayClientDelegate;
 @property (strong, nonatomic) NSString *clientID;
 @property (strong, nonatomic) NSString *eventID;
 @property (strong, nonatomic) NSString *serverBaseURL;

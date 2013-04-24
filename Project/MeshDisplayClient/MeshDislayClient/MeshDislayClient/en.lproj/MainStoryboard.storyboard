@@ -99,7 +99,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="joinDisplayButtonPushedEvent:" destination="2" eventType="touchUpInside" id="ibI-Bl-Izh"/>
                                     <action selector="joinEventButtonPushed:" destination="2" eventType="touchUpInside" id="zHT-hM-Gwv"/>
                                     <segue destination="cq8-dn-3mP" kind="push" identifier="CLIENT_DISPLAY_SEGUE" id="kuU-NZ-G5y"/>
                                 </connections>
@@ -117,6 +116,22 @@
             </objects>
         </scene>
     </scenes>
+    <classes>
+        <class className="ClientDisplayViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ClientDisplayViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="ClientDisplayTextLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="ControlMenuViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ControlMenuViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="joinEventButtonPushed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="ClientIDTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="EventIDTextField" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

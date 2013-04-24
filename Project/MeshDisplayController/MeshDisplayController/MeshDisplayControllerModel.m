@@ -136,10 +136,8 @@
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setHTTPMethod:@"POST"];
-    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"client_id", deviceToSet, @"text", newText];
+    NSString *postBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@&%@=%@", @"event_id", self.eventID, @"client_id", deviceToSet, @"text", newText];
     [urlRequest setHTTPBody:[postBodyString dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    
     
     [NSURLConnection
      sendAsynchronousRequest:urlRequest
@@ -216,7 +214,7 @@
                          //If it is not then add it to the mode devicesList
                          ClientDevice *newClientDevice = [[ClientDevice alloc] init];
                          newClientDevice.deviceID = device_clientID;
-                         newClientDevice.text = @"";
+                         newClientDevice.text = [eventClientInfo objectForKey:@"client_text"];;
                          [self.clientDevices setValue:newClientDevice forKey:device_clientID];
                          //Do the UI update on the main thread - hard to debug errors if you don't...
                          dispatch_sync(dispatch_get_main_queue(), ^{

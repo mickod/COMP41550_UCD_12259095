@@ -55,19 +55,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-	//Add test device view
-    DeviceView *testDeviceView = [[DeviceView alloc] init];
-    CGRect rect = testDeviceView.frame;
-    rect.origin = CGPointMake(100, 100);
-    testDeviceView.frame = rect;
-    testDeviceView.deviceLabel.text = @"Test Device";
-    [self.view addSubview:testDeviceView];
-    
-    //Add the pan gesture to the device
-    UIPanGestureRecognizer *deviceViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
-                                                         initWithTarget:self action:@selector(handlePanGestureEventOnDeviceView:)];
-    [testDeviceView addGestureRecognizer:deviceViewPanGestureRecognizer];
 
     //Set the model to be the appdelgate model
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -96,11 +83,9 @@
     
 }
 
-- (void) handleTabEventOnDeviceView:(UIPanGestureRecognizer *)sender {
+- (void) handleTapEventOnDeviceView:(UIPanGestureRecognizer *)sender {
     
-    //Add a text filed to the view
-    
-    //
+    //Unused for now
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,6 +114,13 @@
     
     //Model delegate method - new devices have been creted so add them to the display
     
+    //If the device if is controller do not create a device view for the device
+    //Note this is clearly relying on a text string whihc is not good practice so should
+    //be changed when time permits (time is not doing much permitting at the moment...)
+    if ([clientDeviceAdded.deviceID isEqualToString:@"CONTROLLER"]) {
+        return;
+    }
+    
     //Add a new DeviceView
     DeviceView *newDeviceView = [[DeviceView alloc] init];
     CGRect rect = newDeviceView.frame;
@@ -146,6 +138,9 @@
     UIPanGestureRecognizer *deviceViewPanGestureRecognizer = [[UIPanGestureRecognizer alloc]
                                                               initWithTarget:self action:@selector(handlePanGestureEventOnDeviceView:)];
     [newDeviceView addGestureRecognizer:deviceViewPanGestureRecognizer];
+    
+    //Set self as the delegate for the view
+    newDeviceView.deviceViewDelegae = self;
     
     //Add the new device to the dictionary
     @synchronized(self) {
@@ -165,6 +160,12 @@
     @synchronized(self) {
         [self.clientDeviceViews  removeObjectForKey:clientDeviceRemoved.deviceID];
     }
+}
+
+- (void) handleDeviceViewTextEditedEvent:(NSString*) newText forDevice:(NSString*)deviceID {
+    
+    //DeviceView delegate method - this handles a user updating the text for a device
+    [self.meshDisplayControllermodel setTextForDevice:deviceID withText:newText];
 }
 
 @end
