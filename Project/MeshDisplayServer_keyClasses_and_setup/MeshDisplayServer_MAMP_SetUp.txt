@@ -1,0 +1,38 @@
+MeshDisplayServer_MAMP
+======================
+
+(Setting up the local test for Mesh Display Server on MAMP on a MAC)
+
+-----Install MAMP------
+- Download MAMP from the main MAMP page - not use MAMP not MAMP-PRO throughout: http://www.mamp.info/en/index.html
+- Double click on the MAMP installer and follow instructions
+- Locate MAMP in the applictaion folder and move the MAMP icon in the MAMP folder to the launchbar
+- Double click on the MAMP icon
+- Click on 'start servers'
+- Check that the MAMP launch page starts
+
+
+----Add codeigniter-restserver----
+- download codeigniter-restserver from GIThub (e.g. https://github.com/philsturgeon/codeigniter-restserver/archive/master.zip)
+- copy the file into the htdoc folder within the MAMP folder
+- goto the URL 	'http://localhost:8888/codeigniter-restserver-master/' and check that the codeigniter-restserver page launches:
+
+				Welcome to CodeIgniter!
+				The page you are looking at is being generated dynamically by CodeIgniter.
+
+				Users - defaulting to XML
+				Users - get it in CSV
+				User #1 - defaulting to XML
+				User #1 - get it in JSON
+				Users - get it in JSON (AJAX request)
+				If you are exploring CodeIgniter for the very first time, you should start by reading the User Guide.
+				
+				Page rendered in 0.0100 seconds
+				
+- Click on some of the links to make sure that the JSON and XML responses are working properly.
+
+- Add the MeshDisplayServer Model and Controller code in the applictaion folder of the codeigniter-restserver applictaion
+- Use MYSQLAdmin on MAMP front page to create database and events table on database
+- Update the database config to use the correct database name and to use root, root for login
+- use firefox RESTClient tool to inject requests to make sure it is all working (remember to set body headers for POST, DELETE etc)
+

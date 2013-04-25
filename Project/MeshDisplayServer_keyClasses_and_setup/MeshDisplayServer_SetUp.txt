@@ -1,0 +1,128 @@
+MeshDisplayServer
+=================
+
+-----Install LAMP------
+- Launch ubuntu instance from console (use latest Canonical ubuntu LTS version)
+- ssh into the terminal: ssh -v -i MickOD_AWS_keypair.pem ubuntu@ec2-54-216-38-222.eu-west-1.compute.amazonaws.com
+- sudo apt-get update
+- sudo apt-get install tasksel
+- sudo tasksel install lamp-server
+- check apache installed correctly by using browser to go to 'http://<EC2InstanceDNSNAME>'. You should see a simple page with the message 'It works'
+
+-----Install codeigniter-restserver -----
+- download codeigniter-restserver
+	>wget https://github.com/philsturgeon/codeigniter-restserver/archive/master.zip
+- install unzip
+	>sudo apt-get install unzip
+- unzip codeigniter-restserver
+	>unzip master.zip (or whatever file name the downloaded file has)
+- move codeigniter-restserver to the /usr/share directory
+	>sudo mv ~/codeigniter-restserver-master /usr/share
+- Change the file permissions on the codeigniter-restserver directory to allow Apache access it (as Apache is running under a different user 'www-data'):
+	>cd /usr/share
+	>sudo chmod 755 codeigniter-restserver-master/
+- move the index.php in CodeIgniter folder back to the var/www directory:
+	>cd codeigniter-restserver-master
+	>sudo mv index.php /var/www
+- Edit index.php and set the $system_folder and $application_folder variables, preferably with a full path, e.g. '/www/MyUser/system':
+	.
+	.
+	.
+	/*
+	 *---------------------------------------------------------------
+	 * SYSTEM FOLDER NAME
+	 *---------------------------------------------------------------
+	 *
+	 * This variable must contain the name of your "system" folder.
+	 * Include the path if the folder is not in the same  directory
+	 * as this file.
+	 *
+	 */
+		$system_path = '/usr/share/codeigniter-restserver-master/system';
+
+	/*
+	 *---------------------------------------------------------------
+	 * APPLICATION FOLDER NAME
+	 *---------------------------------------------------------------
+	 *
+	 * If you want this front controller to use a different "application"
+	 * folder then the default one you can set its name here. The folder
+	 * can also be renamed or relocated anywhere on your server.  If
+	 * you do, use a full server path. For more info please see the user guide:
+	 * http://codeigniter.com/user_guide/general/managing_apps.html
+	 *
+	 * NO TRAILING SLASH!
+	 *
+	 */
+		$application_folder = '/usr/share/codeigniter-restserver-master/application';
+	.
+	.
+	.
+
+- Check codeigniter-restserver is working by using a browser to go to 'http://<EC2InstanceDNSNAME>/index.php'. You should see the codeigniter-restserver welcome page which will look like:
+
+				Welcome to CodeIgniter!
+				The page you are looking at is being generated dynamically by CodeIgniter.
+
+				Users - defaulting to XML
+				Users - get it in CSV
+				User #1 - defaulting to XML
+				User #1 - get it in JSON
+				Users - get it in JSON (AJAX request)
+				If you are exploring CodeIgniter for the very first time, you should start by reading the User Guide.
+				
+				Page rendered in 0.0100 seconds
+				
+- Click on some of the links to make sure that the JSON and XML responses are working properly.				
+			
+-----Save instance at this point-----
+- Select the instance in the AWS console
+- From the actions tab/button select 'Create Image (EBS/AMI)'
+- Enter a name and create the image - this will reboot the running instance and save the EBS image into snapshots
+
+-----Install phpMyAdmin------
+- sudo apt-get install phpmyadmin
+- during the install script choose apache and to use the already installed database
+- At the end of the install go to 'http://<EC2InstanceDNSNAME>/phpmyadmin'
+- If the above does not give the phpmyadmin start page then see this link: http://www.linuxquestions.org/questions/linux-software-2/how-to-fix-the-requested-url-phpmyadmin-was-not-found-on-this-server-796610/ and answer from smoker
+- The part of the answer that worked for me was:
+	sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf.d/phpmyadmin.conf
+	sudo /etc/init.d/apache2 reload
+- Go to 'http://<EC2InstanceDNSNAME>/phpmyadmin' again
+- If the login does not work reset the password - the following link helped: http://ubuntu.flowconsult.at/en/mysql-set-change-reset-root-password/
+- This suggested the following which worked:
+		-Stop the MySQL Server.
+		sudo /etc/init.d/mysql stop
+		-Start the mysqld configuration.
+		sudo mysqld --skip-grant-tables &
+		-Login to MySQL as root.
+		mysql -u root mysql
+		-Replace YOURNEWPASSWORD with your new password!
+		UPDATE user SET Password=PASSWORD('YOURNEWPASSWORD') WHERE User='root'; FLUSH PRIVILEGES; exit;
+- create the 'MeshDisplayServerDB' database and add table events with three columns 'event_id', 'client_id' and 'client_text' - make all TEXT and have a length of 50
+
+
+-----Update the codeigniter-rest installation-----
+- Go to the php database config file: cd /usr/share/codeigniter-restserver-master/application/config
+- Update the database config to use the correct database name and to use root, password for login (where password is whatever you set it to): vi database.php
+- Copy the controller and model files to the root directory - (if using a mac) open an new terminal on the MAC, go to directory with amazon PEM key, copy the files you want to send over into this directory and then secure copy using the scp command (you can do from another directory using path to secure key although there are reports of issues sometimes with this): 
+	- scp -i MickOD_AWS_keypair.pem example.php ubuntu@ec2-54-216-7-173.eu-west-1.compute.amazonaws.com:~/.
+	- scp -i MickOD_AWS_keypair.pem mesh_display_server_model.php ubuntu@ec2-54-216-7-173.eu-west-1.compute.amazonaws.com:~/.
+
+- Going back to the ubuntu terminal make sure the files arrived in the root directory (cd ~ and ls)
+- Copy the files to the relevant codeigniter directories:
+	- mv mesh_display_server_model.php /usr/share/codeigniter-restserver-master/application/models
+	- mv example.php /usr/share/codeigniter-restserver-master/application/controllers/api
+
+
+-----Test the system----
+- Fire up a controller and create an event
+- fire up a client and add it to the event
+- ensure the client shows up on the controller
+- change the text for the client on the controller
+- ensure the new text shows up on the client
+		
+
+
+
+
