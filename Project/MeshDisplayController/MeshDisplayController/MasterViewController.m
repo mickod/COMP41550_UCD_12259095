@@ -61,6 +61,7 @@
     
     //The user has entered an event code - update the event code in the model
     self.meshDisplayControllermodel.eventID = sender.text;
+    [self.meshDisplayControllermodel startPollingServer];
 }
 
 @end

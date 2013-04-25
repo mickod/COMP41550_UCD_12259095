@@ -35,4 +35,5 @@
     //The user updated the text field - inform the view controller
     [self.deviceViewDelegae handleDeviceViewTextEditedEvent:sender.text forDevice:self.deviceLabel.text];
 }
+
 @end

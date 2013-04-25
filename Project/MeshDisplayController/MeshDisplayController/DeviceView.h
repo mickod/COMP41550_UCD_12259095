@@ -13,9 +13,10 @@
 @end
 
 @interface DeviceView : UIView
-@property (weak, nonatomic) IBOutlet UITextField *displayTextField;
+@property (strong, nonatomic) IBOutlet UITextField *displayTextField;
 @property (weak, nonatomic) IBOutlet UILabel *deviceLabel;
 @property (strong, nonatomic) id <DeviceViewDelegateProtocol> deviceViewDelegae;
-- (IBAction)textFieldEditEvent:(UITextField*)sender;
+- (IBAction)textFieldEditEvent:(UITextField *)sender;
+
 
 @end

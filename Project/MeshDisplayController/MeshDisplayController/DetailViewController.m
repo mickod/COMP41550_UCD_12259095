@@ -63,6 +63,9 @@
     //Set self to the MeshDisplayModelViewDelegate
     self.meshDisplayControllermodel.MeshDisplayModelViewDelegate = self;
     
+    //Create the device view dictionary
+     self.clientDeviceViews = [[NSMutableDictionary alloc] init];
+    
     [self configureView];
 }
 

@@ -68,7 +68,7 @@
              //Start the timer to poll the server for the text to display while this app is
              //in the foreground
              dispatch_sync(dispatch_get_main_queue(), ^{
-                 self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
+                 self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self
                                                                        selector:@selector(getDisplayTextFromServer) userInfo:nil repeats:YES];
              });
          }

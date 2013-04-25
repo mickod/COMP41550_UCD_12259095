@@ -28,13 +28,22 @@
         self.eventID = nil;
         self.serverBaseURL = AWS_BASE_URL;
         self.clientDevices = [[NSMutableDictionary alloc] init];
-        
-        //Create a timer to poll the server while this app is in the foreground
-        self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self
-                                                        selector:@selector(pollServer) userInfo:nil repeats:YES];
     }
     
     return self;
+}
+
+- (void) startPollingServer {
+    
+    //Create and start the timer for polling the server
+    //Create a timer to poll the server while this app is in the foreground
+    if (self.eventID == nil) {
+        //Don't poll the server if the event id is nil
+        return;
+    }
+    self.serverPollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self
+                                                          selector:@selector(pollServer) userInfo:nil repeats:YES];
+    
 }
 
 - (void) createEvent:(NSString*)newEventID {
@@ -80,12 +89,22 @@
          
      }];
     
+    //Start the polling timer
+    [self startPollingServer];
+    
 }
 
 - (void) deleteCurrentEvent {
     
     //This method messages the server to delete the current event and set the
     //event in this controller to nil
+    if (self.eventID == nil) {
+        return;
+    }
+    
+    //Stop the polling timer
+    [self.serverPollTimer invalidate];
+    self.serverPollTimer = nil;
     
     //Message the server - this is a fire and forget message, as the server will
     //kill the event anyway when it receives no messages from the controller within
@@ -122,8 +141,17 @@
          
      }];
     
+    //Remove all devices from the display and all objects from the client devices dictionary
+    //Note if the controller is modified to control multiple events this will need to be updated
+    for (id key in self.clientDevices) {
+        ClientDevice *thisDevice = [self.clientDevices objectForKey:key];
+        [self.MeshDisplayModelViewDelegate handleClientDeviceRemovedEvent:thisDevice];
+    }
+    [self.clientDevices removeAllObjects];
+    
     //Set the event peoperty to nil
     self.eventID = nil;
+    
 }
 
 - (void) setTextForDevice:(NSString*)deviceToSet withText:(NSString*)newText {
@@ -183,7 +211,7 @@
     //Send the message to the server to check the current device list. This is safely fire and
     //forget as any missed responses will be simply repeated when the poll is reeapted shortly
     //shortly afterwards
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"/device_list_for_event/event_id/", self.eventID];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@/%@", self.serverBaseURL, @"device_list_for_event/event_id", self.eventID];
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -208,6 +236,11 @@
              } else {
                  NSMutableArray *clientIdsReturned = [[NSMutableArray alloc] init];
                  for(NSDictionary *eventClientInfo in deviceListJsonArray) {
+                     if (![eventClientInfo isKindOfClass:[NSDictionary class]]) {
+                         //Unexpected return value - simply log it and return
+                         NSLog(@"MeshDisplayControllerModel pollServer completionHandler unexpected return: %@", [deviceListJsonArray description]);
+                         return;
+                     }
                      NSString *device_clientID = [eventClientInfo objectForKey:@"client_id"];
                      [clientIdsReturned addObject:device_clientID];
                      NSLog(@"client_id: %@", device_clientID);
