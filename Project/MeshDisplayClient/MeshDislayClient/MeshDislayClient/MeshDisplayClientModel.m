@@ -95,11 +95,11 @@
     }
     
     //Message the server
-    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event_client_delete"];
+    NSString *urlAsString = [NSString stringWithFormat:@"%@/%@", self.serverBaseURL, @"event_client_remove"];
     NSURL *url = [NSURL URLWithString:urlAsString];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
-    [urlRequest setHTTPMethod:@"DELETE"];
-    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"cient_id", self.clientID];
+    [urlRequest setHTTPMethod:@"POST"];
+    NSString *deleteBodyString = [NSString stringWithFormat:@"%@=%@&%@=%@", @"event_id", self.eventID, @"client_id", self.clientID];
     [urlRequest setHTTPBody:[deleteBodyString dataUsingEncoding:NSUTF8StringEncoding]];
     
     [NSURLConnection
@@ -113,7 +113,8 @@
          if ([data length] >0 && error == nil)
          {
              //We are not intersted in the response in this
-             //case so simply do nothing
+             //case so simply do nothing (in future we should at least chcek
+             //the http response code.
              
          }
          else if ([data length] == 0 && error == nil)
